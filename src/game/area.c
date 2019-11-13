@@ -21,7 +21,7 @@
 #include "level_table.h"
 
 struct SpawnInfo gPlayerSpawnInfos[1];
-struct GraphNode *D_8033A160[0x100];
+struct GraphNode *D_8033A160[0x2000];
 struct Area gAreaData[8];
 
 struct WarpTransition gWarpTransition;
@@ -380,7 +380,7 @@ void render_game(void) {
         if (gPauseScreenMode != 0) {
             gSaveOptSelectIndex = gPauseScreenMode;
         }
-        
+
         if (D_8032CE78 != NULL) {
             make_viewport_clip_rect(D_8032CE78);
         } else

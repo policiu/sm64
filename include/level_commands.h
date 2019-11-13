@@ -182,6 +182,24 @@
 
 #define OBJECT(model, posX, posY, posZ, angleX, angleY, angleZ, behParam, beh) \
     OBJECT_WITH_ACTS(model, posX, posY, posZ, angleX, angleY, angleZ, behParam, beh, 0x1F)
+// NOTES: Each entry in CMD_BBBB is 2 bytes long!
+//      Goal: Extend model
+#define OBJECT_WITH_ACTS_ASSIGNMENT(array, index, model, posX, posY, posZ, angleX, angleY, angleZ, behParam, beh, acts) \
+    array[index++] = CMD_BBBB(0x3D, 0x1C, acts, 0x00); \
+    array[index++] =CMD_HH(model, 0x00); \
+    CMD_HHHHHH_ASSIGNMENT(array, index, posX, posY, posZ, angleX, angleY, angleZ) \
+    array[index++] = CMD_W(behParam); \
+    array[index++] = CMD_PTR(beh)
+// Debugging
+#define OBJECT_WITH_ACTS_ASSIGNMENT_2(array, index, model, posX, posY, posZ, angleX, angleY, angleZ, behParam, beh, acts) \
+    array[index] = CMD_BBBB(0x24, 0x18, acts, model); \
+    CMD_HHHHHH_ASSIGNMENT(array, index+1, posX, posY, posZ, angleX, angleY, angleZ) \
+    array[index + 4] = CMD_W(behParam); \
+    array[index + 5] = CMD_PTR(beh)
+#define OBJECT_ASSIGNMENT(array, index, model, posX, posY, posZ, angleX, angleY, angleZ, behParam, beh) \
+    OBJECT_WITH_ACTS_ASSIGNMENT(array, index, model, posX, posY, posZ, angleX, angleY, angleZ, behParam, beh, 0x1F)
+
+
 
 #define MARIO(unk3, behArg, beh) \
     CMD_BBBB(0x25, 0x0C, 0x00, unk3), \

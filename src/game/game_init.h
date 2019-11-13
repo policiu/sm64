@@ -10,7 +10,10 @@ struct DemoInput
     s8 rawStickY;
     u8 buttonMask;
 };
-
+extern int helpme;
+extern int helpme2;
+extern int helpme3;
+extern int helpme4;
 extern struct Controller gControllers[3];
 extern OSContStatus gControllerStatuses[4];
 extern OSContPad gControllerPads[4];

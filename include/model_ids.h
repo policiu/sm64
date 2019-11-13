@@ -331,77 +331,77 @@
 
 // actor model IDs
 
-// first set of actor bins (0x54-0x63)
-// group 1
-#define MODEL_BULLET_BILL                 0x54        // bullet_bill_geo
-#define MODEL_YELLOW_SPHERE               0x55        // yellow_sphere_geo
-#define MODEL_HOOT                        0x56        // hoot_geo
-#define MODEL_YOSHI_EGG                   0x57        // yoshi_egg_geo
-#define MODEL_THWOMP                      0x58        // thwomp_geo
-#define MODEL_HEAVE_HO                    0x59        // heave_ho_geo
+// first set of actor bins (0x54-0x63) - Total Size 49?
+// group 1 - Size 6
+#define MODEL_BULLET_BILL                 0x154        // bullet_bill_geo
+#define MODEL_YELLOW_SPHERE               0x155        // yellow_sphere_geo
+#define MODEL_HOOT                        0x156        // hoot_geo
+#define MODEL_YOSHI_EGG                   0x157        // yoshi_egg_geo
+#define MODEL_THWOMP                      0x158        // thwomp_geo
+#define MODEL_HEAVE_HO                    0x159        // heave_ho_geo
 
-// group 2
-#define MODEL_BLARGG                      0x54        // blargg_geo
-#define MODEL_BULLY                       0x56        // bully_geo
-#define MODEL_BULLY_BOSS                  0x57        // bully_boss_geo
+// group 2 - Size 3
+#define MODEL_BLARGG                      0x254        // blargg_geo
+#define MODEL_BULLY                       0x256        // bully_geo
+#define MODEL_BULLY_BOSS                  0x257        // bully_boss_geo
 
-// group 3
-#define MODEL_WATER_BOMB                  0x54        // water_bomb_geo
-#define MODEL_WATER_BOMB_SHADOW           0x55        // water_bomb_shadow_geo
-#define MODEL_KING_BOBOMB                 0x56        // king_bobomb_geo
+// group 3 - Size 3
+#define MODEL_WATER_BOMB                  0x354        // water_bomb_geo
+#define MODEL_WATER_BOMB_SHADOW           0x355        // water_bomb_shadow_geo
+#define MODEL_KING_BOBOMB                 0x356        // king_bobomb_geo
 
-// group 4
-#define MODEL_MANTA_RAY                   0x54        // manta_seg5_geo_05008D14
-#define MODEL_UNAGI                       0x55        // unagi_geo
-#define MODEL_SUSHI                       0x56        // sushi_geo
-#define MODEL_DL_WHIRLPOOL                0x57        // whirlpool_seg5_dl_05013CB8
-#define MODEL_CLAM_SHELL                  0x58        // clam_shell_geo
+// group 4 - Size 5
+#define MODEL_MANTA_RAY                   0x454        // manta_seg5_geo_05008D14
+#define MODEL_UNAGI                       0x455        // unagi_geo
+#define MODEL_SUSHI                       0x456        // sushi_geo
+#define MODEL_DL_WHIRLPOOL                0x457        // whirlpool_seg5_dl_05013CB8
+#define MODEL_CLAM_SHELL                  0x458        // clam_shell_geo
 
-// group 5
-#define MODEL_POKEY_HEAD                  0x54        // pokey_head_geo
-#define MODEL_POKEY_BODY_PART             0x55        // pokey_body_part_geo
-#define MODEL_TWEESTER                    0x56        // tweester_geo
-#define MODEL_KLEPTO                      0x57        // klepto_geo
-#define MODEL_EYEROK_LEFT_HAND            0x58        // eyerok_left_hand_geo
-#define MODEL_EYEROK_RIGHT_HAND           0x59        // eyerok_right_hand_geo
+// group 5 - Size 6
+#define MODEL_POKEY_HEAD                  0x554        // pokey_head_geo
+#define MODEL_POKEY_BODY_PART             0x555        // pokey_body_part_geo
+#define MODEL_TWEESTER                     0x556        // tornado_seg5_geo_05014630
+#define MODEL_KLEPTO                      0x557        // klepto_geo
+#define MODEL_EYEROK_LEFT_HAND            0x558        // eyerok_left_hand_geo
+#define MODEL_EYEROK_RIGHT_HAND           0x559        // eyerok_right_hand_geo
 
-// group 6
-#define MODEL_DL_MONTY_MOLE_HOLE          0x54        // monty_mole_hole_seg5_dl_05000840
-#define MODEL_MONTY_MOLE                  0x55        // monty_mole_geo
-#define MODEL_UKIKI                       0x56        // ukiki_geo
-#define MODEL_FWOOSH                      0x57        // fwoosh_geo
+// group 6 - Size 4
+#define MODEL_DL_MONTY_MOLE_HOLE          0x654        // monty_mole_hole_seg5_dl_05000840
+#define MODEL_MONTY_MOLE                  0x655        // monty_mole_geo
+#define MODEL_UKIKI                       0x656        // ukiki_geo
+#define MODEL_FWOOSH                      0x657        // fwoosh_geo
 
-// group 7
-#define MODEL_SPINDRIFT                   0x54        // spindrift_geo
-#define MODEL_MR_BLIZZARD_HIDDEN          0x55        // mr_blizzard_hidden_geo
-#define MODEL_MR_BLIZZARD                 0x56        // mr_blizzard_geo
-#define MODEL_PENGUIN                     0x57        // penguin_geo
+// group 7 - Size 4
+#define MODEL_SPINDRIFT                   0x754        // spindrift_geo
+#define MODEL_MR_BLIZZARD_HIDDEN          0x755        // mr_blizzard_hidden_geo
+#define MODEL_MR_BLIZZARD                 0x756        // mr_blizzard_geo
+#define MODEL_PENGUIN                     0x757        // penguin_geo
 
-// group 8
-#define MODEL_CAP_SWITCH_EXCLAMATION      0x54        // cap_switch_exclamation_seg5_dl_05002E00
-#define MODEL_CAP_SWITCH                  0x55        // cap_switch_geo
-#define MODEL_CAP_SWITCH_BASE             0x56        // cap_switch_base_seg5_dl_05003120
+// group 8 - Size 3
+#define MODEL_CAP_SWITCH_EXCLAMATION      0x854        // cap_switch_exclamation_seg5_dl_05002E00
+#define MODEL_CAP_SWITCH                  0x855        // cap_switch_geo
+#define MODEL_CAP_SWITCH_BASE             0x856        // cap_switch_base_seg5_dl_05003120
 
-// group 9
-#define MODEL_BOO                         0x54        // boo_geo
-#define MODEL_BETA_BOO_KEY                   0x55        // small_key_geo
-#define MODEL_HAUNTED_CHAIR               0x56        // haunted_chair_geo
-#define MODEL_MAD_PIANO                   0x57        // mad_piano_geo
-#define MODEL_BOOKEND_PART                0x58        // bookend_part_geo
-#define MODEL_BOOKEND                     0x59        // bookend_geo
-#define MODEL_HAUNTED_CAGE                0x5A        // haunted_cage_geo
+// group 9 - Size 7
+#define MODEL_BOO                         0x954        // boo_geo
+#define MODEL_BETA_BOO_KEY                   0x955        // small_key_geo
+#define MODEL_HAUNTED_CHAIR               0x956        // haunted_chair_geo
+#define MODEL_MAD_PIANO                   0x957        // mad_piano_geo
+#define MODEL_BOOKEND_PART                0x958        // bookend_part_geo
+#define MODEL_BOOKEND                     0x959        // bookend_geo
+#define MODEL_HAUNTED_CAGE                0x95A        // haunted_cage_geo
 
-// group 10
-#define MODEL_BIRDS                       0x54        // birds_geo
-#define MODEL_YOSHI                       0x55        // yoshi_geo
+// group 10 - Size 2
+#define MODEL_BIRDS                       0xA54        // birds_geo
+#define MODEL_YOSHI                       0xA55        // yoshi_geo
 
-// group 11
-#define MODEL_ENEMY_LAKITU                0x54        // enemy_lakitu_geo
-#define MODEL_SPINY_BALL                  0x55        // spiny_ball_geo
-#define MODEL_SPINY                       0x56        // spiny_geo
-#define MODEL_WIGGLER_HEAD                0x57        // wiggler_head_geo
-#define MODEL_WIGGLER_BODY                0x58        // wiggler_body_geo
-#define MODEL_BUBBA                       0x59        // bubba_geo
+// group 11 - Size 6
+#define MODEL_ENEMY_LAKITU                0xB54        // enemy_lakitu_geo
+#define MODEL_SPINY_BALL                  0xB55        // spiny_ball_geo
+#define MODEL_SPINY                       0xB56        // spiny_geo
+#define MODEL_WIGGLER_HEAD                0xB57        // wiggler_head_geo
+#define MODEL_WIGGLER_BODY                0xB58        // wiggler_body_geo
+#define MODEL_BUBBA                       0xB59        // bubba_geo
 
 // referenced in macro presets. Unknown usage.
 #define MODEL_UNKNOWN_54                  0x54
@@ -409,46 +409,46 @@
 
 // second set of actor bins, (0x64-0x73)
 // group 12
-#define MODEL_BOWSER                      0x64        // bowser_geo - 2nd geo loaded is bowser_geo_000424, starts with shadow command
-#define MODEL_BOWSER_BOMB_CHILD_OBJ       0x65        // bowser_bomb_geo - Spawns as a chill object in bowser's behavior command, causing an explosion if it touches a bomb
-#define MODEL_BOWSER_SMOKE                0x66        // bowser_impact_smoke_geo
-#define MODEL_BOWSER_FLAMES               0x67        // bowser_flames_geo
-#define MODEL_BOWSER_WAVE                 0x68        // invisible_bowser_accessory_geo
-#define MODEL_BOWSER2                     0x69        // bowser2_geo - 2nd geo loaded is bowser_geo_000770, starts with node command, only difference
+#define MODEL_BOWSER                      0xC64        // bowser_geo - 2nd geo loaded is bowser_geo_000424, starts with shadow command
+#define MODEL_BOWSER_BOMB_CHILD_OBJ       0xC65        // bowser_bomb_geo - Spawns as a chill object in bowser's behavior command, causing an explosion if it touches a bomb
+#define MODEL_BOWSER_SMOKE                0xC66        // bowser_impact_smoke_geo
+#define MODEL_BOWSER_FLAMES               0xC67        // bowser_flames_geo
+#define MODEL_BOWSER_WAVE                 0xC68        // invisible_bowser_accessory_geo
+#define MODEL_BOWSER2                     0xC69        // bowser2_geo - 2nd geo loaded is bowser_geo_000770, starts with node command, only difference
 
 // group 13
-#define MODEL_BUB                         0x64        // cheep_cheep_geo
-#define MODEL_TREASURE_CHEST_BASE         0x65        // treasure_chest_base_geo
-#define MODEL_TREASURE_CHEST_LID          0x66        // treasure_chest_lid_geo
-#define MODEL_CYAN_FISH                   0x67        // cyan_fish_geo
-#define MODEL_WATER_RING                  0x68        // water_ring_geo
-#define MODEL_SKEETER                     0x69        // skeeter_geo
+#define MODEL_BUB                         0xD64        // cheep_cheep_geo
+#define MODEL_TREASURE_CHEST_BASE         0xD65        // treasure_chest_base_geo
+#define MODEL_TREASURE_CHEST_LID          0xD66        // treasure_chest_lid_geo
+#define MODEL_CYAN_FISH                   0xD67        // cyan_fish_geo
+#define MODEL_WATER_RING                  0xD68        // water_ring_geo
+#define MODEL_SKEETER                     0xD69        // skeeter_geo
 
 // group 14
-#define MODEL_PIRANHA_PLANT               0x64        // piranha_plant_geo
-#define MODEL_WHOMP                       0x67        // whomp_geo
-#define MODEL_KOOPA_WITH_SHELL            0x68        // koopa_with_shell_geo
-#define MODEL_METALLIC_BALL               0x65        // metallic_ball_geo
-#define MODEL_CHAIN_CHOMP                 0x66        // chain_chomp
-#define MODEL_KOOPA_FLAG                  0x6A        // koopa_flag_geo
-#define MODEL_WOODEN_POST                 0x6B        // wooden_post_geo
+#define MODEL_PIRANHA_PLANT               0xE64        // piranha_plant_geo
+#define MODEL_WHOMP                       0xE67        // whomp_geo
+#define MODEL_KOOPA_WITH_SHELL            0xE68        // koopa_with_shell_geo
+#define MODEL_METALLIC_BALL               0xE65        // metallic_ball_geo
+#define MODEL_CHAIN_CHOMP                 0xE66        // chain_chomp
+#define MODEL_KOOPA_FLAG                  0xE6A        // koopa_flag_geo
+#define MODEL_WOODEN_POST                 0xE6B        // wooden_post_geo
 
 // group 15
-#define MODEL_MIPS                        0x64        // mips_geo
-#define MODEL_BOO_CASTLE                  0x65        // boo_castle_geo
-#define MODEL_LAKITU                      0x66        // lakitu_geo
+#define MODEL_MIPS                        0xF64        // mips_geo
+#define MODEL_BOO_CASTLE                  0xF65        // boo_castle_geo
+#define MODEL_LAKITU                      0xF66        // lakitu_geo
 
 // group 16
-#define MODEL_CHILL_BULLY                 0x64        // chilly_chief_geo
-#define MODEL_BIG_CHILL_BULLY             0x65        // chilly_chief_big_geo
-#define MODEL_MONEYBAG                    0x66        // moneybag_geo
+#define MODEL_CHILL_BULLY                 0x1064        // chilly_chief_geo
+#define MODEL_BIG_CHILL_BULLY             0x1065        // chilly_chief_big_geo
+#define MODEL_MONEYBAG                    0x1066        // moneybag_geo
 
 // group 17
-#define MODEL_SWOOP                       0x64        // swoop_geo
-#define MODEL_SCUTTLEBUG                  0x65        // scuttlebug_geo
-#define MODEL_MR_I_IRIS                   0x66        // mr_i_iris_geo
-#define MODEL_MR_I                        0x67        // mr_i_geo
-#define MODEL_DORRIE                      0x68        // dorrie_geo
+#define MODEL_SWOOP                       0x1164        // swoop_geo
+#define MODEL_SCUTTLEBUG                  0x1165        // scuttlebug_geo
+#define MODEL_MR_I_IRIS                   0x1166        // mr_i_iris_geo
+#define MODEL_MR_I                        0x1167        // mr_i_geo
+#define MODEL_DORRIE                      0x1168        // dorrie_geo
 
 // other models
 #define MODEL_YELLOW_COIN                 0x74        // yellow_coin_geo
@@ -498,10 +498,10 @@
 #define MODEL_WHITE_PARTICLE              0xA0        // white_particle_dl
 #define MODEL_PEBBLE                      0xA1        // pebble_seg3_dl_0301CB00
 #define MODEL_LEAVES                      0xA2        // leaves_geo
-#define MODEL_WAVE_TRAIL                  0xA3        // wave_trail_geo
+#define MODEL_WATER_WAVES                 0xA3        // water_waves_geo
 #define MODEL_WHITE_PARTICLE_SMALL        0xA4        // white_particle_small_dl
-#define MODEL_SMALL_WATER_SPLASH          0xA5        // small_water_splash_geo
-#define MODEL_IDLE_WATER_WAVE             0xA6        // idle_water_wave_geo
+#define MODEL_SPOT_ON_GROUND              0xA5        // spot_on_ground_geo
+#define MODEL_WATER_WAVES_SURF            0xA6        // water_waves_surface_geo
 #define MODEL_WATER_SPLASH                0xA7        // water_splash_geo
 #define MODEL_BUBBLE                      0xA8        // bubble_geo
 // find me

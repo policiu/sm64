@@ -96,6 +96,7 @@ SECTIONS
       BUILD_DIR/src/game/thread6.o(.text);
 #endif
       BUILD_DIR/src/game/level_update.o(.text);
+      BUILD_DIR/levels/castle_grounds/script.o(.text);
       BUILD_DIR/src/game/interaction.o(.text);
       BUILD_DIR/src/game/mario.o(.text);
       BUILD_DIR/src/game/mario_step.o(.text);
@@ -381,6 +382,7 @@ SECTIONS
       BUILD_DIR/src/game/game_init.o(.data*);
       BUILD_DIR/src/game/sound_init.o(.data*);
       BUILD_DIR/src/game/level_update.o(.data*);
+      BUILD_DIR/levels/castle_grounds/script.o(.data*);
       BUILD_DIR/src/game/interaction.o(.data*);
       BUILD_DIR/src/game/mario.o(.data*);
       BUILD_DIR/src/game/mario_step.o(.data*);
@@ -575,6 +577,7 @@ SECTIONS
       BUILD_DIR/src/game/game_init.o(.bss*);
       BUILD_DIR/src/game/sound_init.o(.bss*);
       BUILD_DIR/src/game/level_update.o(.bss*);
+      BUILD_DIR/levels/castle_grounds/script.o(.bss*);
       BUILD_DIR/src/game/interaction.o(.bss*);
       BUILD_DIR/src/game/mario.o(.bss*);
       BUILD_DIR/src/game/mario_actions_cutscene.o(.bss*);
@@ -681,6 +684,7 @@ SECTIONS
       BUILD_DIR/src/game/object_helpers.o(.text);
 #endif
       BUILD_DIR/src/engine*.o(.text);
+      BUILD_DIR/src/engine/randomizer.o(.text);
       /* data */
       BUILD_DIR/src/engine/graph_node.o(.data*);
       BUILD_DIR/src/engine/graph_node_manager.o(.data*);
@@ -694,6 +698,7 @@ SECTIONS
       BUILD_DIR/src/game/object_helpers.o(.data*);
 #endif
       BUILD_DIR/src/engine*.o(.data*);
+      BUILD_DIR/src/engine/randomizer.o(.data*);
       /* rodata */
       BUILD_DIR/src/engine/math_util.o(.rodata*);
       BUILD_DIR/src/engine/level_script.o(.rodata*);
@@ -705,6 +710,7 @@ SECTIONS
       BUILD_DIR/src/game/object_helpers.o(.rodata*);
 #endif
       BUILD_DIR/src/engine*.o(.rodata*);
+      BUILD_DIR/src/engine/randomizer.o(.rodata*);
    }
    END_SEG(engine)
    BEGIN_NOLOAD(engine)

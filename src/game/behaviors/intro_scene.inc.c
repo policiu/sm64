@@ -31,7 +31,7 @@ void bhv_intro_scene_loop(void) {
 
         switch (gCutsceneObjSpawn) {
             case 6:
-                sp34 = spawn_object(gCurrentObject, MODEL_LAKITU, bhvBeginningLakitu);
+                sp34 = spawn_object(gCurrentObject, MODEL_GOOMBA, bhvBeginningLakitu);
                 break;
             case 5:
                 sp34 = spawn_object(gCurrentObject, MODEL_PEACH, bhvBeginningPeach);

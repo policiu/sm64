@@ -390,8 +390,8 @@ static void level_cmd_load_model_from_dl(void) {
 static void level_cmd_load_model_from_geo(void) {
     s16 arg0 = CMD_GET(s16, 2);
     void *arg1 = CMD_GET(void *, 4);
-
-    if (arg0 < 256) {
+    // Allow for a larger range of models
+    if (arg0 < 0xFFFF) {
         gLoadedGraphNodes[arg0] = process_geo_layout(sLevelPool, arg1);
     }
 
@@ -438,15 +438,56 @@ static void level_cmd_init_mario(void) {
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_place_object(void) {
+#include "game/print.h"
+//#include "enhancements/crash.h"
+#include "behavior_data.h"
+static void level_cmd_place_object_ext(void) {
     u8 val7 = 1 << (gCurrActNum - 1);
     u16 model;
     struct SpawnInfo *spawnInfo;
 
+    //DEBUG_ASSERT(0);
+    //fb_print_int_hex(22,190, 200, 2);
+    if (sCurrAreaIndex != -1 && ((CMD_GET(u8, 2) & val7) || CMD_GET(u8, 2) == 0x1F)) {
+        // Buffer CMD GET(u8, 3)
+        model = CMD_GET(s16, 4);
+        spawnInfo = alloc_only_pool_alloc(sLevelPool, sizeof(struct SpawnInfo));
+        // Buffer CMD GET(u16,6)
+        spawnInfo->startPos[0] = CMD_GET(s16, 8);
+        spawnInfo->startPos[1] = CMD_GET(s16, 10);
+        spawnInfo->startPos[2] = CMD_GET(s16, 12);
+
+        spawnInfo->startAngle[0] = CMD_GET(s16, 14) * 0x8000 / 180;
+        spawnInfo->startAngle[1] = CMD_GET(s16, 16) * 0x8000 / 180;
+        spawnInfo->startAngle[2] = CMD_GET(s16, 18) * 0x8000 / 180;
+
+        spawnInfo->areaIndex = sCurrAreaIndex;
+        spawnInfo->activeAreaIndex = sCurrAreaIndex;
+            helpme = CMD_GET(s16, 4); //& 0x00FFFFFF;
+        //print_text_fmt_int(20,20, "Test: %d", CMD_GET(s16,8));
+        spawnInfo->behaviorArg = CMD_GET(u32, 20);
+        spawnInfo->behaviorScript = CMD_GET(void *, 24);
+        spawnInfo->unk18 = gLoadedGraphNodes[model];
+        spawnInfo->next = gAreas[sCurrAreaIndex].objectSpawnInfos;
+
+         gAreas[sCurrAreaIndex].objectSpawnInfos = spawnInfo;
+    }
+    sCurrentCmd = CMD_NEXT;
+}
+static void level_cmd_place_object(void) {
+    u8 val7 = 1 << (gCurrActNum - 1);
+    u16 model;
+    struct SpawnInfo *spawnInfo;
     if (sCurrAreaIndex != -1 && ((CMD_GET(u8, 2) & val7) || CMD_GET(u8, 2) == 0x1F)) {
         model = CMD_GET(u8, 3);
         spawnInfo = alloc_only_pool_alloc(sLevelPool, sizeof(struct SpawnInfo));
-
+        /*
+        if (helpme && !helpme2){
+            helpme2 = CMD_GET(u16, 20);
+            helpme3 = CMD_GET(u8, 22);
+            helpme4 = CMD_GET(u8, 24);
+        }
+        */
         spawnInfo->startPos[0] = CMD_GET(s16, 4);
         spawnInfo->startPos[1] = CMD_GET(s16, 6);
         spawnInfo->startPos[2] = CMD_GET(s16, 8);
@@ -800,6 +841,7 @@ static void (*LevelScriptJumpTable[])(void) = {
     /*3A*/ level_cmd_3A,
     /*3B*/ level_cmd_create_whirlpool,
     /*3C*/ level_cmd_get_or_set_var,
+    /*3D*/ level_cmd_place_object_ext,
 };
 
 struct LevelCommand *level_script_execute(struct LevelCommand *cmd) {

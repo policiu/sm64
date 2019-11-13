@@ -24,5 +24,10 @@
 #define CMD_PTR(a) ((uintptr_t)(a))
 
 #define CMD_HHHHHH(a, b, c, d, e, f) CMD_HH(a, b), CMD_HH(c, d), CMD_HH(e, f)
+// Allow for array entries
+#define CMD_HHHHHH_ASSIGNMENT(array, index, a, b, c, d, e, f) \
+	array[index++] = CMD_HH(a, b); \
+	array[index++] = CMD_HH(c, d); \
+	array[index++] = CMD_HH(e, f);
 
 #endif

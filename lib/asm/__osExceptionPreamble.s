@@ -15,11 +15,16 @@
 .endif
 
 glabel __osExceptionPreamble
+    lui   $k0, %hi(__crash_handler_entry)
+    addiu $k0, $k0, %lo(__crash_handler_entry)
+    jr    $k0
+    nop
+/*
     lui   $k0, %hi(__osException) # $k0, 0x8032
     addiu $k0, %lo(__osException) # addiu $k0, $k0, 0x66d0
     jr    $k0
      nop
-
+*/
 
 glabel __osException
 .ifndef VERSION_EU

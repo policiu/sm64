@@ -7,13 +7,19 @@
 #include "level_commands.h"
 
 #include "game/level_update.h"
+#include "engine/randomizer.h"
 
 #include "levels/scripts.h"
 
 #include "actors/common1.h"
 
+#include "engine/behavior_script.h"
 #include "make_const_nonconst.h"
 #include "levels/castle_grounds/header.h"
+
+// Allow mass replacement
+extern u8 rng_modelsFriendly[];
+static const u32 castle_grounds_local_models[] = { MODEL_BIRDS, MODEL_1UP, MODEL_KOOPA_SHELL, };
 
 static const LevelScript script_func_local_1[] = {
     WARP_NODE(/*id*/ 0x00, /*destLevel*/ LEVEL_CASTLE, /*destArea*/ 0x01, /*destNode*/ 0x00, /*flags*/ WARP_NO_CHECKPOINT),
@@ -74,25 +80,50 @@ static const LevelScript script_func_local_3[] = {
     OBJECT(/*model*/ MODEL_CASTLE_GROUNDS_FLAG, /*pos*/  3835, 3348, -6647, /*angle*/ 0, 0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvCastleFlagWaving),
     RETURN(),
 };
+#define LEN_EXT 7
+static LevelScript script_func_local_4[26*7+1] = {RETURN(), RETURN(),  RETURN(),  RETURN(),  RETURN(),  RETURN(),  RETURN(),  RETURN(),  RETURN(),  RETURN(),  RETURN(),  RETURN(),  RETURN(),  RETURN(),  RETURN(),  RETURN(),  RETURN(),  RETURN(),  RETURN(),  RETURN(),  RETURN(),  RETURN(),  RETURN(),  RETURN(), } ;
 
-static const LevelScript script_func_local_4[] = {
-    OBJECT(/*model*/ MODEL_BUTTERFLY, /*pos*/ -4508,  406,  4400, /*angle*/ 0, 0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvButterfly),
-    OBJECT(/*model*/ MODEL_BUTTERFLY, /*pos*/ -4408,  406,  4500, /*angle*/ 0, 0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvButterfly),
-    OBJECT(/*model*/ MODEL_BUTTERFLY, /*pos*/ -4708,  406,  4100, /*angle*/ 0, 0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvButterfly),
-    OBJECT(/*model*/ MODEL_BUTTERFLY, /*pos*/ -6003,  473, -2621, /*angle*/ 0, 0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvButterfly),
-    OBJECT(/*model*/ MODEL_BUTTERFLY, /*pos*/ -6003,  473, -2321, /*angle*/ 0, 0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvButterfly),
-    OBJECT(/*model*/ MODEL_BUTTERFLY, /*pos*/  6543,  461,  -617, /*angle*/ 0, 0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvButterfly),
-    OBJECT(/*model*/ MODEL_BUTTERFLY, /*pos*/  6143,  461,  -617, /*angle*/ 0, 0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvButterfly),
-    OBJECT(/*model*/ MODEL_BUTTERFLY, /*pos*/  5773,  775, -5722, /*angle*/ 0, 0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvButterfly),
-    OBJECT(/*model*/ MODEL_BUTTERFLY, /*pos*/  5873,  775, -5622, /*angle*/ 0, 0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvButterfly),
-    OBJECT(/*model*/ MODEL_BUTTERFLY, /*pos*/  5473,  775, -5322, /*angle*/ 0, 0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvButterfly),
-    OBJECT(/*model*/ MODEL_BUTTERFLY, /*pos*/ -1504,  326,  3196, /*angle*/ 0, 0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvButterfly),
-    OBJECT(/*model*/ MODEL_BUTTERFLY, /*pos*/ -1204,  326,  3296, /*angle*/ 0, 0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvButterfly),
-    OBJECT(/*model*/ MODEL_YOSHI,     /*pos*/     0, 3174, -5625, /*angle*/ 0, 0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvYoshi),
-    RETURN(),
-};
+s32 please_work = 9;
+s32 please(void) {
+    //return UNUSED1;
+
+ //   LevelScript temp[] = {
+ //  };
+ //   unsigned int i;
+ //   for (i = 0; i< sizeof(temp)/sizeof(temp[0]); ++i)
+ //       script_func_local_4[i] = temp[i];
+    //please_work = 1;
+    u32 index;
+    index = 0;
+
+    //script_func_local_4[6] = RETURN();
+    //OBJECT_ASSIGNMENT( script_func_local_4, 0*7, /*model*/ MODEL_1UP, /*pos*/ -1204,  326,  3296, /*angle*/ 0, 0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvButterfly);
+    generate_enemy( script_func_local_4, &index, /*pos*/ -4508,  406,  4400, /*angle*/ 0, 0, 0);
+    //OBJECT_WITH_ACTS_ASSIGNMENT( script_func_local_4, 0*7, /*model*/ MODEL_1UP, /*pos*/ -1204,  326,  3296, /*angle*/ 0, 0, 0,   0x1F);
+    generate_enemy(script_func_local_4, &index, /*pos*/ -4408,  406,  4500, /*angle*/ 0, 0, 0);
+    generate_enemy(script_func_local_4, &index, /*pos*/ -4708,  406,  4100, /*angle*/ 0, 0, 0);
+    generate_enemy(script_func_local_4, &index, /*pos*/ -6003,  473, -2621, /*angle*/ 0, 0, 0);
+    generate_enemy(script_func_local_4, &index, /*pos*/ -6003,  473, -2321, /*angle*/ 0, 0, 0);
+    generate_enemy(script_func_local_4, &index, /*pos*/  6543,  461,  -617, /*angle*/ 0, 0, 0);
+    generate_enemy(script_func_local_4, &index, /*pos*/  6143,  461,  -617, /*angle*/ 0, 0, 0);
+    generate_enemy(script_func_local_4, &index, /*pos*/  5773,  775, -5722, /*angle*/ 0, 0, 0);
+    generate_enemy(script_func_local_4, &index, /*pos*/  5873,  775, -5622, /*angle*/ 0, 0, 0);
+    generate_enemy(script_func_local_4, &index, /*pos*/  5473,  775, -5322, /*angle*/ 0, 0, 0);
+    generate_enemy(script_func_local_4, &index, /*pos*/ -1204, 326, 3296, /*angle*/ 0, 0, 0);
+    generate_enemy(script_func_local_4, &index, /*pos*/ -1299,  326,  3196, /*angle*/ 0, 0, 0);
+    //OBJECT_ASSIGNMENT(script_func_local_4, 11 index,/*model*/  /*pos*/ -1504,  326,  3196, /*angle*/ 0, 0, 0,  );
+    //OBJECT_ASSIGNMENT(script_func_local_4, 12 index, /*model*/ MODEL_KING_BOBOMB_EXT,           /*pos*/  -1200, 326, 3296, /*angle*/ 0, -147, 0, /*behParam*/ 0x00000000, /*beh*/ bhvKingBobomb);
+    //OBJECT_ASSIGNMENT(script_func_local_4, index, /*model*/ MODEL_WIGGLER_HEAD,           /*pos*/  -1200 - 800, 326 + 150, 3296-300, /*angle*/ 0, -147, 0, /*behParam*/ 0x00000000, /*beh*/ bhvWigglerHead);
+    //OBJECT_ASSIGNMENT(script_func_local_4, 13 index, /*model*/ MODEL_WHOMP_EXT,           /*pos*/  -1210, 326, 3296, /*angle*/ 0, -147, 0, /*behParam*/ 0x00000000, /*beh*/ bhvWhompKingBoss);
+    //OBJECT_ASSIGNMENT(script_func_local_4, 14 index, /*model*/ MODEL_BOWSER_EXT,           /*pos*/  -1200, 326, 3296, /*angle*/ 0, -147, 0, /*behParam*/ 0x00000000, /*beh*/ bhvBowser);
+    //OBJECT_ASSIGNMENT(script_func_local_4, 12 index,/*model*/ MODEL_YOSHI,     /*pos*/     0, 3174, -5625, /*angle*/ 0, 0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvYoshi);
+    script_func_local_4[index] = RETURN();
+    return 1;
+}
 
 const LevelScript level_castle_grounds_entry[] = {
+    CALL(0, please),
+    SLEEP(10),
     INIT_LEVEL(),
     LOAD_MIO0(        /*seg*/ 0x07, _castle_grounds_segment_7SegmentRomStart, _castle_grounds_segment_7SegmentRomEnd),
     LOAD_MIO0(        /*seg*/ 0x0A, _water_skybox_mio0SegmentRomStart, _water_skybox_mio0SegmentRomEnd),
@@ -106,8 +137,8 @@ const LevelScript level_castle_grounds_entry[] = {
     ALLOC_LEVEL_POOL(),
     MARIO(/*model*/ MODEL_MARIO, /*behParam*/ 0x00000001, /*beh*/ bhvMario),
     JUMP_LINK(script_func_global_1),
-    JUMP_LINK(script_func_global_11),
-    JUMP_LINK(script_func_global_16),
+    //JUMP_LINK(script_func_global_11),
+    //JUMP_LINK(script_func_global_16),
     LOAD_MODEL_FROM_GEO(MODEL_LEVEL_GEOMETRY_03,           castle_grounds_geo_0006F4),
     LOAD_MODEL_FROM_GEO(MODEL_CASTLE_GROUNDS_BUBBLY_TREE,  bubbly_tree_geo),
     LOAD_MODEL_FROM_GEO(MODEL_CASTLE_GROUNDS_WARP_PIPE,    warp_pipe_geo),
