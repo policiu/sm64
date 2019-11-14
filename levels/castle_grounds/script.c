@@ -81,48 +81,34 @@ static const LevelScript script_func_local_3[] = {
     RETURN(),
 };
 #define LEN_EXT 7
-static LevelScript script_func_local_4[26*7+1] = {RETURN(), RETURN(),  RETURN(),  RETURN(),  RETURN(),  RETURN(),  RETURN(),  RETURN(),  RETURN(),  RETURN(),  RETURN(),  RETURN(),  RETURN(),  RETURN(),  RETURN(),  RETURN(),  RETURN(),  RETURN(),  RETURN(),  RETURN(),  RETURN(),  RETURN(),  RETURN(),  RETURN(), } ;
+static LevelScript script_func_local_4[15*7+1];
+static s32 setup_level_scripts_local(void) {
 
-s32 please_work = 9;
-s32 please(void) {
-    //return UNUSED1;
-
- //   LevelScript temp[] = {
- //  };
- //   unsigned int i;
- //   for (i = 0; i< sizeof(temp)/sizeof(temp[0]); ++i)
- //       script_func_local_4[i] = temp[i];
-    //please_work = 1;
     u32 index;
     index = 0;
-
-    //script_func_local_4[6] = RETURN();
-    //OBJECT_ASSIGNMENT( script_func_local_4, 0*7, /*model*/ MODEL_1UP, /*pos*/ -1204,  326,  3296, /*angle*/ 0, 0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvButterfly);
-    generate_enemy( script_func_local_4, &index, /*pos*/ -4508,  406,  4400, /*angle*/ 0, 0, 0);
-    //OBJECT_WITH_ACTS_ASSIGNMENT( script_func_local_4, 0*7, /*model*/ MODEL_1UP, /*pos*/ -1204,  326,  3296, /*angle*/ 0, 0, 0,   0x1F);
-    generate_enemy(script_func_local_4, &index, /*pos*/ -4408,  406,  4500, /*angle*/ 0, 0, 0);
-    generate_enemy(script_func_local_4, &index, /*pos*/ -4708,  406,  4100, /*angle*/ 0, 0, 0);
-    generate_enemy(script_func_local_4, &index, /*pos*/ -6003,  473, -2621, /*angle*/ 0, 0, 0);
-    generate_enemy(script_func_local_4, &index, /*pos*/ -6003,  473, -2321, /*angle*/ 0, 0, 0);
-    generate_enemy(script_func_local_4, &index, /*pos*/  6543,  461,  -617, /*angle*/ 0, 0, 0);
-    generate_enemy(script_func_local_4, &index, /*pos*/  6143,  461,  -617, /*angle*/ 0, 0, 0);
-    generate_enemy(script_func_local_4, &index, /*pos*/  5773,  775, -5722, /*angle*/ 0, 0, 0);
-    generate_enemy(script_func_local_4, &index, /*pos*/  5873,  775, -5622, /*angle*/ 0, 0, 0);
-    generate_enemy(script_func_local_4, &index, /*pos*/  5473,  775, -5322, /*angle*/ 0, 0, 0);
-    generate_enemy(script_func_local_4, &index, /*pos*/ -1204, 326, 3296, /*angle*/ 0, 0, 0);
-    generate_enemy(script_func_local_4, &index, /*pos*/ -1299,  326,  3196, /*angle*/ 0, 0, 0);
-    //OBJECT_ASSIGNMENT(script_func_local_4, 11 index,/*model*/  /*pos*/ -1504,  326,  3196, /*angle*/ 0, 0, 0,  );
-    //OBJECT_ASSIGNMENT(script_func_local_4, 12 index, /*model*/ MODEL_KING_BOBOMB_EXT,           /*pos*/  -1200, 326, 3296, /*angle*/ 0, -147, 0, /*behParam*/ 0x00000000, /*beh*/ bhvKingBobomb);
-    //OBJECT_ASSIGNMENT(script_func_local_4, index, /*model*/ MODEL_WIGGLER_HEAD,           /*pos*/  -1200 - 800, 326 + 150, 3296-300, /*angle*/ 0, -147, 0, /*behParam*/ 0x00000000, /*beh*/ bhvWigglerHead);
-    //OBJECT_ASSIGNMENT(script_func_local_4, 13 index, /*model*/ MODEL_WHOMP_EXT,           /*pos*/  -1210, 326, 3296, /*angle*/ 0, -147, 0, /*behParam*/ 0x00000000, /*beh*/ bhvWhompKingBoss);
-    //OBJECT_ASSIGNMENT(script_func_local_4, 14 index, /*model*/ MODEL_BOWSER_EXT,           /*pos*/  -1200, 326, 3296, /*angle*/ 0, -147, 0, /*behParam*/ 0x00000000, /*beh*/ bhvBowser);
-    //OBJECT_ASSIGNMENT(script_func_local_4, 12 index,/*model*/ MODEL_YOSHI,     /*pos*/     0, 3174, -5625, /*angle*/ 0, 0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvYoshi);
+    generate_enemy(script_func_local_4, &index,  -1204,  326,  3296,  0, 0, 0);
+    /*                                            // Pos                Angle
+    generate_enemy(script_func_local_4, &index,  -4508,  406,  4400,  0, 0, 0);
+    generate_enemy(script_func_local_4, &index,  -4408,  406,  4500,  0, 0, 0);
+    generate_enemy(script_func_local_4, &index,  -4708,  406,  4100,  0, 0, 0);
+    generate_enemy(script_func_local_4, &index,  -6003,  473, -2621,  0, 0, 0);
+    generate_enemy(script_func_local_4, &index,  -6003,  473, -2321,  0, 0, 0);
+    generate_enemy(script_func_local_4, &index,   6543,  461,  -617,  0, 0, 0);
+    generate_enemy(script_func_local_4, &index,   6143,  461,  -617,  0, 0, 0);
+    generate_enemy(script_func_local_4, &index,   5773,  775, -5722,  0, 0, 0);
+    generate_enemy(script_func_local_4, &index,   5873,  775, -5622,  0, 0, 0);
+    generate_enemy(script_func_local_4, &index,   5473,  775, -5322,  0, 0, 0);
+    generate_enemy(script_func_local_4, &index,  -1204,  326,  3296,  0, 0, 0);
+    generate_enemy(script_func_local_4, &index,  -1299,  326,  3196,  0, 0, 0);
+    generate_enemy(script_func_local_4, &index,  -1504,  326,  3196,  0, 0, 0);
+    OBJECT_ASSIGNMENT(script_func_local_4, index, MODEL_YOSHI,          0, 3174, -5625,  0, 0, 0,  0x00000000,  bhvYoshi);
+    */
     script_func_local_4[index] = RETURN();
     return 1;
 }
 
 const LevelScript level_castle_grounds_entry[] = {
-    CALL(0, please),
+    CALL(0, setup_level_scripts_local),
     SLEEP(10),
     INIT_LEVEL(),
     LOAD_MIO0(        /*seg*/ 0x07, _castle_grounds_segment_7SegmentRomStart, _castle_grounds_segment_7SegmentRomEnd),

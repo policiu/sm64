@@ -52,6 +52,9 @@ static s8 sSelectableStarIndex = 0;
 // Act Selector menu timer that keeps counting until you choose an act.
 static s32 sActSelectorMenuTimer = 0;
 
+static u8 stars[7];
+static s16 currCourse[6];
+static u8 updateCur;
 /**
  * Act Selector Star Type Loop Action
  * Defines a select type for a star in the act selector.
@@ -88,8 +91,8 @@ void bhv_act_selector_star_type_loop(void) {
 /**
  * Renders the 100 coin star with an special star selector type.
  */
-void render_100_coin_star(u8 stars) {
-    if (stars & (1 << 6)) {
+void render_100_coin_star(u8 *stars) {
+    if (stars[0] & (1 << 6)) {
         // If the 100 coin star has been collected, create a new star selector next to the coin score.
         sStarSelectorModels[6] = spawn_object_abs_with_rot(gCurrentObject, 0, MODEL_STAR,
                                                         bhvActSelectorStarType, 370, 24, -300, 0, 0, 0);
@@ -105,15 +108,15 @@ void render_100_coin_star(u8 stars) {
  * checks of what star should be next in sInitSelectedActNum.
  */
 void bhv_act_selector_init(void) {
-    s16 i = 0;
+    s16 i = 0, j = 0;
     s32 selectorModelIDs[10];
-    u8 stars = save_file_get_star_flags(gCurrSaveFileNum - 1, gCurrCourseNum - 1);
-
+    //u8 stars = save_file_get_star_flags(gCurrSaveFileNum - 1, gCurrCourseNum - 1);
+    stars[6] = 0x0;
     sVisibleStars = 0;
-    while (i != sObtainedStars) {
-        if (stars & (1 << sVisibleStars)) { // Star has been collected
+    for (i=0; j != sObtainedStars; i++) { // while (i != sObtainedStars) {
+        if (stars[i] & (1 << sVisibleStars)) { // Star has been collected
             selectorModelIDs[sVisibleStars] = MODEL_STAR;
-            i++;
+            j++;
         } else { // Star has not been collected
             selectorModelIDs[sVisibleStars] = MODEL_TRANSPARENT_STAR;
             // If this is the first star that has not been collected, set
@@ -124,6 +127,7 @@ void bhv_act_selector_init(void) {
             }
         }
         sVisibleStars++;
+        //i++;
     }
 
     // If the stars have been collected in order so far, show the next star.
@@ -166,7 +170,7 @@ void bhv_act_selector_init(void) {
 void bhv_act_selector_loop(void) {
     s8 i;
     u8 starIndexCounter;
-    u8 stars = save_file_get_star_flags(gCurrSaveFileNum - 1, gCurrCourseNum - 1);
+    //u8 stars = save_file_get_star_flags(gCurrSaveFileNum - 1, gCurrCourseNum - 1);
 
     if (sObtainedStars != 6) {
         // Sometimes, stars are not selectable even if they appear on the screen.
@@ -176,7 +180,7 @@ void bhv_act_selector_loop(void) {
         starIndexCounter = sSelectableStarIndex;
         for (i = 0; i < sVisibleStars; i++) {
             // Can the star be selected (is it either already completed or the first non-completed mission)
-            if ((stars & (1 << i)) || i + 1 == sInitSelectedActNum) {
+            if ((stars[i] & (1 << i)) || i + 1 == sInitSelectedActNum) {
                 if (starIndexCounter == 0) { // We have reached the sSelectableStarIndex-th selectable star.
                     sSelectedActIndex = i;
                     break;
@@ -300,9 +304,10 @@ void print_act_selector_strings(void) {
             levelNameTbl = segmented_to_virtual(course_name_table_eu_de);
             break;
     }
-    currLevelName = segmented_to_virtual(levelNameTbl[gCurrCourseNum - 1]);
-#endif
 
+    if (updateCur){
+        updateCur = 0;
+    }
     // Print the coin highscore.
     gSPDisplayList(gDisplayListHead++, dl_rgba16_text_begin);
     gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, 255);
@@ -342,14 +347,13 @@ void print_act_selector_strings(void) {
     gDPSetEnvColor(gDisplayListHead++, 0, 0, 0, 255);
     // Print the name of the selected act.
     if (sVisibleStars != 0) {
-        selectedActName = segmented_to_virtual(actNameTbl[(gCurrCourseNum - 1) * 6 + sSelectedActIndex]);
-
+        selectedActName = segmented_to_virtual(actNameTbl[(currCourse[sSelectedActIndex] - 1) * 6 + sSelectedActIndex]);
 #ifdef VERSION_EU
         print_menu_generic_string(get_str_x_pos_from_center(ACT_NAME_X, selectedActName, 8.0f), 81, selectedActName);
 #elif defined(VERSION_SH)
         actNameX = get_str_x_pos_from_center_scale(ACT_NAME_X, selectedActName, 8.0f);
         print_menu_generic_string(actNameX, 81, selectedActName);
-#else
+#else        
         actNameX = get_str_x_pos_from_center(ACT_NAME_X, selectedActName, 8.0f);
         print_menu_generic_string(actNameX, 81, selectedActName);
 #endif
@@ -388,13 +392,20 @@ Gfx *geo_act_selector_strings(s16 callContext, UNUSED struct GraphNode *node) {
  * Also load how much stars a course has, without counting the 100 coin star.
  */
 s32 lvl_init_act_selector_values_and_stars(UNUSED s32 arg, UNUSED s32 unused) {
-    u8 stars = save_file_get_star_flags(gCurrSaveFileNum - 1, gCurrCourseNum - 1);
+    //u8 stars = save_file_get_star_flags(gCurrSaveFileNum - 1, gCurrCourseNum - 1);
 
     sLoadedActNum = 0;
     sInitSelectedActNum = 0;
     sVisibleStars = 0;
     sActSelectorMenuTimer = 0;
-    sObtainedStars = save_file_get_course_star_count(gCurrSaveFileNum - 1, gCurrCourseNum - 1);
+    sObtainedStars = 0; //save_file_get_course_star_count(gCurrSaveFileNum - 1, gCurrCourseNum - 1);
+    generate_star_select(currCourse);
+    gCurrCourseNumOld = gCurrCourseNum;
+    gCurrCourseNum = currCourse[sSelectedActIndex];
+    if (updateCur){
+        updateCur = 0;
+        gCurrCourseNumOld = gLevelToCourseNumTable[gCurrLevelNum]; //gCurrCourseNum;
+    }
 
     // Don't count 100 coin star
     if (stars & (1 << 6)) {
@@ -426,16 +437,23 @@ s32 lvl_update_obj_and_load_act_button_actions(UNUSED s32 arg, UNUSED s32 unused
 #else
             play_sound(SOUND_MENU_STAR_SOUND_LETS_A_GO, gDefaultSoundArgs);
 #endif
-            if (sInitSelectedActNum >= sSelectedActIndex + 1) {
+            if (sInitSelectedActNum > sSelectedActIndex) {
                 sLoadedActNum = sSelectedActIndex + 1;
             } else {
                 sLoadedActNum = sInitSelectedActNum;
             }
+
+            gCurrLevelNum= gCourseNumToLevelTable[currCourse[sSelectedActIndex]];
             gDialogCourseActNum = sSelectedActIndex + 1;
         }
+    }
+    if (gCurrCourseNum != 0) {
+        gCurrCourseNum = currCourse[sSelectedActIndex];
     }
 
     area_update_objects();
     sActSelectorMenuTimer++;
+    //helpme2 = gCurrLevelNum & 0x00FFFFFF;
+    //helpme = sSelectedActIndex;
     return sLoadedActNum;
 }

@@ -8,4 +8,7 @@
 
 
 void generate_enemy( LevelScript *array, u32 *start_index, const s16 x, const s16 y, const s16 z, const s16 roll, const s16 pitch, const s16 yaw);
+
+
+void generate_star_select(s16 * currCourse);
 #endif

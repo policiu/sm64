@@ -93,7 +93,7 @@ static u16 rand_int(){
  * Behavior Genration
  */
 
-static u32 gen_no_behavior(UNUSED BehaviorScript * beh ){
+static u32 gen_no_behavior(UNUSED const BehaviorScript * beh ){
     return 0x00000000;
 }
 
@@ -112,12 +112,12 @@ static u32 gen_bobomb_behavior(UNUSED const BehaviorScript * beh){
 
 }
 
-static u32 gen_fly_guy_behavior(UNUSED BehaviorScript * beh) {
+static u32 gen_fly_guy_behavior(UNUSED const BehaviorScript * beh) {
     // Fly Guy Behavior Information
     // can Fire - 2nd Byte
     return ( (rand_int() % 2) <<16);
 }
-static u32 gen_goomba_behavior(UNUSED BehaviorScript * beh){
+static u32 gen_goomba_behavior(UNUSED const BehaviorScript * beh){
     // Goomba Behavior Information
     // Size = 0x000x0000 (2nd Byte)
     // Anything else?
@@ -126,7 +126,7 @@ static u32 gen_goomba_behavior(UNUSED BehaviorScript * beh){
     return bhv | ((rand_int() % 3) << 16);
 }
 
-static u32 gen_koopa_behavior(UNUSED BehaviorScript * beh) {
+static u32 gen_koopa_behavior(UNUSED const BehaviorScript * beh) {
     // Koopa Behavior Information
     // type 2nd Byte
     // 00 - Unshelled
@@ -140,18 +140,23 @@ static u32 gen_koopa_behavior(UNUSED BehaviorScript * beh) {
 
 }
 
-static u32 gen_mr_blizzard_behavior(UNUSED BehaviorScript * beh) {
+static u32 gen_mr_blizzard_behavior(UNUSED const BehaviorScript * beh) {
     // Mr Blizzard Information
     // Movement type
     return ((rand_int() %2) << 16);
 }
 
-static u32 gen_thwomp_behavior(UNUSED BehaviorScript * beh) {
+static u32 gen_mr_i_behavior(UNUSED const BehaviorScript * beh) {
+
+   return 0x00010000;
+}
+
+static u32 gen_thwomp_behavior(UNUSED const BehaviorScript * beh) {
     // Thwomp_behavior
     // Random height increase??
     return (( rand_int() % (0xFF - 39)) << 16);
 }
-static void  * rng_EnemeyBehFunc[] ={
+static u32 (*rng_EnemeyBehFunc[])(const BehaviorScript *) ={
     gen_amp_behavior,
     gen_bobomb_behavior,
     gen_no_behavior, // Boo unknown what behaviors do, figureout!
@@ -160,9 +165,9 @@ static void  * rng_EnemeyBehFunc[] ={
     gen_no_behavior, // Bully - Big spawns star no matter what, TODO: make logic for non star bully
     gen_no_behavior, // bhvHauntedChair,
     gen_no_behavior,//bhvBubba,
-    gen_no_behavior, // bhvChuckya, // here!
-    gen_no_behavior, // bhvClamShell,
-    gen_fly_guy_behavior, // bhvFlyGuy, // here
+    gen_no_behavior, // bhvChuckya
+    gen_no_behavior, // Clam Shell,
+    gen_fly_guy_behavior, // Fly Guy
     //bhvFwoosh, // fix 11
     gen_goomba_behavior, // bhvGoomba,
     gen_no_behavior, // bhvHeaveHo,
@@ -174,7 +179,7 @@ static void  * rng_EnemeyBehFunc[] ={
     gen_no_behavior, // bhvMadPiano, // 18
     gen_no_behavior, // bhvMoneybagHidden,
     gen_mr_blizzard_behavior,// bhvMrBlizzard,
-    gen_no_behavior, // MrI - 2nd Byte creates large eye and spawns star on death, TODO: make logic for a different star to spawn
+    gen_mr_i_behavior, // MrI - 2nd Byte creates large eye and spawns star on death, TODO: make logic for a different star to spawn
     gen_no_behavior, // bhvScuttlebug,
     gen_no_behavior, // bhvSkeeter,
     gen_no_behavior, // bhvPiranhaPlant,
@@ -196,14 +201,26 @@ void generate_enemy( LevelScript *array, u32 * start_index, const s16 x, const s
     u16 selection = MODEL_NONE;
     u32 bhvParam = 0x00000000;
     const BehaviorScript *bhv;
-    int getEnemy = rand_int() % 29;
+    int getEnemy = 20; //rand_int() % 29;
 
     selection = rng_modelsEnemy[getEnemy];
-    bhvParam = rng_EnemeyBehFunc[getEnemy];//gen_goomba_behavior();
     bhv = rng_bhvEnemy[getEnemy];
     helpme2 = selection;
+    bhvParam = rng_EnemeyBehFunc[getEnemy](bhv);//gen_goomba_behavior();
     helpme = 0;
     OBJECT_ASSIGNMENT(array, (*start_index),/*model*/ selection, /*pos*/ x,y,z, /*angle*/ roll,pitch,yaw, /*behParam*/ bhvParam, /*beh*/ bhv);
 
 }
 void generate_friendly(  );
+
+
+void generate_star_select(s16 * currCourse) {
+   // size = 6
+   u8 i = 0;
+   for (i =0; i < 6; i++){
+      currCourse[i] = (rand_int() % 15) + 1;
+   }
+
+   //currCourse[0] = 2;
+   //currCourse[5] = 1;
+}

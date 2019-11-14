@@ -119,6 +119,7 @@ extern struct GraphNode *D_8033A160[];
 extern struct Area gAreaData[];
 extern struct WarpTransition gWarpTransition;
 extern s16 gCurrCourseNum;
+extern s16 gCurrCourseNumOld;
 extern s16 gCurrActNum;
 extern s16 gCurrAreaIndex;
 extern s16 gSavedCourseNum;

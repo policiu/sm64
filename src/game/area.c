@@ -27,6 +27,7 @@ struct Area gAreaData[8];
 struct WarpTransition gWarpTransition;
 
 s16 gCurrCourseNum;
+s16 gCurrCourseNumOld;
 s16 gCurrActNum;
 s16 gCurrAreaIndex;
 s16 gSavedCourseNum;

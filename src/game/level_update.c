@@ -38,17 +38,6 @@
 #define WARP_TYPE_CHANGE_LEVEL 1
 #define WARP_TYPE_CHANGE_AREA 2
 #define WARP_TYPE_SAME_AREA 3
-
-#define WARP_NODE_F0 0xF0
-#define WARP_NODE_DEATH 0xF1
-#define WARP_NODE_F2 0xF2
-#define WARP_NODE_WARP_FLOOR 0xF3
-#define WARP_NODE_CREDITS_START 0xF8
-#define WARP_NODE_CREDITS_NEXT 0xF9
-#define WARP_NODE_CREDITS_END 0xFA
-
-#define WARP_NODE_CREDITS_MIN 0xF8
-
 #ifdef VERSION_JP
 const char *credits01[] = { "1GAME DIRECTOR", "SHIGERU MIYAMOTO" };
 const char *credits02[] = { "2ASSISTANT DIRECTORS", "YOSHIAKI KOIZUMI", "TAKASHI TEZUKA" };
@@ -689,7 +678,7 @@ void initiate_painting_warp(void) {
         }
     }
 }
-
+static s32 currWarpOp;
 /**
  * If there is not already a delayed warp, schedule one. The source node is
  * based on the warp operation and sometimes mario's used object.
@@ -702,7 +691,7 @@ s16 level_trigger_warp(struct MarioState *m, s32 warpOp) {
         m->invincTimer = -1;
         sDelayedWarpArg = 0;
         sDelayedWarpOp = warpOp;
-
+        currWarpOp = warpOp;
         switch (warpOp) {
             case WARP_OP_DEMO_NEXT:
             case WARP_OP_DEMO_END:
@@ -813,6 +802,17 @@ s16 level_trigger_warp(struct MarioState *m, s32 warpOp) {
     return sDelayedWarpTimer;
 }
 
+static void level_update_warp_node_dest_area(struct ObjectWarpNode * warpNode){
+    // TODO: Figure out vcutm output location
+    helpme4 = currWarpOp;
+    helpme3 = warpNode->node.destLevel;
+
+    if ( (currWarpOp != WARP_OP_DEATH && currWarpOp != WARP_OP_WARP_FLOOR) || gCurrCourseNumOld == COURSE_NONE || gCurrCourseNumOld == COURSE_CAKE_END || warpNode->node.destLevel != LEVEL_CASTLE)
+        return;
+    warpNode->node.destNode= gCourseNumToDeathWarpTable[gCurrCourseNumOld][0];
+    warpNode->node.destArea= gCourseNumToDeathWarpTable[gCurrCourseNumOld][1];
+}
+
 /**
  * If a delayed warp is ready, initiate it.
  */
@@ -870,7 +870,8 @@ void initiate_delayed_warp(void) {
 
                 default:
                     warpNode = area_get_warp_node(sSourceWarpNodeId);
-
+                    // Update Warp Node
+                    level_update_warp_node_dest_area(warpNode);
                     initiate_warp(warpNode->node.destLevel & 0x7F, warpNode->node.destArea,
                                   warpNode->node.destNode, sDelayedWarpArg);
 
@@ -1192,10 +1193,10 @@ s32 init_level(void) {
                 set_mario_action(gMarioState, ACT_IDLE, 0);
             } else if (gDebugLevelSelect == 0) {
                 if (gMarioState->action != ACT_UNINITIALIZED) {
-                    if (!save_file_exists(gCurrSaveFileNum - 1)) {
+                    if (1) { //!save_file_exists(gCurrSaveFileNum - 1)) {
                         set_mario_action(gMarioState, ACT_IDLE, 0);
                     } else {
-                        set_mario_action(gMarioState, ACT_INTRO_CUTSCENE, 0);
+                        set_mario_action(gMarioState, ACT_IDLE, 0); //ACT_INTRO_CUTSCENE, 0);
                         val4 = 1;
                     }
                 }

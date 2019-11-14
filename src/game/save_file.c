@@ -35,6 +35,98 @@ u8 gSpecialTripleJump = 0;
 #define STUB_LEVEL(_0, _1, courseenum, _3, _4, _5, _6, _7, _8) courseenum,
 #define DEFINE_LEVEL(_0, _1, courseenum, _3, _4, _5, _6, _7, _8, _9, _10) courseenum,
 
+
+s8 gCourseNumToDeathWarpTable [][2] = {
+    {0x00, 0x00},
+    {0x64, 0x01},    // (1)  Bob Omb Battlefield
+    {0x66, 0x01},                         // (2)  Whomp's Fortress
+    {0x67, 0x01},                        // (3)  Jolly Rodger's Bay
+    {0x65, 0x01},                        // (4)  Cool Cool Mountain
+    {0x0B, 0x01},                        // (5)  Big Boo's Haunt
+    {0x66, 0x03},                        // (6)  Hazy Maze Cave
+    {0x64, 0x03},                        // (7)  Lethal Lava Land
+    {0x65, 0x03},                        // (8)  Shifting Sand Land
+    {0x67, 0x03},                        // (9)  Dire Dire Docks
+    {0x68, 0x02},                         // (10) Snowman's Land
+    {0x64, 0x02},                        // (11) Wet Dry World
+    {0x66, 0x02},                        // (12) Tall Tall Mountain
+    {0x65, 0x02},                        // (13) Tiny Huge Island
+    {0x67, 0x02},                        // (14) Tick Tock Clock
+    {0x6C, 0x02},                         // (15) Rainbow Ride
+    /* -------------- Bonus Courses -------------- */
+    {0x25, 0x01},                      // (16) Bowser in the Dark World
+    {0x68, 0x03},                      // (17) Bowser in the Fire Sea
+    {0x02, 0x68},                       // (18) Bowser in the Sky
+    {0x23, 0x01},                        // (19) Princess's Secret Slide
+    {0x66, 0x03}, // (20) Cavern of the Metal Cap
+    {0x23, 0x01},                      // (21) Tower of the Wing Cap
+    {0x06, 0x01},                      // (22) Vanish Cap Under the Moat
+    {0x6D, 0x02},                      // Outside! (23) Winged Mario over the Rainbow
+    {0x28, 0x01},                         // (24) Secret Aquarium
+    {0x00, 0x01},                   // (25) The End (Cake Scene)
+};
+
+s8 gLevelToDeathWarpTable [][2] = {
+    {0x00, 0x00},                       // None
+    {0x64, 0x01},    // (1)  Bob Omb Battlefield
+    {0x66, 0x01},                         // (2)  Whomp's Fortress
+    {0x67, 0x01},                        // (3)  Jolly Rodger's Bay
+    {0x65, 0x01},                        // (4)  Cool Cool Mountain
+    {0x0B, 0x01},                        // (5)  Big Boo's Haunt
+    {0x66, 0x03},                        // (6)  Hazy Maze Cave
+    {0x64, 0x03},                        // (7)  Lethal Lava Land
+    {0x65, 0x03},                        // (8)  Shifting Sand Land
+    {0x67, 0x03},                        // (9)  Dire Dire Docks
+    {0x68, 0x02},                         // (10) Snowman's Land
+    {0x64, 0x02},                        // (11) Wet Dry World
+    {0x66, 0x02},                        // (12) Tall Tall Mountain
+    {0x65, 0x02},                        // (13) Tiny Huge Island
+    {0x67, 0x02},                        // (14) Tick Tock Clock
+    {0x6C, 0x02},                         // (15) Rainbow Ride
+    /* -------------- Bonus Courses -------------- */
+    {0x25, 0x01},                      // (16) Bowser in the Dark World
+    {0x68, 0x03},                      // (17) Bowser in the Fire Sea
+    {0x02, 0x68},                       // (18) Bowser in the Sky
+    {0x23, 0x01},                        // (19) Princess's Secret Slide
+    {0x66, 0x03}, // (20) Cavern of the Metal Cap
+    {0x23, 0x01},                      // (21) Tower of the Wing Cap
+    {0x06, 0x01},                      // (22) Vanish Cap Under the Moat
+    {0x6D, 0x02},                      // Outside! (23) Winged Mario over the Rainbow
+    {0x28, 0x01},                         // (24) Secret Aquarium
+    {0x00, 0x01},                   // (25) The End (Cake Scene)
+};
+
+
+s8 gCourseNumToLevelTable[] = {
+    LEVEL_NONE,         // COURSE_NONE
+    LEVEL_BOB,          // COURSE_BOB
+    LEVEL_WF,
+    LEVEL_JRB,
+    LEVEL_CCM,
+    LEVEL_BBH,
+    LEVEL_HMC,
+    LEVEL_LLL,
+    LEVEL_SSL,
+    LEVEL_DDD,
+    LEVEL_SL,
+    LEVEL_WDW,
+    LEVEL_TTM,
+    LEVEL_THI,
+    LEVEL_TTC,
+    LEVEL_RR,
+    LEVEL_BITDW,
+    LEVEL_BITS,
+    LEVEL_PSS,
+    LEVEL_COTMC,
+    LEVEL_TOTWC,
+    LEVEL_VCUTM,
+    LEVEL_WMOTR,
+    LEVEL_SA,
+    LEVEL_ENDING,
+
+
+};
+
 s8 gLevelToCourseNumTable[] = {
     #include "levels/level_defines.h"
 };

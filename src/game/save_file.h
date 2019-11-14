@@ -81,7 +81,8 @@ extern u8 gGotFileCoinHiScore;
 extern u8 gCurrCourseStarFlags;
 extern u8 gSpecialTripleJump;
 extern s8 gLevelToCourseNumTable[];
-
+extern s8 gCourseNumToLevelTable[];
+extern s8 gCourseNumToDeathWarpTable[][2];
 // game progress flags
 #define SAVE_FLAG_FILE_EXISTS            /* 0x000001 */ (1 << 0)
 #define SAVE_FLAG_HAVE_WING_CAP          /* 0x000002 */ (1 << 1)

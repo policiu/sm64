@@ -633,8 +633,8 @@ void thread5_game_loop(UNUSED void *arg) {
         print_text_fmt_int(20,40, "x: %x", helpme2);
         print_text_fmt_int(20,60, "y: %x", helpme3);
         print_text_fmt_int(20,80, "z: %x", helpme4);
-        print_text_fmt_int(20,100, "start: %x", (int)_common0_geoSegmentRomStart & 0x00FFFFFF);
-        print_text_fmt_int(20,120, "end: %x", (int)_common0_geoSegmentRomEnd & 0x00FFFFFF);
+        print_text_fmt_int(20,100, "Curr: %x", gCurrCourseNum & 0x00FFFFFF);//(int)_common0_geoSegmentRomStart & 0x00FFFFFF);
+        print_text_fmt_int(20,120, "Old: %x", gCurrCourseNumOld & 0x00FFFFFF); //(int)_common0_geoSegmentRomEnd & 0x00FFFFFF);
         display_and_vsync();
 
         // when debug info is enabled, print the "BUF %d" information.
