@@ -181,6 +181,28 @@
 #define TEXT_NO _("NO")
 #define TEXT_FILE_MARIO_A_JUST_ERASED _("MARIO A JUST ERASED")
 
+// Random Menu
+#define TEXT_RANDOM_SETTINGS _("RANDOM SETTINGS")
+#define TEXT_INSERT_SEED _("ENTER SEED")
+#define TEXT_RANDOM_CLEAR _("CLEAR")
+#define TEXT_RANDOM_ACCEPT _("ACCEPT")
+#define TEXT_NUM_0 _("0")
+#define TEXT_NUM_1 _("1")
+#define TEXT_NUM_2 _("2")
+#define TEXT_NUM_3 _("3")
+#define TEXT_NUM_4 _("4")
+#define TEXT_NUM_5 _("5")
+#define TEXT_NUM_6 _("6")
+#define TEXT_NUM_7 _("7")
+#define TEXT_NUM_8 _("8")
+#define TEXT_NUM_9 _("9")
+#define TEXT_NUM_10 _("A")
+#define TEXT_NUM_11 _("B")
+#define TEXT_NUM_12 _("C")
+#define TEXT_NUM_13 _("D")
+#define TEXT_NUM_14 _("E")
+#define TEXT_NUM_15 _("F")
+#define PLS_WORD _("0x001")
 /**
  * Menus Text (Pause, Course Completed)
  */

@@ -11,6 +11,7 @@
 #include "level_table.h"
 #include "course_table.h"
 #include "thread6.h"
+#include "./engine/randomizer.h"
 
 #define MENU_DATA_MAGIC 0x4849
 #define SAVE_FILE_MAGIC 0x4441
@@ -440,6 +441,7 @@ void save_file_reload(void) {
 
     gMainMenuDataModified = FALSE;
     gSaveFileModified = FALSE;
+    gRandomSeedCurrent= 0;
 }
 
 /**
@@ -457,7 +459,8 @@ void save_file_collect_star_or_key(s16 coinScore, s16 starIndex) {
     gLastCompletedStarNum = starIndex + 1;
     sUnusedGotGlobalCoinHiScore = 0;
     gGotFileCoinHiScore = 0;
-
+    gSaveBuffer.files[fileIndex][0].gRandomSeed = gRandomSeed;
+    gSaveFileModified = TRUE;
     if (courseIndex >= 0 && courseIndex < COURSE_STAGES_COUNT) {
         //! Compares the coin score as a 16 bit value, but only writes the 8 bit
         // truncation. This can allow a high score to decrease.
@@ -572,6 +575,14 @@ u32 save_file_get_flags(void) {
     }
     return gSaveBuffer.files[gCurrSaveFileNum - 1][0].flags;
 }
+
+u32 save_file_get_random_seed(void) {
+    if (gCurrCreditsEntry != 0 || gCurrDemoInput != NULL) {
+        return 0;
+    }
+    return gSaveBuffer.files[gCurrSaveFileNum - 1][0].gRandomSeed;
+}
+
 
 /**
  * Return the bitset of obtained stars in the specified course.

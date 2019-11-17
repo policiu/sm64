@@ -18,6 +18,7 @@
 #include "behavior_data.h"
 #include "text_strings.h"
 #include "file_select.h"
+#include "../engine/randomizer.h"
 #include "dialog_ids.h"
 
 #include "eu_translation.h"
@@ -51,9 +52,9 @@ static s16 sSoundTextY;
         #define NUM_BUTTONS 34
     #endif
 #else
-#define NUM_BUTTONS 32
+#define NUM_BUTTONS 32 + 3
 #endif
-
+// 35
 // Amount of main menu buttons defined in the code called by spawn_object_rel_with_rot.
 // See file_select.h for the names in MenuButtonTypes.
 static struct Object *sMainMenuButtons[NUM_BUTTONS];
@@ -70,6 +71,7 @@ static s16 sSoundTextY;
 // sYesNoColor[0]: YES | sYesNoColor[1]: NO
 static u8 sYesNoColor[2];
 
+static u8 sSeedNumColor[16];
 // Unused variable that is written to define centered X value for some strings.
 #ifdef VERSION_EU
 static s16 sCenteredX;
@@ -125,6 +127,9 @@ static s8 sLanguageMode = LANGUAGE_ENGLISH;
 
 // Tracks which button will be pressed in the erase confirmation prompt (yes/no).
 static s8 sEraseYesNoHoverState = MENU_ERASE_HOVER_NONE;
+
+// Tracks which button will be pressed in the seed creation prompt
+static s8 sRandomSeedHoverState = MENU_RANDOM_HOVER_NONE;
 
 // Used for the copy menu, defines if the game as all 4 save slots with data.
 // if TRUE, it doesn't allow copying more files.
@@ -268,6 +273,14 @@ static unsigned char textNo[] = { TEXT_NO };
 static unsigned char textNo[][5] = {{ TEXT_NO }, { TEXT_NO_FR }, { TEXT_NO_DE }};
 #endif
 
+static unsigned char textInsertSeed[] = { TEXT_INSERT_SEED };
+static unsigned char textSeedNums[][2] = { { TEXT_NUM_0 },  { TEXT_NUM_1 }, { TEXT_NUM_2 },
+        { TEXT_NUM_3 }, { TEXT_NUM_4 }, { TEXT_NUM_5 }, { TEXT_NUM_6 }, { TEXT_NUM_7 },
+        { TEXT_NUM_8 }, { TEXT_NUM_9 }, { TEXT_NUM_10 }, { TEXT_NUM_11 }, { TEXT_NUM_12 },
+        { TEXT_NUM_13 }, { TEXT_NUM_14 }, { TEXT_NUM_15 } };
+static unsigned char textRandomSettings[] = { TEXT_RANDOM_SETTINGS };
+static unsigned char textRandomClear[] = { TEXT_RANDOM_CLEAR };
+static unsigned char textRandomAccept[] = { TEXT_RANDOM_ACCEPT };
 #ifdef VERSION_EU
 // In EU, Erase File and Sound Select strings are outside it's print string function
 static unsigned char textEraseFile[][17] = {
@@ -302,7 +315,6 @@ static unsigned char textNew[][5] = {{ TEXT_NEW }, { TEXT_NEW_FR }, { TEXT_NEW_D
 static unsigned char starIcon[] = { GLYPH_STAR, GLYPH_SPACE };
 static unsigned char xIcon[] = { GLYPH_MULTIPLY, GLYPH_SPACE };
 #endif
-
 /**
  * Yellow Background Menu Initial Action
  * Rotates the background at 180 grades and it's scale.
@@ -863,6 +875,176 @@ void check_copy_menu_clicked_buttons(struct Object *copyButton) {
     }
 }
 
+
+static void load_main_menu_save_file(struct Object *fileButton, s32 fileNum);
+/**
+ * In the score menu, checks if a button was clicked to play a sound, button state and other functions.
+ */
+static void check_random_menu_clicked_buttons(struct Object *scoreButton) {
+    if (scoreButton->oMenuButtonState == MENU_BUTTON_STATE_FULLSCREEN) {
+        s32 buttonID;
+        // Configure score menu button group
+        for (buttonID = MENU_BUTTON_RANDOM_MIN; buttonID < MENU_BUTTON_RANDOM_MAX; buttonID++) {
+            s16 buttonX;
+            s16 buttonY;
+            buttonX = sMainMenuButtons[buttonID]->oPosX;
+            buttonY = sMainMenuButtons[buttonID]->oPosY;
+            if (check_clicked_button(buttonX, buttonY, 22.0f) == TRUE && sMainMenuTimer >= 31) {
+                // If menu button clicked, select it
+                if (buttonID == MENU_BUTTON_RANDOM_CLEAR) {
+                    play_sound(SOUND_MENU_CLICK_FILE_SELECT, gDefaultSoundArgs);
+                    sMainMenuButtons[buttonID]->oMenuButtonState =
+                        MENU_BUTTON_STATE_ZOOM_IN_OUT;
+                    if (sMainMenuTimer >= 31) {
+                        sFadeOutText = TRUE;
+                        sMainMenuTimer = 0;
+                    }
+                    gRandomSeed = 0;
+                }
+                else if (buttonID == MENU_BUTTON_RANDOM_ACCEPT){
+                    play_sound(SOUND_MENU_CLICK_FILE_SELECT, gDefaultSoundArgs);
+                        sMainMenuButtons[buttonID]->oMenuButtonState =
+                        MENU_BUTTON_STATE_GROWING;
+                    sSelectedButtonID = buttonID;
+                }
+               else {
+                    // If clicked in a non-existing save file, play buzz sound
+                    play_sound(SOUND_MENU_CAMERA_BUZZ, gDefaultSoundArgs);
+                    sMainMenuButtons[buttonID]->oMenuButtonState =
+                        MENU_BUTTON_STATE_ZOOM_IN_OUT;
+                    if (sMainMenuTimer >= 31) {
+                        sFadeOutText = TRUE;
+                        sMainMenuTimer = 0;
+                    }
+                }
+                sCurrentMenuLevel = MENU_LAYER_SUBMENU;
+                break;
+            }
+        }
+    }
+}
+
+#ifdef VERSION_JP
+#define CURSOR_X 160.0f
+#define MENU_ERASE_YES_MIN_X 0x91
+#define MENU_ERASE_YES_MAX_X 0xA4
+#else
+#define CURSOR_X (x + 0x46)
+#define MENU_ERASE_YES_MIN_X 0x8C
+#define MENU_ERASE_YES_MAX_X 0xA9
+#endif
+
+#define MENU_RANDOM_SEED_ROW_1_MAX_Y 115
+#define MENU_RANDOM_SEED_ROW_1_MID_Y 100
+#define MENU_RANDOM_SEED_ROW_1_MIN_Y 85
+
+#define MENU_RANDOM_SEED_ROW_2_MAX_Y 75
+#define MENU_RANDOM_SEED_ROW_2_MID_Y 60
+#define MENU_RANDOM_SEED_ROW_2_MIN_Y 45
+
+#define MENI_RANDOM_SEED_COLUMN_MAX_DIFF 10
+static s32 sRandomMenuSeedMidX[] = { 50, 80, 110, 140, 170, 200, 230, 260, 290  };
+
+
+
+/**
+ * Prints the "0-F" prompt and checks if one of the prompts are hovered to do it's functions.
+ */
+static void print_random_menu_prompt(s16 x, s16 y) {
+    u16 i = 0;
+    s16 colorFade = gGlobalTimer << 12;
+
+    s16 cursorX = sCursorPos[0] + CURSOR_X*2 + 15;
+    s16 cursorY = sCursorPos[1] + 120.0f;
+    for (i =0 ; i < 8; i++) {
+        sSeedNumColor[ i ] = 150;
+        sSeedNumColor[i+8] = 150;
+        if (sRandomMenuSeedMidX[i] - 15  <= cursorX && cursorX < sRandomMenuSeedMidX[i] + 15 &&
+            MENU_RANDOM_SEED_ROW_1_MAX_Y >= cursorY && cursorY >= MENU_RANDOM_SEED_ROW_1_MIN_Y ) {
+            // Fade "YES" string color but keep "NO" gray
+            sSeedNumColor[i] = sins(colorFade) * 50.0f + 205.0f;
+            sRandomSeedHoverState = i;
+        } else if (sRandomMenuSeedMidX[i] - 15  <= cursorX && cursorX < sRandomMenuSeedMidX[i] + 15 &&
+            MENU_RANDOM_SEED_ROW_2_MAX_Y >= cursorY && cursorY >= MENU_RANDOM_SEED_ROW_2_MIN_Y ) {
+            // Fade "NO" string color but keep "YES" gray
+            sSeedNumColor[i+8] = sins(colorFade) * 50.0f + 205.0f;
+            sRandomSeedHoverState = i+8;
+        } else {
+            // Don't fade both strings and keep them gray
+            sRandomSeedHoverState = MENU_RANDOM_HOVER_NONE;
+        }
+
+        // If the cursor is clicked...
+        if (sCursorClickingTimer == 2) {
+            // ..and is hovering "YES", delete file
+            if (sRandomSeedHoverState != MENU_RANDOM_HOVER_NONE){
+                gRandomSeed = ((gRandomSeed&0x0FFFFFFF) << 4) | sRandomSeedHoverState;
+                sRandomSeedHoverState = MENU_RANDOM_HOVER_NONE;
+                sMainMenuTimer = 0;
+                sCursorClickingTimer = 0;
+             }
+        }
+
+/*
+
+            if (sEraseYesNoHoverState == MENU_ERASE_HOVER_YES) {
+                play_sound(SOUND_MARIO_WAAAOOOW, gDefaultSoundArgs);
+                //sMainMenuButtons[MENU_BUTTON_ERASE]->oMenuButtonActionPhase = ERASE_PHASE_MARIO_ERASED;
+                //sFadeOutText = TRUE;
+                sMainMenuTimer = 0;
+                //save_file_erase(sSelectedFileIndex);
+                //sMainMenuButtons[MENU_BUTTON_ERASE_MIN + sSelectedFileIndex]->header.gfx.sharedChild =
+                //    gLoadedGraphNodes[MODEL_MAIN_MENU_MARIO_NEW_BUTTON_FADE];
+               // sMainMenuButtons[sSelectedFileIndex]->header.gfx.sharedChild =
+                //    gLoadedGraphNodes[MODEL_MAIN_MENU_MARIO_NEW_BUTTON_FADE];
+                //sEraseYesNoHoverState = MENU_ERASE_HOVER_NONE;
+                // ..and is hovering "NO", return back to main phase
+            } else if (sEraseYesNoHoverState == MENU_ERASE_HOVER_NO) {
+                play_sound(SOUND_MENU_CLICK_FILE_SELECT, gDefaultSoundArgs);
+               // sMainMenuButtons[MENU_BUTTON_ERASE_MIN + sSelectedFileIndex]->oMenuButtonState =
+               //     MENU_BUTTON_STATE_ZOOM_OUT;
+               // sMainMenuButtons[MENU_BUTTON_ERASE]->oMenuButtonActionPhase = ERASE_PHASE_MAIN;
+               // sFadeOutText = TRUE;
+               // sMainMenuTimer = 0;
+               // sEraseYesNoHoverState = MENU_ERASE_HOVER_NONE;
+            }
+        }
+*/
+    }
+    // Print Nums strings
+    gSPDisplayList(gDisplayListHead++, dl_ia_text_begin);
+    for ( i =0; i <8; i++) {
+        gDPSetEnvColor(gDisplayListHead++, sSeedNumColor[i], sSeedNumColor[i], sSeedNumColor[i], sTextBaseAlpha);
+        print_generic_string(sRandomMenuSeedMidX[i], MENU_RANDOM_SEED_ROW_1_MID_Y, textSeedNums[i]);
+
+        gDPSetEnvColor(gDisplayListHead++, sSeedNumColor[i+8], sSeedNumColor[i+8], sSeedNumColor[i+8], sTextBaseAlpha);
+        print_generic_string(sRandomMenuSeedMidX[i], MENU_RANDOM_SEED_ROW_2_MID_Y, textSeedNums[i+8]);
+    }
+
+    //gDPSetEnvColor(gDisplayListHead++, sYesNoColor[1], sYesNoColor[1], sYesNoColor[1], sTextBaseAlpha);
+    //print_generic_string(x + 98, y, textNo);
+    gSPDisplayList(gDisplayListHead++, dl_ia_text_end);
+}
+
+
+
+
+static void render_random_menu_buttons(struct Object *scoreButton) {
+        sMainMenuButtons[MENU_BUTTON_RANDOM_CLEAR] =
+            spawn_object_rel_with_rot(scoreButton, MODEL_MAIN_MENU_RED_ERASE_BUTTON, bhvMenuButton,
+                                      711, 311, -100, 0, -0x8000, 0);
+        sMainMenuButtons[MENU_BUTTON_RANDOM_CLEAR]->oMenuButtonScale = 0.11111111f;
+
+        sMainMenuButtons[MENU_BUTTON_RANDOM_ACCEPT] =
+            spawn_object_rel_with_rot(scoreButton, MODEL_MAIN_MENU_GREEN_SCORE_BUTTON, bhvMenuButton,
+                                      -371, 311, -100, 0, -0x8000, 0);
+        sMainMenuButtons[MENU_BUTTON_RANDOM_ACCEPT]->oMenuButtonScale = 0.11111111f;
+
+}
+
+
+
+
 /**
  * Render buttons for the erase menu.
  * Also check if the save file exists to render a different Mario button.
@@ -1137,6 +1319,11 @@ void return_to_main_menu(s16 prevMenuButtonID, struct Object *sourceButton) {
     if (sMainMenuButtons[prevMenuButtonID]->oMenuButtonState == MENU_BUTTON_STATE_DEFAULT) {
         sSelectedButtonID = MENU_BUTTON_NONE;
         // Hide buttons of corresponding button menu groups
+        if (prevMenuButtonID == MENU_BUTTON_PLAY_FILE_B) {
+            for (buttonID = MENU_BUTTON_SCORE_MIN; buttonID < MENU_BUTTON_SCORE_MAX; buttonID++) {
+                mark_obj_for_deletion(sMainMenuButtons[buttonID]);
+            }
+        }
         if (prevMenuButtonID == MENU_BUTTON_SCORE) {
             for (buttonID = MENU_BUTTON_SCORE_MIN; buttonID < MENU_BUTTON_SCORE_MAX; buttonID++) {
                 mark_obj_for_deletion(sMainMenuButtons[buttonID]);
@@ -1382,20 +1569,22 @@ void check_main_menu_clicked_buttons(void) {
 
                 if (check_clicked_button(buttonX, buttonY, 200.0f) == TRUE) {
                     // If menu button clicked, select it
+                    if (buttonID == MENU_BUTTON_PLAY_FILE_B && !save_file_exists(SAVE_FILE_B)){
+                    	sMainMenuButtons[MENU_BUTTON_RANDOM_FILE_B] = spawn_object_rel_with_rot(
+                    	gCurrentObject, MODEL_MAIN_MENU_BLUE_COPY_BUTTON, bhvMenuButton,
+                             sMainMenuButtons[buttonID]->oPosX, sMainMenuButtons[buttonID]->oPosY, 0, 0, 0, 0);
+                    	sMainMenuButtons[MENU_BUTTON_RANDOM_FILE_B]->oMenuButtonScale = 1.0f;
+                    	sMainMenuButtons[MENU_BUTTON_RANDOM_FILE_B]->oMenuButtonState = MENU_BUTTON_STATE_GROWING;
+                    	sSelectedButtonID = MENU_BUTTON_RANDOM_FILE_B;
+                }
+                else{                    
                     sMainMenuButtons[buttonID]->oMenuButtonState = MENU_BUTTON_STATE_GROWING;
                     sSelectedButtonID = buttonID;
-                    break;
-                }
+		}                    
+	        break;   
             }
         }
-#ifdef VERSION_EU
-        // Open Options Menu if sOpenLangSettings is TRUE (It's TRUE when there's no saves)
-        if (sOpenLangSettings == TRUE) {
-            sMainMenuButtons[MENU_BUTTON_SOUND_MODE]->oMenuButtonState = MENU_BUTTON_STATE_GROWING;
-            sSelectedButtonID = MENU_BUTTON_SOUND_MODE;
-            sOpenLangSettings = FALSE;
-        }
-#endif
+    }
 
         // Play sound of the save file clicked
         switch (sSelectedButtonID) {
@@ -1428,6 +1617,10 @@ void check_main_menu_clicked_buttons(void) {
                 play_sound(SOUND_MENU_CAMERA_ZOOM_IN, gDefaultSoundArgs);
                 render_sound_mode_menu_buttons(sMainMenuButtons[MENU_BUTTON_SOUND_MODE]);
                 break;
+            case MENU_BUTTON_RANDOM_FILE_B:
+                play_sound(SOUND_MENU_CAMERA_ZOOM_IN, gDefaultSoundArgs);
+                render_random_menu_buttons(sMainMenuButtons[sSelectedButtonID]);
+                break;
         }
 #ifdef VERSION_EU
     }
@@ -1457,6 +1650,12 @@ void bhv_menu_button_manager_loop(void) {
             break;
         case MENU_BUTTON_PLAY_FILE_D:
             load_main_menu_save_file(sMainMenuButtons[MENU_BUTTON_PLAY_FILE_D], 4);
+            break;
+        case MENU_BUTTON_RANDOM_FILE_B:
+            check_random_menu_clicked_buttons(sMainMenuButtons[sSelectedButtonID]);
+            break;
+        case MENU_BUTTON_RANDOM_ACCEPT:
+            load_main_menu_save_file(sMainMenuButtons[sSelectedButtonID], 2);
             break;
         case MENU_BUTTON_SCORE:
             check_score_menu_clicked_buttons(sMainMenuButtons[MENU_BUTTON_SCORE]);
@@ -1954,6 +2153,55 @@ void print_score_menu_strings(void) {
     gSPDisplayList(gDisplayListHead++, dl_menu_ia8_text_end);
 #endif
 }
+/**
+ * Prints score menu strings that shows on the green background menu screen.
+ */
+static void print_random_menu_strings(void) {
+    unsigned char temp[9] = {0};
+    // Update and print the message at the top of the menu.
+    int i =0;
+    while ( i < 8 && gRandomSeed >> i*4){
+        temp[7-i] = (gRandomSeed >> i*4) & 0xF;
+        i++;
+    }
+    temp[8] = 0xFF;
+
+/*
+    if (sMainMenuTimer == 20) {
+        sFadeOutText = TRUE;
+    }
+*/
+    // Print messageID called above
+    print_hud_lut_string_fade(HUD_LUT_DIFF, 70, 30, textRandomSettings);
+    print_random_menu_prompt(0, 40);
+    print_hud_lut_string_fade(HUD_LUT_DIFF, 89, 73, temp);
+    //print_hud_lut_string_fade(HUD_LUT_DIFF, CHECK_FILE_X, 35, textCheckFile);
+    // Print file star counts
+    //gSPDisplayList(gDisplayListHead++, dl_rgba16_text_begin);
+    //gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, sTextBaseAlpha);
+    //print_save_file_star_count(SAVE_FILE_A, 90, 76);
+    //print_save_file_star_count(SAVE_FILE_B, 211, 76);
+    //print_save_file_star_count(SAVE_FILE_C, 90, 119);
+    //print_save_file_star_count(SAVE_FILE_D, 211, 119);
+    //gSPDisplayList(gDisplayListHead++, dl_rgba16_text_end);
+    // Print menu names
+    //gSPDisplayList(gDisplayListHead++, dl_ia_text_begin);
+    //gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, sTextBaseAlpha);
+    //print_generic_string(RETURN_X, 35, textReturn);
+    //print_generic_string(COPYFILE_X1, 35, textCopyFileButton);
+    //print_generic_string(ERASEFILE_X1, 35, textEraseFileButton);
+    //gSPDisplayList(gDisplayListHead++, dl_ia_text_end);
+    // Print file names
+    gSPDisplayList(gDisplayListHead++, dl_menu_ia8_text_begin);
+    gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, sTextBaseAlpha);
+    print_menu_generic_string(89, 62, textInsertSeed);
+    print_menu_generic_string(45, 95, textRandomClear);
+    print_menu_generic_string(190, 95, textRandomAccept);
+    //print_menu_generic_string(211, 105, textMarioD);
+    gSPDisplayList(gDisplayListHead++, dl_menu_ia8_text_end);
+}
+
+
 
 #if defined(VERSION_JP) || defined(VERSION_SH)
     #define NOFILE_COPY_X  90
@@ -2662,6 +2910,7 @@ void print_score_file_star_score(s8 fileIndex, s16 courseIndex, s16 x, s16 y) {
         print_score_file_star_score(fileIndex, courseIndex - 1, 171, 23 + 12 * courseIndex);                        \
         print_score_file_course_coin_score(fileIndex, courseIndex - 1, 213, 23 + 12 * courseIndex);
 #endif
+
     // Course values are indexed, from Bob-omb Battlefield to Rainbow Ride
     PRINT_COURSE_SCORES(COURSE_BOB, PADCHAR) // BOB
     PRINT_COURSE_SCORES(COURSE_WF, PADCHAR) // WF
@@ -2715,6 +2964,10 @@ static void print_file_select_strings(void) {
 
     create_dl_ortho_matrix();
     switch (sSelectedButtonID) {
+        case MENU_BUTTON_RANDOM_FILE_B:
+            print_random_menu_strings();
+            sScoreFileCoinScoreMode = 0;
+            break;
         case MENU_BUTTON_NONE:
 #ifdef VERSION_EU
             // Ultimately calls print_main_menu_strings, but prints main language strings first.

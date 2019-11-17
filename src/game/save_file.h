@@ -6,7 +6,7 @@
 
 #include "course_table.h"
 
-#define EEPROM_SIZE 0x200
+#define EEPROM_SIZE 0x210
 #define NUM_SAVE_FILES 4
 
 struct SaveBlockSignature
@@ -33,6 +33,7 @@ struct SaveFile
 
     u8 courseCoinScores[COURSE_STAGES_COUNT];
 
+    u32 gRandomSeed;
     struct SaveBlockSignature signature;
 };
 
@@ -144,6 +145,7 @@ void save_file_set_cap_pos(s16 x, s16 y, s16 z);
 s32 save_file_get_cap_pos(Vec3s capPos);
 void save_file_set_sound_mode(u16 mode);
 u16 save_file_get_sound_mode(void);
+u32 save_file_get_random_seed(void);
 void save_file_move_cap_to_default_location(void);
 
 void disable_warp_checkpoint(void);

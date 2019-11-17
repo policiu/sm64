@@ -11,6 +11,13 @@
 #include "sm64.h"
 
 #include "./game/game.h"
+
+// very random
+u32 gRandomSeed = 0x1;
+u32 gRandomSeedCurrent= 0;
+static u32 x,y=0,z,w,c;
+static u32 sRandomSeedLevels[38];
+
 static u16 rng_modelsFriendly[64] =  { MODEL_LAKITU};
 static u16 rng_modelsEnemy[] = {
                         MODEL_AMP,
@@ -84,9 +91,54 @@ static const BehaviorScript * rng_bhvEnemy[] = {
                         bhvSmallWhomp
 };
 
-static u16 rand_int(){
-    return RandomU16() + 1;
+
+
+static u32 rand_int(){
+   u32 t;
+   if (!y)
+      y = gRandomSeedCurrent;
+   // From https://en.wikipedia.org/
+   // KISS
+
+   y ^= (y<<5); y ^= (y>>7); y ^= (y<<22);
+   t = z+w+c; z = w; c = t < 0; w = t&2147483647;
+   x += 1411392427;
+   return x + y + w;
+
+   /*
+   gRandomSeedCurrent ^= gRandomSeedCurrent << 13;
+   gRandomSeedCurrent ^= gRandomSeedCurrent >> 17;
+   gRandomSeedCurrent ^= gRandomSeedCurrent << 5;
+   result = gRandomSeedCurrent & 0xFFFF0000;
+   gRandomSeedCurrent ^= gRandomSeedCurrent << 13;
+   gRandomSeedCurrent ^= gRandomSeedCurrent >> 17;
+   gRandomSeedCurrent ^= gRandomSeedCurrent << 5;
+*/
 }
+
+// seeds x y z w c
+static void rand_int_seed(u32 local_seed){
+   u32 initRand[4];
+   u16 i = 0;
+
+   for (i = 0; i< 4; i++){
+      local_seed ^= local_seed << 13;
+      local_seed ^= local_seed >> 17;
+      local_seed ^= local_seed << 5;
+      initRand[i] = local_seed;
+   }
+   x = initRand[0];
+   y = initRand[1];
+   z = initRand[2];
+   w = initRand[3];
+   c = 0;
+
+   // Cycle a bit
+   for ( i =0; i < 1000; i++)
+      rand_int();
+}
+
+
 // IDEAS
 
 /*
@@ -201,8 +253,7 @@ void generate_enemy( LevelScript *array, u32 * start_index, const s16 x, const s
     u16 selection = MODEL_NONE;
     u32 bhvParam = 0x00000000;
     const BehaviorScript *bhv;
-    int getEnemy = 20; //rand_int() % 29;
-
+    int getEnemy = rand_int() % 30;
     selection = rng_modelsEnemy[getEnemy];
     bhv = rng_bhvEnemy[getEnemy];
     helpme2 = selection;
@@ -223,4 +274,19 @@ void generate_star_select(s16 * currCourse) {
 
    //currCourse[0] = 2;
    //currCourse[5] = 1;
+}
+
+void generate_init_level( u32 level_id ){
+   rand_int_seed(sRandomSeedLevels[level_id]);
+}
+
+void generate_init(){
+   int i;
+   rand_int_seed(gRandomSeed);
+
+   for (i =0; i< 26; i++ ){
+      sRandomSeedLevels[i] = rand_int();
+   }
+
+
 }

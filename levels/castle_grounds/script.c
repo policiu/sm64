@@ -18,8 +18,6 @@
 #include "levels/castle_grounds/header.h"
 
 // Allow mass replacement
-extern u8 rng_modelsFriendly[];
-static const u32 castle_grounds_local_models[] = { MODEL_BIRDS, MODEL_1UP, MODEL_KOOPA_SHELL, };
 
 static const LevelScript script_func_local_1[] = {
     WARP_NODE(/*id*/ 0x00, /*destLevel*/ LEVEL_CASTLE, /*destArea*/ 0x01, /*destNode*/ 0x00, /*flags*/ WARP_NO_CHECKPOINT),
@@ -87,7 +85,7 @@ static s32 setup_level_scripts_local(void) {
     u32 index;
     index = 0;
     generate_enemy(script_func_local_4, &index,  -1204,  326,  3296,  0, 0, 0);
-    /*                                            // Pos                Angle
+                                                // Pos                Angle
     generate_enemy(script_func_local_4, &index,  -4508,  406,  4400,  0, 0, 0);
     generate_enemy(script_func_local_4, &index,  -4408,  406,  4500,  0, 0, 0);
     generate_enemy(script_func_local_4, &index,  -4708,  406,  4100,  0, 0, 0);
@@ -102,12 +100,13 @@ static s32 setup_level_scripts_local(void) {
     generate_enemy(script_func_local_4, &index,  -1299,  326,  3196,  0, 0, 0);
     generate_enemy(script_func_local_4, &index,  -1504,  326,  3196,  0, 0, 0);
     OBJECT_ASSIGNMENT(script_func_local_4, index, MODEL_YOSHI,          0, 3174, -5625,  0, 0, 0,  0x00000000,  bhvYoshi);
-    */
+
     script_func_local_4[index] = RETURN();
     return 1;
 }
 
 const LevelScript level_castle_grounds_entry[] = {
+    CALL(16, generate_init_level),
     CALL(0, setup_level_scripts_local),
     SLEEP(10),
     INIT_LEVEL(),
