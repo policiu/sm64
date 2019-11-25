@@ -463,8 +463,6 @@ static void level_cmd_place_object_ext(void) {
 
         spawnInfo->areaIndex = sCurrAreaIndex;
         spawnInfo->activeAreaIndex = sCurrAreaIndex;
-            helpme = CMD_GET(s16, 4); //& 0x00FFFFFF;
-        //print_text_fmt_int(20,20, "Test: %d", CMD_GET(s16,8));
         spawnInfo->behaviorArg = CMD_GET(u32, 20);
         spawnInfo->behaviorScript = CMD_GET(void *, 24);
         spawnInfo->unk18 = gLoadedGraphNodes[model];

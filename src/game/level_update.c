@@ -604,7 +604,7 @@ s16 music_changed_through_warp(s16 arg) {
 void initiate_warp(s16 destLevel, s16 destArea, s16 destWarpNode, s32 arg3) {
     if (destWarpNode >= WARP_NODE_CREDITS_MIN) {
         sWarpDest.type = WARP_TYPE_CHANGE_LEVEL;
-    } else if (destLevel != gCurrLevelNum) {
+    } else if (destLevel != gCurrLevelNumOld) {
         sWarpDest.type = WARP_TYPE_CHANGE_LEVEL;
     } else if (destArea != gCurrentArea->index) {
         sWarpDest.type = WARP_TYPE_CHANGE_AREA;
@@ -805,13 +805,19 @@ s16 level_trigger_warp(struct MarioState *m, s32 warpOp) {
 
 static void level_update_warp_node_dest_area(struct ObjectWarpNode * warpNode){
     // TODO: Figure out vcutm output location
-    helpme4 = currWarpOp;
-    helpme3 = warpNode->node.destLevel;
 
-    if ( (currWarpOp != WARP_OP_DEATH && currWarpOp != WARP_OP_WARP_FLOOR) || gCurrCourseNumOld == COURSE_NONE || gCurrCourseNumOld == COURSE_CAKE_END || warpNode->node.destLevel != LEVEL_CASTLE)
+    if ( gCurrCourseNumOld == COURSE_NONE || gCurrCourseNumOld == COURSE_CAKE_END || warpNode->node.destLevel != LEVEL_CASTLE)
         return;
-    warpNode->node.destNode= gCourseNumToDeathWarpTable[gCurrCourseNumOld][0];
-    warpNode->node.destArea= gCourseNumToDeathWarpTable[gCurrCourseNumOld][1];
+    if ( currWarpOp == WARP_OP_DEATH || currWarpOp == WARP_OP_WARP_FLOOR) {
+        warpNode->node.destNode= gCourseNumToDeathWarpTable[gCurrCourseNumOld].destNode;
+        warpNode->node.destArea= gCourseNumToDeathWarpTable[gCurrCourseNumOld].destArea;
+        warpNode->node.destLevel= gCourseNumToDeathWarpTable[gCurrCourseNumOld].destLevel;
+    }
+    else if (currWarpOp == WARP_OP_STAR_EXIT){
+        warpNode->node.destNode= gCourseNumToStarWarpTable[gCurrCourseNumOld].destNode;
+        warpNode->node.destArea= gCourseNumToStarWarpTable[gCurrCourseNumOld].destArea;
+        warpNode->node.destLevel= gCourseNumToStarWarpTable[gCurrCourseNumOld].destLevel;
+    }
 }
 
 /**

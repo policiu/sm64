@@ -9,7 +9,7 @@
 #include "game/display.h"
 #include "include/config.h"
 #include "sm64.h"
-
+#include "./src/game/area.h"
 #include "./game/game.h"
 
 // very random
@@ -91,9 +91,11 @@ static const BehaviorScript * rng_bhvEnemy[] = {
                         bhvSmallWhomp
 };
 
+u16 sAllCourse[15 * 6][2];
 
 
-static u32 rand_int(){
+
+static u16 rand_int(){
    u32 t;
    if (!y)
       y = gRandomSeedCurrent;
@@ -103,7 +105,7 @@ static u32 rand_int(){
    y ^= (y<<5); y ^= (y>>7); y ^= (y<<22);
    t = z+w+c; z = w; c = t < 0; w = t&2147483647;
    x += 1411392427;
-   return x + y + w;
+   return (x + y + w) >> 16;
 
    /*
    gRandomSeedCurrent ^= gRandomSeedCurrent << 13;
@@ -265,15 +267,14 @@ void generate_enemy( LevelScript *array, u32 * start_index, const s16 x, const s
 void generate_friendly(  );
 
 
-void generate_star_select(s16 * currCourse) {
+void generate_star_select(s16 currCourse[6][2], u8 courseNum) {
    // size = 6
-   u8 i = 0;
-   for (i =0; i < 6; i++){
-      currCourse[i] = (rand_int() % 15) + 1;
+   u16 i = 0;
+   for (i =(courseNum-1)*6; i < (courseNum-1)*6 + 6; i++){
+      currCourse[i%6][0] = sAllCourse[i][0];
+      currCourse[i%6][1] = sAllCourse[i][1]; // 6 Acts
    }
 
-   //currCourse[0] = 2;
-   //currCourse[5] = 1;
 }
 
 void generate_init_level( u32 level_id ){
@@ -281,12 +282,28 @@ void generate_init_level( u32 level_id ){
 }
 
 void generate_init(){
-   int i;
+   u16 i, j;
    rand_int_seed(gRandomSeed);
 
    for (i =0; i< 26; i++ ){
       sRandomSeedLevels[i] = rand_int();
    }
-
-
+   // Setup all course select
+   for (i =0 ; i < 15; i++ ) { // Yay Magic Numbers!!!!
+      for (j=0; j < 6; j++) {
+         sAllCourse[i*6+j][0] = i+ 1;
+         sAllCourse[i*6+j][1] = j;
+      }
+   }
+   // Suffle array!!
+   for (i = 15*6 - 1; i > 0; i--) {
+      u16 t[2];
+      j = (u16) (rand_int()*(i+1)/0xFFFF);
+      t[1] = sAllCourse[j][1];
+      t[0] = sAllCourse[j][0];
+      sAllCourse[j][0] = sAllCourse[i][0];
+      sAllCourse[j][1] = sAllCourse[i][1];
+      sAllCourse[i][0] = t[0];
+      sAllCourse[i][1] = t[1];
+   }
 }

@@ -53,8 +53,11 @@ static s8 sSelectableStarIndex = 0;
 static s32 sActSelectorMenuTimer = 0;
 
 static u8 stars[7];
-static s16 currCourse[6];
+static s16 currCourse[6][2];
 static u8 updateCur;
+
+static u8 sConvBin[9] = { 0x1, 0x2, 0x4, 0x8, 0x10, 0x20, 0x40, 0x80 };
+
 /**
  * Act Selector Star Type Loop Action
  * Defines a select type for a star in the act selector.
@@ -114,7 +117,7 @@ void bhv_act_selector_init(void) {
     stars[6] = 0x0;
     sVisibleStars = 0;
     for (i=0; j != sObtainedStars; i++) { // while (i != sObtainedStars) {
-        if (stars[i] & (1 << sVisibleStars)) { // Star has been collected
+        if ((stars[i]) & sConvBin[currCourse[i][1]]) {// Star has been collected
             selectorModelIDs[sVisibleStars] = MODEL_STAR;
             j++;
         } else { // Star has not been collected
@@ -180,7 +183,7 @@ void bhv_act_selector_loop(void) {
         starIndexCounter = sSelectableStarIndex;
         for (i = 0; i < sVisibleStars; i++) {
             // Can the star be selected (is it either already completed or the first non-completed mission)
-            if ((stars[i] & (1 << i)) || i + 1 == sInitSelectedActNum) {
+            if ((stars[i] & sConvBin[currCourse[i][1]]) || i + 1 == sInitSelectedActNum) {
                 if (starIndexCounter == 0) { // We have reached the sSelectableStarIndex-th selectable star.
                     sSelectedActIndex = i;
                     break;
@@ -347,7 +350,7 @@ void print_act_selector_strings(void) {
     gDPSetEnvColor(gDisplayListHead++, 0, 0, 0, 255);
     // Print the name of the selected act.
     if (sVisibleStars != 0) {
-        selectedActName = segmented_to_virtual(actNameTbl[(currCourse[sSelectedActIndex] - 1) * 6 + sSelectedActIndex]);
+        selectedActName = segmented_to_virtual(actNameTbl[(currCourse[sSelectedActIndex][0] - 1) * 6 + currCourse[sSelectedActIndex][1]]);
 #ifdef VERSION_EU
         print_menu_generic_string(get_str_x_pos_from_center(ACT_NAME_X, selectedActName, 8.0f), 81, selectedActName);
 #elif defined(VERSION_SH)
@@ -394,28 +397,27 @@ Gfx *geo_act_selector_strings(s16 callContext, UNUSED struct GraphNode *node) {
 s32 lvl_init_act_selector_values_and_stars(UNUSED s32 arg, UNUSED s32 unused) {
     //u8 stars = save_file_get_star_flags(gCurrSaveFileNum - 1, gCurrCourseNum - 1);
 
+    int j = 0;
     sLoadedActNum = 0;
     sInitSelectedActNum = 0;
     sVisibleStars = 0;
     sActSelectorMenuTimer = 0;
     sObtainedStars = 0; //save_file_get_course_star_count(gCurrSaveFileNum - 1, gCurrCourseNum - 1);
-    generate_star_select(currCourse);
+    generate_star_select(currCourse, gCurrCourseNum);
     gCurrCourseNumOld = gCurrCourseNum;
-    gCurrCourseNum = currCourse[sSelectedActIndex];
+    gCurrCourseNum = currCourse[sSelectedActIndex][0];
     if (updateCur){
         updateCur = 0;
         gCurrCourseNumOld = gLevelToCourseNumTable[gCurrLevelNum]; //gCurrCourseNum;
     }
 
-    // Don't count 100 coin star
-    if (stars & (1 << 6)) {
-        sObtainedStars--;
+    for (j = 0;j < 6; j++){
+        stars[j] = save_file_get_star_flags(gCurrSaveFileNum - 1, currCourse[j][0] - 1);
     }
-
-    //! no return value
-#ifdef AVOID_UB
-    return 0;
-#endif
+    // Don't count 100 coin star
+    for (j =0; j < 6; j++)
+        if (stars[j] & sConvBin[currCourse[j][1]])
+            sObtainedStars++;
 }
 
 /**
@@ -438,22 +440,23 @@ s32 lvl_update_obj_and_load_act_button_actions(UNUSED s32 arg, UNUSED s32 unused
             play_sound(SOUND_MENU_STAR_SOUND_LETS_A_GO, gDefaultSoundArgs);
 #endif
             if (sInitSelectedActNum > sSelectedActIndex) {
-                sLoadedActNum = sSelectedActIndex + 1;
+                sLoadedActNum = currCourse[sSelectedActIndex][1] + 1;
             } else {
-                sLoadedActNum = sInitSelectedActNum;
+                sLoadedActNum = currCourse[sInitSelectedActNum-1][1]+1;
+
             }
 
-            gCurrLevelNum= gCourseNumToLevelTable[currCourse[sSelectedActIndex]];
-            gDialogCourseActNum = sSelectedActIndex + 1;
+            gCurrLevelNum= gCourseNumToLevelTable[currCourse[sSelectedActIndex][0]];
+            gCurrLevelNumOld = gCurrLevelNum;
+            gDialogCourseActNum = currCourse[sSelectedActIndex][1] + 1;
         }
     }
-    if (gCurrCourseNum != 0) {
-        gCurrCourseNum = currCourse[sSelectedActIndex];
-    }
+    if (gCurrCourseNum != 0)
+        gCurrCourseNum = currCourse[sSelectedActIndex][0];
 
     area_update_objects();
     sActSelectorMenuTimer++;
-    //helpme2 = gCurrLevelNum & 0x00FFFFFF;
-    //helpme = sSelectedActIndex;
+    helpme2 = gCurrLevelNum & 0x00FFFFFF;
+    helpme = sSelectedActIndex;
     return sLoadedActNum;
 }

@@ -589,7 +589,7 @@ int helpme4 = 0;
 // continues.
 void thread5_game_loop(UNUSED void *arg) {
     struct LevelCommand *addr;
-
+    //int i;
     setup_game_memory();
 #ifdef VERSION_SH
     init_rumble_pak_scheduler_queue();
@@ -630,14 +630,21 @@ void thread5_game_loop(UNUSED void *arg) {
         config_gfx_pool();
         read_controller_inputs();
         addr = level_script_execute(addr);
-/*
+        /*
         print_text_fmt_int(20,20, "Ext: %x", helpme);
         print_text_fmt_int(20,40, "x: %x", helpme2);
         print_text_fmt_int(20,60, "y: %x", helpme3);
         print_text_fmt_int(20,80, "z: %x", helpme4);
-        */
         print_text_fmt_int(20,100, "Curr: %x", gSaveBuffer.files[1][0].gRandomSeed & 0x00FFFFFF);//(int)_common0_geoSegmentRomStart & 0x00FFFFFF);
         print_text_fmt_int(20,120, "Old: %x", gSaveBuffer.files[1][1].gRandomSeed & 0x00FFFFFF); //(int)_common0_geoSegmentRomEnd & 0x00FFFFFF);
+        print_text_fmt_int(20,140, "Act: %x", gCurrActNum & 0x00FFFFFF); //(int)_common0_geoSegmentRomEnd & 0x00FFFFFF);
+        */
+/*
+        for (i =14*6; i <14*6 + 6; i++){
+            print_text_fmt_int(220, 20 + 20*(i%6), "%x", sAllCourse[i][0]);
+            print_text_fmt_int(260, 20 + 20*(i%6), "%x", sAllCourse[i][1]);
+        }
+*/
         display_and_vsync();
 
         // when debug info is enabled, print the "BUF %d" information.

@@ -67,6 +67,36 @@ s8 gCourseNumToDeathWarpTable [][2] = {
     {0x00, 0x01},                   // (25) The End (Cake Scene)
 };
 
+struct WarpCourseTable gCourseNumToStarWarpTable [] = {
+    // {destLevel, destArea, destNode}
+    {0x00, 0x00, 0x00},
+    {0x06, 0x01, 0x32},                       // (1)  Bob Omb Battlefield
+    {0x06, 0x01, 0x34},                         // (2)  Whomp's Fortress
+    {0x06, 0x01, 0x35},                        // (3)  Jolly Rodger's Bay
+    {0x06, 0x01, 0x33},                        // (4)  Cool Cool Mountain
+    {0x1A, 0x01, 0x0A},                        // (5)  Big Boo's Haunt
+    {0x06, 0x03, 0x34},                        // (6)  Hazy Maze Cave
+    {0x06, 0x03, 0x32},                        // (7)  Lethal Lava Land
+    {0x06, 0x03, 0x33},                        // (8)  Shifting Sand Land
+    {0x06, 0x03, 0x35},                        // (9)  Dire Dire Docks
+    {0x06, 0x02, 0x36},                         // (10) Snowman's Land
+    {0x06, 0x02, 0x32},                        // (11) Wet Dry World
+    {0x06, 0x02, 0x34},                        // (12) Tall Tall Mountain
+    {0x06, 0x02, 0x37},                        // (13) Tiny Huge Island
+    {0x06, 0x02, 0x35},                        // (14) Tick Tock Clock
+    {0x06, 0x02, 0x3A},                         // (15) Rainbow Ride
+    /* -------------- Bonus Courses -------------- */
+    {0x06, 0x01, 0x24},                      // (16) Bowser in the Dark World
+    {0x06, 0x03, 0x36},                      // (17) Bowser in the Fire Sea
+    {0x00, 0x00, 0x00},                       // (18) Bowser in the Sky
+    {0x06, 0x01, 0x26},                        // (19) Princess's Secret Slide
+    {0x06, 0x03, 0x34}, // (20) Cavern of the Metal Cap
+    {0x06, 0x01, 0x26},                      // (21) Tower of the Wing Cap
+    {0x10, 0x01, 0x08},                      // (22) Vanish Cap Under the Moat
+    {0x06, 0x02, 0x38},                      // Outside! (23) Winged Mario over the Rainbow
+    {0x06, 0x01, 0x27},                         // (24) Secret Aquarium
+    {0x00, 0x00, 0x00},                   // (25) The End (Cake Scene)
+};
 s8 gLevelToDeathWarpTable [][2] = {
     {0x00, 0x00},                       // None
     {0x64, 0x01},    // (1)  Bob Omb Battlefield
