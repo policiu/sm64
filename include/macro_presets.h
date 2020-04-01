@@ -13,6 +13,7 @@ struct MacroPreset
 };
 
 struct MacroPreset MacroObjectPresets[] = {
+    // beh model behParams
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},
     {bhvOneCoin, MODEL_YELLOW_COIN, 0},
     {bhvMovingBlueCoin, MODEL_BLUE_COIN, 0},

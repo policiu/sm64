@@ -202,7 +202,7 @@ static u32 gen_mr_blizzard_behavior(UNUSED const BehaviorScript * beh) {
 
 static u32 gen_mr_i_behavior(UNUSED const BehaviorScript * beh) {
 
-   return 0x00010000;
+    return 0x00000000;
 }
 
 static u32 gen_thwomp_behavior(UNUSED const BehaviorScript * beh) {
@@ -295,6 +295,7 @@ void generate_init(){
          sAllCourse[i*6+j][1] = j;
       }
    }
+   // return;
    // Suffle array!!
    for (i = 15*6 - 1; i > 0; i--) {
       u16 t[2];

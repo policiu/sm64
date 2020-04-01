@@ -4,6 +4,7 @@
 #include "object_helpers.h"
 #include "macro_special_objects.h"
 #include "object_list_processor.h"
+#include "area.h"
 
 #include "behavior_data.h"
 
@@ -103,12 +104,13 @@ struct LoadedPreset {
 #define MACRO_OBJ_Y 2
 #define MACRO_OBJ_Z 3
 #define MACRO_OBJ_PARAMS 4
+#define MACRO_OBJ_ACT 5
 
 void spawn_macro_objects(s16 areaIndex, s16 *macroObjList) {
     UNUSED u32 pad5C;
     s32 presetID;
 
-    s16 macroObject[5]; // see the 5 #define statements above
+    s16 macroObject[6]; // see the 5 #define statements above
     struct Object *newObj;
     struct LoadedPreset preset;
 
@@ -132,6 +134,12 @@ void spawn_macro_objects(s16 areaIndex, s16 *macroObjList) {
         macroObject[MACRO_OBJ_Y] = *macroObjList++;                          // Y position
         macroObject[MACRO_OBJ_Z] = *macroObjList++;                          // Z position
         macroObject[MACRO_OBJ_PARAMS] = *macroObjList++;                     // Behavior params
+        macroObject[MACRO_OBJ_ACT] = *macroObjList++;
+
+        // Skip macro if not in the correct ACT
+        if (!(macroObject[MACRO_OBJ_ACT] & 1 << (gCurrActNum - 1))) {
+            continue;
+        }
 
         // Get the preset values from the MacroObjectPresets list.
         preset.model = MacroObjectPresets[presetID].model;

@@ -442,8 +442,7 @@ s32 lvl_update_obj_and_load_act_button_actions(UNUSED s32 arg, UNUSED s32 unused
             if (sInitSelectedActNum > sSelectedActIndex) {
                 sLoadedActNum = currCourse[sSelectedActIndex][1] + 1;
             } else {
-                sLoadedActNum = currCourse[sInitSelectedActNum-1][1]+1;
-
+                sLoadedActNum = currCourse[sSelectedActIndex][1] + 1;
             }
 
             gCurrLevelNum= gCourseNumToLevelTable[currCourse[sSelectedActIndex][0]];

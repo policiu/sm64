@@ -20,7 +20,7 @@
 #include "thread6.h"
 #include <prevent_bss_reordering.h>
 #include "game.h"
-
+#include "mario.h"
 // FIXME: I'm not sure all of these variables belong in this file, but I don't
 // know of a good way to split them
 struct Controller gControllers[3];

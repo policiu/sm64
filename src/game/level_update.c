@@ -693,6 +693,7 @@ s16 level_trigger_warp(struct MarioState *m, s32 warpOp) {
         sDelayedWarpArg = 0;
         sDelayedWarpOp = warpOp;
         currWarpOp = warpOp;
+        helpme = warpOp;
         switch (warpOp) {
             case WARP_OP_DEMO_NEXT:
             case WARP_OP_DEMO_END:
@@ -806,7 +807,7 @@ s16 level_trigger_warp(struct MarioState *m, s32 warpOp) {
 static void level_update_warp_node_dest_area(struct ObjectWarpNode * warpNode){
     // TODO: Figure out vcutm output location
 
-    if ( gCurrCourseNumOld == COURSE_NONE || gCurrCourseNumOld == COURSE_CAKE_END || warpNode->node.destLevel != LEVEL_CASTLE)
+    if ( gCurrCourseNumOld == COURSE_NONE || gCurrCourseNumOld == COURSE_CAKE_END || (warpNode->node.destLevel != LEVEL_CASTLE && warpNode->node.destLevel != LEVEL_CASTLE_COURTYARD && warpNode->node.destLevel != LEVEL_CASTLE_GROUNDS))
         return;
     if ( currWarpOp == WARP_OP_DEATH || currWarpOp == WARP_OP_WARP_FLOOR) {
         warpNode->node.destNode= gCourseNumToDeathWarpTable[gCurrCourseNumOld].destNode;
@@ -818,6 +819,8 @@ static void level_update_warp_node_dest_area(struct ObjectWarpNode * warpNode){
         warpNode->node.destArea= gCourseNumToStarWarpTable[gCurrCourseNumOld].destArea;
         warpNode->node.destLevel= gCourseNumToStarWarpTable[gCurrCourseNumOld].destLevel;
     }
+
+    // gCurrLevelNumOld = warpNode->node.destLevel;
 }
 
 /**
@@ -881,7 +884,9 @@ void initiate_delayed_warp(void) {
                     level_update_warp_node_dest_area(warpNode);
                     initiate_warp(warpNode->node.destLevel & 0x7F, warpNode->node.destArea,
                                   warpNode->node.destNode, sDelayedWarpArg);
-
+                    //if (currWarpOp == WARP_OP_STAR_EXIT || currWarpOp == WARP_OP_DEATH
+                    //   || currWarpOp == WARP_OP_WARP_FLOOR)
+                    gCurrLevelNumOld = gCurrLevelNum;;
                     check_if_should_set_warp_checkpoint(&warpNode->node);
                     if (sWarpDest.type != WARP_TYPE_CHANGE_LEVEL) {
                         level_set_transition(2, NULL);
@@ -916,7 +921,7 @@ void update_hud_values(void) {
             }
         }
 
-        if (gMarioState->numLives > 1) {
+        if (gMarioState->numLives > 99) {
             gMarioState->numLives = 0;
         }
 
@@ -1275,6 +1280,7 @@ s32 lvl_init_from_save_file(UNUSED s16 arg0, s32 levelNum) {
     gShouldNotPlayCastleMusic = !save_file_exists(gCurrSaveFileNum - 1);
 
     gCurrLevelNum = levelNum;
+    gCurrLevelNumOld = levelNum;
     gCurrCourseNum = COURSE_NONE;
     gSavedCourseNum = COURSE_NONE;
     gCurrCreditsEntry = NULL;
@@ -1298,8 +1304,11 @@ s32 lvl_set_current_level(UNUSED s16 arg0, s32 levelNum) {
 
     D_8032C9E0 = 0;
     gCurrLevelNum = levelNum;
+    gCurrLevelNumOld = levelNum;
     gCurrCourseNum = gLevelToCourseNumTable[levelNum - 1];
-
+    if (gCurrCourseNum > 15 || gCurrCourseNum == 0) {
+        gCurrCourseNumOld = gLevelToCourseNumTable[levelNum - 1];
+    }
     if (gCurrDemoInput != NULL || gCurrCreditsEntry != NULL || gCurrCourseNum == COURSE_NONE) {
         return 0;
     }

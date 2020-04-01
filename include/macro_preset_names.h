@@ -342,7 +342,7 @@ enum MacroPresets {
     macro_empty_337,
     macro_empty_338,
     macro_box_star_2,
-    macro_box_star_3,
+    macro_box_star_3, // 342
     macro_box_star_4,
     macro_box_star_5,
     macro_box_star_6,
