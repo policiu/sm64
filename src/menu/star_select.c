@@ -14,6 +14,7 @@
 #include "game/object_list_processor.h"
 #include "engine/behavior_script.h"
 #include "engine/graph_node.h"
+#include "engine/randomizer.h"
 #include "behavior_data.h"
 #include "text_strings.h"
 #include "star_select.h"
@@ -307,7 +308,7 @@ void print_act_selector_strings(void) {
             levelNameTbl = segmented_to_virtual(course_name_table_eu_de);
             break;
     }
-
+#endif
     if (updateCur){
         updateCur = 0;
     }

@@ -550,6 +550,7 @@ SECTIONS
       BUILD_DIR/src/game/obj_behaviors_2.o(.rodata*);
 #ifndef VERSION_EU
       BUILD_DIR/src/game*.o(.rodata*);
+#endif
       BUILD_DIR/src/audio/synthesis.o(.rodata*);
       BUILD_DIR/src/audio/heap.o(.rodata*);
       BUILD_DIR/src/audio/load.o(.rodata*);

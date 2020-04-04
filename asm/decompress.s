@@ -148,4 +148,3 @@ glabel decompress
      nop
 .endif
 
-.include "../enhancements/crash.inc.s"

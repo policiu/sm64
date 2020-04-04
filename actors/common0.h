@@ -583,7 +583,7 @@ extern const Gfx pokey_seg5_dl_050130B0[];
 // tornado
 extern const Gfx tornado_seg5_dl_05014450[];
 extern const Gfx tornado_seg5_dl_050145C0[];
-extern const GeoLayout tornado_seg5_geo_05014630[];
+extern const GeoLayout tweester_geo[];
 
 // group 11
 // bubba

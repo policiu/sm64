@@ -1288,8 +1288,8 @@ s32 lvl_init_from_save_file(UNUSED s16 arg0, s32 levelNum) {
     if (save_file_exists(gCurrSaveFileNum - 1)) {
         gRandomSeed = save_file_get_random_seed();
         gRandomSeedCurrent = 0;
-        generate_init();
     }
+    generate_init();
     init_mario_from_save_file();
     disable_warp_checkpoint();
     save_file_move_cap_to_default_location();

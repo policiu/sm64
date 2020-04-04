@@ -19,7 +19,6 @@
 #include "main_entry.h"
 #include "thread6.h"
 #include <prevent_bss_reordering.h>
-#include "game.h"
 #include "mario.h"
 // FIXME: I'm not sure all of these variables belong in this file, but I don't
 // know of a good way to split them
@@ -589,7 +588,7 @@ int helpme4 = 0;
 // continues.
 void thread5_game_loop(UNUSED void *arg) {
     struct LevelCommand *addr;
-    //int i;
+    int i;
     setup_game_memory();
 #ifdef VERSION_SH
     init_rumble_pak_scheduler_queue();
@@ -639,12 +638,12 @@ void thread5_game_loop(UNUSED void *arg) {
         print_text_fmt_int(20,120, "Old: %x", gSaveBuffer.files[1][1].gRandomSeed & 0x00FFFFFF); //(int)_common0_geoSegmentRomEnd & 0x00FFFFFF);
         print_text_fmt_int(20,140, "Act: %x", gCurrActNum & 0x00FFFFFF); //(int)_common0_geoSegmentRomEnd & 0x00FFFFFF);
         
-/*
+
         for (i =14*6; i <14*6 + 6; i++){
             print_text_fmt_int(220, 20 + 20*(i%6), "%x", sAllCourse[i][0]);
             print_text_fmt_int(260, 20 + 20*(i%6), "%x", sAllCourse[i][1]);
         }
-*/
+
         display_and_vsync();
 
         // when debug info is enabled, print the "BUF %d" information.

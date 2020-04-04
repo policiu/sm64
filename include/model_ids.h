@@ -360,7 +360,7 @@
 // group 5 - Size 6
 #define MODEL_POKEY_HEAD                  0x554        // pokey_head_geo
 #define MODEL_POKEY_BODY_PART             0x555        // pokey_body_part_geo
-#define MODEL_TWEESTER                     0x556        // tornado_seg5_geo_05014630
+#define MODEL_TWEESTER                     0x556        // tweester_geo
 #define MODEL_KLEPTO                      0x557        // klepto_geo
 #define MODEL_EYEROK_LEFT_HAND            0x558        // eyerok_left_hand_geo
 #define MODEL_EYEROK_RIGHT_HAND           0x559        // eyerok_right_hand_geo
@@ -449,7 +449,6 @@
 #define MODEL_MR_I_IRIS                   0x1166        // mr_i_iris_geo
 #define MODEL_MR_I                        0x1167        // mr_i_geo
 #define MODEL_DORRIE                      0x1168        // dorrie_geo
-
 // other models
 #define MODEL_YELLOW_COIN                 0x74        // yellow_coin_geo
 #define MODEL_YELLOW_COIN_NO_SHADOW       0x75        // yellow_coin_no_shadow_geo
@@ -498,10 +497,10 @@
 #define MODEL_WHITE_PARTICLE              0xA0        // white_particle_dl
 #define MODEL_PEBBLE                      0xA1        // pebble_seg3_dl_0301CB00
 #define MODEL_LEAVES                      0xA2        // leaves_geo
-#define MODEL_WATER_WAVES                 0xA3        // water_waves_geo
+#define MODEL_WAVE_TRAIL                  0xA3        // wave_trail_geo
 #define MODEL_WHITE_PARTICLE_SMALL        0xA4        // white_particle_small_dl
-#define MODEL_SPOT_ON_GROUND              0xA5        // spot_on_ground_geo
-#define MODEL_WATER_WAVES_SURF            0xA6        // water_waves_surface_geo
+#define MODEL_SMALL_WATER_SPLASH          0xA5        // small_water_splash_geo
+#define MODEL_IDLE_WATER_WAVE             0xA6        // idle_water_wave_geo
 #define MODEL_WATER_SPLASH                0xA7        // water_splash_geo
 #define MODEL_BUBBLE                      0xA8        // bubble_geo
 // find me

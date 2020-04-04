@@ -6,11 +6,9 @@
 #include "level_commands.h"
 #include "behavior_script.h"
 #include "object_constants.h"
-#include "game/display.h"
-#include "include/config.h"
 #include "sm64.h"
 #include "./src/game/area.h"
-#include "./game/game.h"
+#include "./game/game_init.h"
 
 // very random
 u32 gRandomSeed = 0x1;
