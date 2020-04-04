@@ -6,8 +6,11 @@
 #include "dialog_ids.h"
 #include "segment_symbols.h"
 #include "level_commands.h"
+#include "macro_preset_names.h"
 
+#include "level_misc_macros.h"
 #include "game/level_update.h"
+#include "engine/randomizer.h"
 
 #include "levels/scripts.h"
 
@@ -52,46 +55,116 @@ static const LevelScript script_func_local_2[] = {
 };
 
 static const LevelScript script_func_local_3[] = {
-    OBJECT(/*model*/ MODEL_THWOMP,            /*pos*/  3462, 1939, -1545, /*angle*/ 0,  180, 0, /*behParam*/ 0x00000000, /*beh*/ bhvThwomp),
-    OBJECT(/*model*/ MODEL_THWOMP,            /*pos*/  3462, 1075, -3314, /*angle*/ 0,   90, 0, /*behParam*/ 0x00000000, /*beh*/ bhvThwomp2),
     OBJECT(/*model*/ MODEL_NONE,              /*pos*/  -856,  922,  3819, /*angle*/ 0,    0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvBetaFishSplashSpawner),
-    OBJECT(/*model*/ MODEL_PIRANHA_PLANT,     /*pos*/  1822, 2560,  -101, /*angle*/ 0,   90, 0, /*behParam*/ 0x00000000, /*beh*/ bhvPiranhaPlant),
-    OBJECT(/*model*/ MODEL_PIRANHA_PLANT,     /*pos*/  4625,  256,  5017, /*angle*/ 0,  -90, 0, /*behParam*/ 0x00000000, /*beh*/ bhvPiranhaPlant),
-    OBJECT(/*model*/ MODEL_PIRANHA_PLANT,     /*pos*/   689, 2560,  1845, /*angle*/ 0,   90, 0, /*behParam*/ 0x00000000, /*beh*/ bhvPiranhaPlant),
-    OBJECT(/*model*/ MODEL_WHOMP,             /*pos*/ -1545, 2560,  -286, /*angle*/ 0,    0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvSmallWhomp),
-    OBJECT(/*model*/ MODEL_WHOMP,             /*pos*/   189, 2560, -1857, /*angle*/ 0, -135, 0, /*behParam*/ 0x00000000, /*beh*/ bhvSmallWhomp),
-    OBJECT(/*model*/ MODEL_BUTTERFLY,         /*pos*/  4736,  256,  4992, /*angle*/ 0,    0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvButterfly),
-    OBJECT(/*model*/ MODEL_BUTTERFLY,         /*pos*/  4608,  256,  5120, /*angle*/ 0,    0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvButterfly),
-    OBJECT(/*model*/ MODEL_BUTTERFLY,         /*pos*/  4608,  256,  4992, /*angle*/ 0,    0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvButterfly),
-    OBJECT(/*model*/ MODEL_BUTTERFLY,         /*pos*/  4608,  256,  4864, /*angle*/ 0,    0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvButterfly),
-    OBJECT(/*model*/ MODEL_BUTTERFLY,         /*pos*/  4480,  256,  4992, /*angle*/ 0,    0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvButterfly),
-    OBJECT(/*model*/ MODEL_BUTTERFLY,         /*pos*/  4608,  256,   256, /*angle*/ 0,    0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvButterfly),
-    OBJECT(/*model*/ MODEL_BUTTERFLY,         /*pos*/  4736,  256,   128, /*angle*/ 0,    0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvButterfly),
-    OBJECT(/*model*/ MODEL_BUTTERFLY,         /*pos*/  4480,  256,   128, /*angle*/ 0,    0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvButterfly),
-    OBJECT(/*model*/ MODEL_BUTTERFLY,         /*pos*/  4608,  256,     0, /*angle*/ 0,    0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvButterfly),
-    OBJECT(/*model*/ MODEL_BUTTERFLY,         /*pos*/  4608,  256,   128, /*angle*/ 0,    0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvButterfly),
     OBJECT(/*model*/ MODEL_NONE,              /*pos*/  1035, 2880,  -900, /*angle*/ 0,   45, 0, /*behParam*/ 0x00000000, /*beh*/ bhvCheckerboardElevatorGroup),
-    OBJECT_WITH_ACTS(/*model*/ MODEL_BULLET_BILL,       /*pos*/  1280, 3712,   968, /*angle*/ 0,  180, 0, /*behParam*/ 0x00000000, /*beh*/ bhvBulletBill,               /*acts*/ ACT_2 | ACT_3 | ACT_4 | ACT_5 | ACT_6),
     OBJECT_WITH_ACTS(/*model*/ MODEL_LEVEL_GEOMETRY_08, /*pos*/     0, 3584,     0, /*angle*/ 0,    0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvTower,                     /*acts*/ ACT_2 | ACT_3 | ACT_4 | ACT_5 | ACT_6),
     OBJECT_WITH_ACTS(/*model*/ MODEL_LEVEL_GEOMETRY_09, /*pos*/  1280, 3584,   896, /*angle*/ 0,    0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvBulletBillCannon,        /*acts*/ ACT_2 | ACT_3 | ACT_4 | ACT_5 | ACT_6),
     OBJECT_WITH_ACTS(/*model*/ MODEL_NONE,              /*pos*/     0, 3483,     0, /*angle*/ 0,    0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvTowerPlatformGroup,      /*acts*/ ACT_2 | ACT_3 | ACT_4 | ACT_5 | ACT_6),
     OBJECT_WITH_ACTS(/*model*/ MODEL_WF_TOWER_DOOR,     /*pos*/  -511, 3584,     0, /*angle*/ 0,    0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvTowerDoor,                /*acts*/ ACT_2 | ACT_3 | ACT_4 | ACT_5 | ACT_6),
+    // Randomize Position?
     OBJECT_WITH_ACTS(/*model*/ MODEL_BOBOMB_BUDDY,      /*pos*/ -1700, 1140,  3500, /*angle*/ 0,    0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvBobombBuddyOpensCannon, /*acts*/ ACT_3 | ACT_4 | ACT_5 | ACT_6),
     OBJECT_WITH_ACTS(/*model*/ MODEL_HOOT,              /*pos*/  2560,  700,  4608, /*angle*/ 0,    0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvHoot,                      /*acts*/ ACT_3 | ACT_4 | ACT_5 | ACT_6),
     RETURN(),
 };
+MacroObject wf_seg7_macro_objs[259];
+#define NUM_NO_MOVE 1
+#define MACRO_SIZE 6
+static void setup_macro_local() {
+    u32 index = 0;
+    MACRO_OBJECT_ASSIGNMENT(wf_seg7_macro_objs, index, /*preset*/ macro_coin_line_horizontal,        /*yaw*/   0, /*pos*/  3760,   960,  2740)
+    MACRO_OBJECT_ASSIGNMENT(wf_seg7_macro_objs, index, /*preset*/ macro_coin_line_horizontal,        /*yaw*/  90, /*pos*/ -1400,  1160,  3900)
+    MACRO_OBJECT_ASSIGNMENT(wf_seg7_macro_objs, index, /*preset*/ macro_coin_line_horizontal,        /*yaw*/  90, /*pos*/  1254,  2586,  2299)
+    MACRO_OBJECT_ASSIGNMENT(wf_seg7_macro_objs, index, /*preset*/ macro_coin_ring_horizontal,        /*yaw*/   0, /*pos*/ -2500,  1795,  -260)
+    MACRO_OBJECT_ASSIGNMENT(wf_seg7_macro_objs, index, /*preset*/ macro_blue_coin_switch,            /*yaw*/   0, /*pos*/ -2500,   384,  -250)
+    MACRO_OBJECT_ASSIGNMENT(wf_seg7_macro_objs, index, /*preset*/ macro_hidden_blue_coin,            /*yaw*/   0, /*pos*/ -2500,   450, -1150)
+    MACRO_OBJECT_ASSIGNMENT(wf_seg7_macro_objs, index, /*preset*/ macro_hidden_blue_coin,            /*yaw*/   0, /*pos*/ -2500,   450,  -900)
+    MACRO_OBJECT_ASSIGNMENT(wf_seg7_macro_objs, index, /*preset*/ macro_hidden_blue_coin,            /*yaw*/   0, /*pos*/ -2500,   450,  -650)
+    MACRO_OBJECT_ASSIGNMENT(wf_seg7_macro_objs, index, /*preset*/ macro_box_metal_cap,               /*yaw*/   0, /*pos*/  2750,  1370, -3400)
+    MACRO_OBJECT_ASSIGNMENT(wf_seg7_macro_objs, index, /*preset*/ macro_yellow_coin,                 /*yaw*/   0, /*pos*/     0,  2650,  2900)
+    MACRO_OBJECT_ASSIGNMENT(wf_seg7_macro_objs, index, /*preset*/ macro_yellow_coin,                 /*yaw*/   0, /*pos*/  -500,  2650,  2900)
+    MACRO_OBJECT_ASSIGNMENT(wf_seg7_macro_objs, index, /*preset*/ macro_yellow_coin,                 /*yaw*/   0, /*pos*/   250,  2650,  2800)
+    MACRO_OBJECT_ASSIGNMENT(wf_seg7_macro_objs, index, /*preset*/ macro_yellow_coin,                 /*yaw*/   0, /*pos*/  -750,  2650,  2800)
+    MACRO_OBJECT_ASSIGNMENT(wf_seg7_macro_objs, index, /*preset*/ macro_hidden_1up_in_pole,          /*yaw*/   0, /*pos*/ -2500,  4560,  -256)
+    MACRO_OBJECT_ASSIGNMENT(wf_seg7_macro_objs, index, /*preset*/ macro_hidden_1up_trigger,          /*yaw*/   0, /*pos*/     0,  2650,  2900)
+    MACRO_OBJECT_WITH_BEH_PARAM_ASSIGNMENT(wf_seg7_macro_objs, index,/*preset*/ macro_hidden_1up,                  /*yaw*/   0, /*pos*/  -250,  2650,  2400, /*behParam*/ 2);
+    MACRO_OBJECT_WITH_BEH_PARAM_ASSIGNMENT(wf_seg7_macro_objs, index, /*preset*/ macro_wooden_signpost,             /*yaw*/ 315, /*pos*/  4200,   256,  5160, /*behParam*/ DIALOG_018);
+    MACRO_OBJECT_WITH_BEH_PARAM_ASSIGNMENT(wf_seg7_macro_objs, index, /*preset*/ macro_wooden_signpost,             /*yaw*/   0, /*pos*/ -2540,  2560,  -900, /*behParam*/ DIALOG_036);
+    MACRO_OBJECT_WITH_BEH_PARAM_ASSIGNMENT(wf_seg7_macro_objs, index, /*preset*/ macro_wooden_signpost,             /*yaw*/  90, /*pos*/  1600,  2560,  2600, /*behParam*/ DIALOG_042);
+    MACRO_OBJECT_WITH_BEH_PARAM_ASSIGNMENT(wf_seg7_macro_objs, index, /*preset*/ macro_wooden_signpost,             /*yaw*/ 270, /*pos*/ -2705,  2560,    59, /*behParam*/ DIALOG_051);
+    MACRO_OBJECT_WITH_BEH_PARAM_ASSIGNMENT(wf_seg7_macro_objs, index, /*preset*/ macro_wooden_signpost,             /*yaw*/ 180, /*pos*/  3460,  2304,   -40, /*behParam*/ DIALOG_096);
+    MACRO_OBJECT_WITH_BEH_PARAM_ASSIGNMENT(wf_seg7_macro_objs, index, /*preset*/ macro_wooden_signpost,             /*yaw*/ 270, /*pos*/ -2932,   386,  -157, /*behParam*/ DIALOG_078);
+    MACRO_OBJECT_ASSIGNMENT(wf_seg7_macro_objs, index, /*preset*/ macro_hidden_1up_trigger,          /*yaw*/   0, /*pos*/  -500,  2650,  2900)
+    MACRO_OBJECT_ASSIGNMENT(wf_seg7_macro_objs, index, /*preset*/ macro_red_coin,                    /*yaw*/   0, /*pos*/  -250,  2650,  2970)
+    MACRO_OBJECT_ASSIGNMENT(wf_seg7_macro_objs, index, /*preset*/ macro_red_coin,                    /*yaw*/   0, /*pos*/  1746,  3620, -3120)
+    MACRO_OBJECT_ASSIGNMENT(wf_seg7_macro_objs, index, /*preset*/ macro_red_coin,                    /*yaw*/   0, /*pos*/  1277,  2600,  1350)
+    MACRO_OBJECT_ASSIGNMENT(wf_seg7_macro_objs, index, /*preset*/ macro_red_coin,                    /*yaw*/   0, /*pos*/  1585,  2595,   -80)
+    MACRO_OBJECT_ASSIGNMENT(wf_seg7_macro_objs, index, /*preset*/ macro_red_coin,                    /*yaw*/   0, /*pos*/  3350,  3000, -1520)
+    MACRO_OBJECT_ASSIGNMENT(wf_seg7_macro_objs, index, /*preset*/ macro_red_coin,                    /*yaw*/   0, /*pos*/  2700,  3600,  -900)
+    MACRO_OBJECT_ASSIGNMENT(wf_seg7_macro_objs, index, /*preset*/ macro_red_coin,                    /*yaw*/   0, /*pos*/  3770,  1380,   650)
+    MACRO_OBJECT_ASSIGNMENT(wf_seg7_macro_objs, index, /*preset*/ macro_red_coin,                    /*yaw*/   0, /*pos*/  -270,  1720,  2250)
+    MACRO_OBJECT_ASSIGNMENT(wf_seg7_macro_objs, index, /*preset*/ macro_coin_arrow,                  /*yaw*/ 135, /*pos*/  1215,  3600, -2609)
+    MACRO_OBJECT_ASSIGNMENT(wf_seg7_macro_objs, index, /*preset*/ macro_hidden_blue_coin,            /*yaw*/   0, /*pos*/ -2500,   450, -1400)
+    MACRO_OBJECT_ASSIGNMENT(wf_seg7_macro_objs, index, /*preset*/ macro_coin_ring_horizontal,        /*yaw*/   0, /*pos*/  4611,   256,   141)
+    MACRO_OBJECT_ASSIGNMENT(wf_seg7_macro_objs, index, /*preset*/ macro_coin_ring_horizontal,        /*yaw*/   0, /*pos*/  1558,   922,  2329)
+    MACRO_OBJECT_ASSIGNMENT(wf_seg7_macro_objs, index, /*preset*/ macro_coin_line_horizontal,        /*yaw*/   0, /*pos*/  3396,  1380,  3280)
+    MACRO_OBJECT_ASSIGNMENT(wf_seg7_macro_objs, index, /*preset*/ macro_coin_ring_horizontal_flying, /*yaw*/   0, /*pos*/  3234,  3345, -1787)
+    MACRO_OBJECT_WITH_BEH_PARAM_ASSIGNMENT(wf_seg7_macro_objs, index, /*preset*/ macro_wooden_signpost,             /*yaw*/   0, /*pos*/  4800,   256,  3000, /*behParam*/ DIALOG_104)
+    MACRO_OBJECT_WITH_BEH_PARAM_ASSIGNMENT(wf_seg7_macro_objs, index, /*preset*/ macro_wooden_signpost,             /*yaw*/  90, /*pos*/  2930,  1075, -3740, /*behParam*/ DIALOG_113)
+    MACRO_OBJECT_ASSIGNMENT(wf_seg7_macro_objs, index, /*preset*/ macro_breakable_box_small,         /*yaw*/   0, /*pos*/  4320,   256,  1880)
+    MACRO_OBJECT_ASSIGNMENT(wf_seg7_macro_objs, index, /*preset*/ macro_breakable_box_small,         /*yaw*/   0, /*pos*/ -2940,   384, -1320)
+    MACRO_OBJECT_ASSIGNMENT(wf_seg7_macro_objs, index, /*preset*/ macro_butterfly_triplet_2,         /*yaw*/   0, /*pos*/  4574,   300,  1130)
+    
+    // No Move
+    MACRO_OBJECT_WITH_BEH_PARAM_ASSIGNMENT(wf_seg7_macro_objs, index, /*preset*/ macro_cannon_closed,               /*yaw*/   0, /*pos*/ -1844,  1026,  3893, /*behParam*/ 0x40);
 
+    wf_seg7_macro_objs[(sizeof(wf_seg7_macro_objs)/sizeof(wf_seg7_macro_objs[0])) - 1] = MACRO_OBJECT_END();
+}
+
+// Start Information
 static const LevelScript script_func_local_4[] = {
     OBJECT_WITH_ACTS(/*model*/ MODEL_WHOMP, /*pos*/     0, 3584,    0, /*angle*/ 0, 0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvWhompKingBoss,      /*acts*/ ACT_1),
-    OBJECT_WITH_ACTS(/*model*/ MODEL_STAR,  /*pos*/   300, 5550,    0, /*angle*/ 0, 0, 0, /*behParam*/ 0x01000000, /*beh*/ bhvStar,                 /*acts*/ ACT_2 | ACT_3 | ACT_4 | ACT_5 | ACT_6),
-    OBJECT_WITH_ACTS(/*model*/ MODEL_STAR,  /*pos*/ -2500, 1500, -750, /*angle*/ 0, 0, 0, /*behParam*/ 0x02000000, /*beh*/ bhvStar,                 /*acts*/ ALL_ACTS),
-    OBJECT_WITH_ACTS(/*model*/ MODEL_NONE,  /*pos*/  4600,  550, 2500, /*angle*/ 0, 0, 0, /*behParam*/ 0x03000000, /*beh*/ bhvHiddenRedCoinStar, /*acts*/ ALL_ACTS),
-    OBJECT_WITH_ACTS(/*model*/ MODEL_STAR,  /*pos*/  2880, 4300,  190, /*angle*/ 0, 0, 0, /*behParam*/ 0x04000000, /*beh*/ bhvStar,                 /*acts*/ ALL_ACTS),
-    OBJECT_WITH_ACTS(/*model*/ MODEL_STAR,  /*pos*/   590, 2450, 2650, /*angle*/ 0, 0, 0, /*behParam*/ 0x05000000, /*beh*/ bhvStar,                 /*acts*/ ALL_ACTS),
+    OBJECT_WITH_ACTS(/*model*/ MODEL_STAR,  /*pos*/   300, 5550,    0, /*angle*/ 0, 0, 0, /*behParam*/ 0x01000000, /*beh*/ bhvStar,                 /*acts*/ ACT_2),
+    OBJECT_WITH_ACTS(/*model*/ MODEL_STAR,  /*pos*/ -2500, 1500, -750, /*angle*/ 0, 0, 0, /*behParam*/ 0x02000000, /*beh*/ bhvStar,                 /*acts*/ ACT_3),
+    OBJECT_WITH_ACTS(/*model*/ MODEL_NONE,  /*pos*/  4600,  550, 2500, /*angle*/ 0, 0, 0, /*behParam*/ 0x03000000, /*beh*/ bhvHiddenRedCoinStar, /*acts*/ ACT_4),
+    OBJECT_WITH_ACTS(/*model*/ MODEL_STAR,  /*pos*/  2880, 4300,  190, /*angle*/ 0, 0, 0, /*behParam*/ 0x04000000, /*beh*/ bhvStar,                 /*acts*/ ACT_4),
+    OBJECT_WITH_ACTS(/*model*/ MODEL_STAR,  /*pos*/   590, 2450, 2650, /*angle*/ 0, 0, 0, /*behParam*/ 0x05000000, /*beh*/ bhvStar,                 /*acts*/ ACT_5),
     RETURN(),
 };
 
+static LevelScript script_func_local_5[18 * 7 + 1];
+
+static void setup_level_wf_scripts_local() {
+    // Setup Macros
+    u32 index = 0;
+    generate_enemy(script_func_local_5, &index, /*pos*/  3462, 1939, -1545, /*angle*/ 0,  180, 0),
+    generate_enemy(script_func_local_5, &index, /*pos*/  3462, 1075, -3314, /*angle*/ 0,   90, 0),
+    generate_enemy_acts(script_func_local_5, &index,  /*pos*/  1280, 3712,   968, /*angle*/ 0,  180, 0, /*acts*/ ACT_2 | ACT_3 | ACT_4 | ACT_5 | ACT_6),
+    generate_enemy(script_func_local_5, &index, /*pos*/  1822, 2560,  -101, /*angle*/ 0,   90, 0),
+    generate_enemy(script_func_local_5, &index, /*pos*/  4625,  256,  5017, /*angle*/ 0,  -90, 0),
+    generate_enemy(script_func_local_5, &index, /*pos*/   689, 2560,  1845, /*angle*/ 0,   90, 0),
+    generate_enemy(script_func_local_5, &index, /*pos*/ -1545, 2560,  -286, /*angle*/ 0,    0, 0),
+    generate_enemy(script_func_local_5, &index, /*pos*/   189, 2560, -1857, /*angle*/ 0, -135, 0),
+    generate_enemy(script_func_local_5, &index, /*pos*/  4736,  256,  4992, /*angle*/ 0,    0, 0),
+    generate_enemy(script_func_local_5, &index, /*pos*/  4608,  256,  5120, /*angle*/ 0,    0, 0),
+    generate_enemy(script_func_local_5, &index, /*pos*/  4608,  256,  4992, /*angle*/ 0,    0, 0),
+    generate_enemy(script_func_local_5, &index, /*pos*/  4608,  256,  4864, /*angle*/ 0,    0, 0),
+    generate_enemy(script_func_local_5, &index, /*pos*/  4480,  256,  4992, /*angle*/ 0,    0, 0),
+    generate_enemy(script_func_local_5, &index, /*pos*/  4608,  256,   256, /*angle*/ 0,    0, 0),
+    generate_enemy(script_func_local_5, &index, /*pos*/  4736,  256,   128, /*angle*/ 0,    0, 0),
+    generate_enemy(script_func_local_5, &index, /*pos*/  4480,  256,   128, /*angle*/ 0,    0, 0),
+    generate_enemy(script_func_local_5, &index, /*pos*/  4608,  256,     0, /*angle*/ 0,    0, 0),
+    generate_enemy(script_func_local_5, &index, /*pos*/  4608,  256,   128, /*angle*/ 0,    0, 0),
+    script_func_local_5[index] = RETURN();
+    //wf_seg7_macro_objs[0] = wf_seg7_macro_objs[0];
+    setup_macro_local();
+    // There can only be one macro list *for some reason*
+    // So we offset the array size for the shuffle to allow for unmovable objects
+    suffle_macro_array(wf_seg7_macro_objs, (sizeof(wf_seg7_macro_objs)/sizeof(wf_seg7_macro_objs[0])) - (NUM_NO_MOVE * MACRO_SIZE));
+}
+
 const LevelScript level_wf_entry[] = {
+    CALL(LEVEL_WF, generate_init_level),
+    CALL(0, setup_level_wf_scripts_local),
     INIT_LEVEL(),
     LOAD_MIO0(        /*seg*/ 0x07, _wf_segment_7SegmentRomStart, _wf_segment_7SegmentRomEnd),
     LOAD_MIO0(        /*seg*/ 0x0A, _cloud_floor_skybox_mio0SegmentRomStart, _cloud_floor_skybox_mio0SegmentRomEnd),
@@ -152,6 +225,7 @@ const LevelScript level_wf_entry[] = {
         JUMP_LINK(script_func_local_2),
         JUMP_LINK(script_func_local_3),
         JUMP_LINK(script_func_local_4),
+        JUMP_LINK(script_func_local_5),
         TERRAIN(/*terrainData*/ wf_seg7_collision_070102D8),
         MACRO_OBJECTS(/*objList*/ wf_seg7_macro_objs),
         SHOW_DIALOG(/*index*/ 0x00, DIALOG_030),

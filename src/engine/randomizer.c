@@ -249,9 +249,12 @@ static u32 (*rng_EnemeyBehFunc[])(const BehaviorScript *) ={
 
 };
 
-
-// Will use 6 spaces from start_index
 void generate_enemy( LevelScript *array, u32 * start_index, const s16 x, const s16 y, const s16 z, const s16 roll, const s16 pitch, const s16 yaw) {
+    generate_enemy_acts(array, start_index, x, y, z, roll, pitch, yaw, 0x1f);
+    return;
+}
+// Will use 6 spaces from start_index
+void generate_enemy_acts( LevelScript *array, u32 * start_index, const s16 x, const s16 y, const s16 z, const s16 roll, const s16 pitch, const s16 yaw, const u16 acts) {
     u16 selection = MODEL_NONE;
     u32 bhvParam = 0x00000000;
     const BehaviorScript *bhv;
@@ -261,7 +264,7 @@ void generate_enemy( LevelScript *array, u32 * start_index, const s16 x, const s
     helpme2 = selection;
     bhvParam = rng_EnemeyBehFunc[getEnemy](bhv);//gen_goomba_behavior();
     helpme = 0;
-    OBJECT_ASSIGNMENT(array, (*start_index),/*model*/ selection, /*pos*/ x,y,z, /*angle*/ roll,pitch,yaw, /*behParam*/ bhvParam, /*beh*/ bhv);
+    OBJECT_WITH_ACTS_ASSIGNMENT(array, (*start_index),/*model*/ selection, /*pos*/ x,y,z, /*angle*/ roll,pitch,yaw, /*behParam*/ bhvParam, /*beh*/ bhv, acts);
 
 }
 void generate_friendly(  );
@@ -274,11 +277,40 @@ void generate_star_select(s16 currCourse[6][2], u8 courseNum) {
       currCourse[i%6][0] = sAllCourse[i][0];
       currCourse[i%6][1] = sAllCourse[i][1]; // 6 Acts
    }
+   currCourse[0][0] = sAllCourse[0][0];
+   currCourse[0][1] = sAllCourse[0][1];
 
 }
 
 void generate_init_level( u32 level_id ){
    rand_int_seed(sRandomSeedLevels[level_id]);
+}
+
+// This is very unsafe
+// Assumes that all MACRO OBJECTS are of size 6
+// and that the array ends in MACRO_OBJECT_END()
+// Suffles the position coords
+void suffle_macro_array(MacroObject array[], const u16 array_size)
+{
+    u16 i, j, ii, temp;
+    for (i = 0; i < array_size - 1; i+=6) {
+      MacroObject t;
+      //j  = i /6;
+      j = rand_int() % ((array_size - 1)/6);
+      j*=6;
+      //if ( j+ 1 == array_size){
+      //    j -= 1;
+     // }
+      //j *= 6;
+      helpme3 = j;
+      helpme4 = i;
+      for (ii = 1; ii  <= 3; ii++){
+        t = array[i + ii];
+        array[i + ii] = array[j + ii];
+        array[j + ii] = t;
+      }
+   }
+   return;
 }
 
 void generate_init(){

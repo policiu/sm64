@@ -292,7 +292,7 @@ static void setup_level_bob_scripts_local() {
 }
 
 const LevelScript level_bob_entry[] = {
-    CALL(16, generate_init_level),
+    CALL(LEVEL_BOB, generate_init_level),
     CALL(0, setup_level_bob_scripts_local),
     INIT_LEVEL(),
     LOAD_MIO0(/*seg*/ 0x07, _bob_segment_7SegmentRomStart, _bob_segment_7SegmentRomEnd),

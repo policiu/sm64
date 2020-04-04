@@ -96,17 +96,17 @@ SECTIONS
       BUILD_DIR/src/game/thread6.o(.text);
 #endif
       BUILD_DIR/src/game/level_update.o(.text);
-      /* BUILD_DIR/levels/bbh/script.o(.text);
+      BUILD_DIR/levels/bbh/script.o(.text);
       BUILD_DIR/levels/bitdw/script.o(.text);
       BUILD_DIR/levels/bitfs/script.o(.text);
-      BUILD_DIR/levels/bits/script.o(.text);*/
+      BUILD_DIR/levels/bits/script.o(.text);
       BUILD_DIR/levels/bob/script.o(.text);
-      /*BUILD_DIR/levels/bowser_1/script.o(.text);
+      BUILD_DIR/levels/bowser_1/script.o(.text);
       BUILD_DIR/levels/bowser_2/script.o(.text);
       BUILD_DIR/levels/bowser_3/script.o(.text);
-      BUILD_DIR/levels/castle_courtyard/script.o(.text);*/
+      BUILD_DIR/levels/castle_courtyard/script.o(.text);
       BUILD_DIR/levels/castle_grounds/script.o(.text);
-      /*BUILD_DIR/levels/castle_inside/script.o(.text);
+      BUILD_DIR/levels/castle_inside/script.o(.text);
       BUILD_DIR/levels/ccm/script.o(.text);
       BUILD_DIR/levels/cotmc/script.o(.text);
       BUILD_DIR/levels/ddd/script.o(.text);
@@ -124,7 +124,7 @@ SECTIONS
       BUILD_DIR/levels/vcutm/script.o(.text);
       BUILD_DIR/levels/wdw/script.o(.text);
       BUILD_DIR/levels/wf/script.o(.text);
-      BUILD_DIR/levels/wmotr/script.o(.text);*/
+      BUILD_DIR/levels/wmotr/script.o(.text);
       BUILD_DIR/src/game/interaction.o(.text);
       BUILD_DIR/src/game/mario.o(.text);
       BUILD_DIR/src/game/mario_step.o(.text);
@@ -410,35 +410,6 @@ SECTIONS
       BUILD_DIR/src/game/game_init.o(.data*);
       BUILD_DIR/src/game/sound_init.o(.data*);
       BUILD_DIR/src/game/level_update.o(.data*);
-      /*BUILD_DIR/levels/bbh/script.o(.data*);
-      BUILD_DIR/levels/bitdw/script.o(.data*);
-      BUILD_DIR/levels/bitfs/script.o(.data*);
-      BUILD_DIR/levels/bits/script.o(.data*);*/
-      BUILD_DIR/levels/bob/script.o(.data*);
-      /*BUILD_DIR/levels/bowser_1/script.o(.data*);
-      BUILD_DIR/levels/bowser_2/script.o(.data*);
-      BUILD_DIR/levels/bowser_3/script.o(.data*);
-      BUILD_DIR/levels/castle_courtyard/script.o(.data*);*/
-      BUILD_DIR/levels/castle_grounds/script.o(.data*);
-      /*BUILD_DIR/levels/castle_inside/script.o(.data*);
-      BUILD_DIR/levels/ccm/script.o(.data*);
-      BUILD_DIR/levels/cotmc/script.o(.data*);
-      BUILD_DIR/levels/ddd/script.o(.data*);
-      BUILD_DIR/levels/hmc/script.o(.data*);
-      BUILD_DIR/levels/jrb/script.o(.data*);
-      BUILD_DIR/levels/lll/script.o(.data*);
-      BUILD_DIR/levels/pss/script.o(.data*);
-      BUILD_DIR/levels/rr/script.o(.data*);
-      BUILD_DIR/levels/sa/script.o(.data*);
-      BUILD_DIR/levels/sl/script.o(.data*);
-      BUILD_DIR/levels/ssl/script.o(.data*);
-      BUILD_DIR/levels/thi/script.o(.data*);
-      BUILD_DIR/levels/totwc/script.o(.data*);
-      BUILD_DIR/levels/ttc/script.o(.data*);
-      BUILD_DIR/levels/vcutm/script.o(.data*);
-      BUILD_DIR/levels/wdw/script.o(.data*);
-      BUILD_DIR/levels/wf/script.o(.data*);
-      BUILD_DIR/levels/wmotr/script.o(.data*);*/
       BUILD_DIR/src/game/interaction.o(.data*);
       BUILD_DIR/src/game/mario.o(.data*);
       BUILD_DIR/src/game/mario_step.o(.data*);
@@ -1084,7 +1055,40 @@ SECTIONS
 
 #undef STUB_LEVEL
 #undef DEFINE_LEVEL
+   BEGIN_SEG(random, RANDOMIZER_START)  SUBALIGN(16)
+   {
+      BUILD_DIR/levels/bbh/script.o(.data*);
+      BUILD_DIR/levels/bitdw/script.o(.data*);
+      BUILD_DIR/levels/bitfs/script.o(.data*);
+      BUILD_DIR/levels/bits/script.o(.data*);
+      BUILD_DIR/levels/bob/script.o(.data*);
+      BUILD_DIR/levels/bowser_1/script.o(.data*);
+      BUILD_DIR/levels/bowser_2/script.o(.data*);
+      BUILD_DIR/levels/bowser_3/script.o(.data*);
+      BUILD_DIR/levels/castle_courtyard/script.o(.data*); 
+      BUILD_DIR/levels/castle_grounds/script.o(.data*);
+      BUILD_DIR/levels/castle_inside/script.o(.data*);
+      BUILD_DIR/levels/ccm/script.o(.data*);
+      BUILD_DIR/levels/cotmc/script.o(.data*);
+      BUILD_DIR/levels/ddd/script.o(.data*);
+      BUILD_DIR/levels/hmc/script.o(.data*);
+      BUILD_DIR/levels/jrb/script.o(.data*);
+      BUILD_DIR/levels/lll/script.o(.data*);
+      BUILD_DIR/levels/pss/script.o(.data*);
+      BUILD_DIR/levels/rr/script.o(.data*);
+      BUILD_DIR/levels/sa/script.o(.data*);
+      BUILD_DIR/levels/sl/script.o(.data*);
+      BUILD_DIR/levels/ssl/script.o(.data*);
+      BUILD_DIR/levels/thi/script.o(.data*);
+      BUILD_DIR/levels/totwc/script.o(.data*);
+      BUILD_DIR/levels/ttc/script.o(.data*);
+      BUILD_DIR/levels/vcutm/script.o(.data*);
+      BUILD_DIR/levels/wdw/script.o(.data*);
+      BUILD_DIR/levels/wf/script.o(.data*);
+      BUILD_DIR/levels/wmotr/script.o(.data*);
 
+   }
+   END_SEG(random)
    /* 4E9FA0-? [?] */
    BEGIN_SEG(assets, __romPos)
    {
