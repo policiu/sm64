@@ -2,7 +2,7 @@
 #define _GAME_INIT_H_
 
 #include "memory.h"
-
+#include "area.h"
 struct DemoInput
 {
     u8 timer; // time until next input. if this value is 0, it means the demo is over
@@ -14,6 +14,8 @@ extern int helpme;
 extern int helpme2;
 extern int helpme3;
 extern int helpme4;
+extern s16 helpme6[4*3*2];
+extern struct SpawnInfo * helpme5;
 extern struct Controller gControllers[3];
 extern OSContStatus gControllerStatuses[4];
 extern OSContPad gControllerPads[4];

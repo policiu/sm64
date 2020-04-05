@@ -693,7 +693,7 @@ s16 level_trigger_warp(struct MarioState *m, s32 warpOp) {
         sDelayedWarpArg = 0;
         sDelayedWarpOp = warpOp;
         currWarpOp = warpOp;
-        helpme = warpOp;
+        helpme2 = warpOp;
         switch (warpOp) {
             case WARP_OP_DEMO_NEXT:
             case WARP_OP_DEMO_END:

@@ -19,7 +19,10 @@
 #include "make_const_nonconst.h"
 #include "levels/bbh/header.h"
 
+// debug
+#include "game/game_init.h"
 
+// Flame Locations
 static const LevelScript script_func_local_1[] = {
     OBJECT(/*model*/ MODEL_RED_FLAME,                  /*pos*/  2089,  1331, -1125, /*angle*/ 0, 270, 0, /*behParam*/ 0x00000000, /*beh*/ bhvFlame),
     OBJECT(/*model*/ MODEL_RED_FLAME,                  /*pos*/  1331,  1075, -1330, /*angle*/ 0, 90, 0,  /*behParam*/ 0x00000000, /*beh*/ bhvFlame),
@@ -30,6 +33,7 @@ static const LevelScript script_func_local_1[] = {
     RETURN(),
 };
 
+// Moving Models
 static const LevelScript script_func_local_2[] = {
     OBJECT(/*model*/ MODEL_BBH_TILTING_FLOOR_PLATFORM, /*pos*/  2866,   820,  1897, /*angle*/ 0, 0, 0,   /*behParam*/ 0x00000000, /*beh*/ bhvBbhTiltingTrapPlatform),
     OBJECT(/*model*/ MODEL_BBH_TUMBLING_PLATFORM,      /*pos*/  2961,     0,  -768, /*angle*/ 0, 0, 0,   /*behParam*/ 0x00000000, /*beh*/ bhvBbhTumblingBridge),
@@ -40,94 +44,112 @@ static const LevelScript script_func_local_2[] = {
     RETURN(),
 };
 
+// Do not Randomize type or position
+// Randomize boss?
 static const LevelScript script_func_local_3[] = {
-    OBJECT_WITH_ACTS(/*model*/ MODEL_BOO,                        /*pos*/  1000,    50,  1000, /*angle*/ 0, 0, 0,   /*behParam*/ 0x00000000, /*beh*/ bhvGhostHuntBigBoo,       /*acts*/ ACT_1),
-    OBJECT_WITH_ACTS(/*model*/ MODEL_BOO,                        /*pos*/    20,   100,  -908, /*angle*/ 0, 0, 0,   /*behParam*/ 0x00000000, /*beh*/ bhvGhostHuntBoo,                 /*acts*/ ACT_1),
-    OBJECT_WITH_ACTS(/*model*/ MODEL_BOO,                        /*pos*/  3150,   100,   398, /*angle*/ 0, 0, 0,   /*behParam*/ 0x00000000, /*beh*/ bhvGhostHuntBoo,                 /*acts*/ ACT_1),
-    OBJECT_WITH_ACTS(/*model*/ MODEL_BOO,                        /*pos*/ -2000,   150,  -800, /*angle*/ 0, 0, 0,   /*behParam*/ 0x00000000, /*beh*/ bhvGhostHuntBoo,                 /*acts*/ ACT_1),
-    OBJECT_WITH_ACTS(/*model*/ MODEL_BOO,                        /*pos*/  2851,   100,  2289, /*angle*/ 0, 0, 0,   /*behParam*/ 0x00000000, /*beh*/ bhvGhostHuntBoo,                 /*acts*/ ACT_1),
-    OBJECT_WITH_ACTS(/*model*/ MODEL_BOO,                        /*pos*/ -1551,   100, -1018, /*angle*/ 0, 0, 0,   /*behParam*/ 0x00000000, /*beh*/ bhvGhostHuntBoo,                 /*acts*/ ACT_1),
-    OBJECT_WITH_ACTS(/*model*/ MODEL_BBH_STAIRCASE_STEP,         /*pos*/   973,     0,   517, /*angle*/ 0, 0, 0,   /*behParam*/ 0x00000000, /*beh*/ bhvHiddenStaircaseStep, /*acts*/ ACT_2 | ACT_3 | ACT_4 | ACT_5 | ACT_6),
-    OBJECT_WITH_ACTS(/*model*/ MODEL_BBH_STAIRCASE_STEP,         /*pos*/   973,  -206,   717, /*angle*/ 0, 0, 0,   /*behParam*/ 0x00000000, /*beh*/ bhvHiddenStaircaseStep, /*acts*/ ACT_2 | ACT_3 | ACT_4 | ACT_5 | ACT_6),
-    OBJECT_WITH_ACTS(/*model*/ MODEL_BBH_STAIRCASE_STEP,         /*pos*/   973,  -412,   917, /*angle*/ 0, 0, 0,   /*behParam*/ 0x00000000, /*beh*/ bhvHiddenStaircaseStep, /*acts*/ ACT_2 | ACT_3 | ACT_4 | ACT_5 | ACT_6),
-    OBJECT_WITH_ACTS(/*model*/ MODEL_BOO,                        /*pos*/    20,   100,  -908, /*angle*/ 0, 0, 0,   /*behParam*/ 0x00000000, /*beh*/ bhvBoo,                 /*acts*/ ACT_2 | ACT_3 | ACT_4 | ACT_5 | ACT_6),
-    OBJECT_WITH_ACTS(/*model*/ MODEL_BOO,                        /*pos*/  3150,   100,   398, /*angle*/ 0, 0, 0,   /*behParam*/ 0x00000000, /*beh*/ bhvBoo,                 /*acts*/ ACT_2 | ACT_3 | ACT_4 | ACT_5 | ACT_6),
-    OBJECT_WITH_ACTS(/*model*/ MODEL_BOO,                        /*pos*/ -2000,   150,  -800, /*angle*/ 0, 0, 0,   /*behParam*/ 0x00000000, /*beh*/ bhvBoo,                 /*acts*/ ACT_2 | ACT_3 | ACT_4 | ACT_5 | ACT_6),
-    OBJECT_WITH_ACTS(/*model*/ MODEL_BOO,                        /*pos*/  2851,   100,  2289, /*angle*/ 0, 0, 0,   /*behParam*/ 0x00000000, /*beh*/ bhvBoo,                 /*acts*/ ACT_2 | ACT_3 | ACT_4 | ACT_5 | ACT_6),
-    OBJECT_WITH_ACTS(/*model*/ MODEL_BOO,                        /*pos*/ -1551,   100, -1018, /*angle*/ 0, 0, 0,   /*behParam*/ 0x00000000, /*beh*/ bhvBoo,                 /*acts*/ ACT_2 | ACT_3 | ACT_4 | ACT_5 | ACT_6),
-    OBJECT_WITH_ACTS(/*model*/ MODEL_NONE,                       /*pos*/   990, -2146,  -908, /*angle*/ 0, -45, 0, /*behParam*/ 0x00030000, /*beh*/ bhvFlamethrower,          /*acts*/ ACT_2 | ACT_3 | ACT_4 | ACT_5 | ACT_6),
-    OBJECT_WITH_ACTS(/*model*/ MODEL_NONE,                       /*pos*/ -1100, -2372,  1100, /*angle*/ 0, 135, 0, /*behParam*/ 0x01000000, /*beh*/ bhvMerryGoRoundBooManager,         /*acts*/ ACT_2 | ACT_3 | ACT_4 | ACT_5 | ACT_6),
-    OBJECT_WITH_ACTS(/*model*/ MODEL_BOO,                        /*pos*/  1030,  1922,  2546, /*angle*/ 0, -90, 0, /*behParam*/ 0x04000000, /*beh*/ bhvBalconyBigBoo,        /*acts*/ ALL_ACTS),
-    OBJECT_WITH_ACTS(/*model*/ MODEL_BOO,                        /*pos*/   581,  1850,  -206, /*angle*/ 0, -90, 0, /*behParam*/ 0x00000000, /*beh*/ bhvBoo,                 /*acts*/ ALL_ACTS),
-    OBJECT(/*model*/ MODEL_MAD_PIANO,                  /*pos*/ -1300,     0,  2310, /*angle*/ 0, 243, 0, /*behParam*/ 0x00000000, /*beh*/ bhvMadPiano),
-    OBJECT(/*model*/ MODEL_HAUNTED_CHAIR,              /*pos*/ -1530,     0,  2200, /*angle*/ 0, 66, 0,  /*behParam*/ 0x00000000, /*beh*/ bhvHauntedChair),
-    // TODO: Add spawners to randomizer?
-    OBJECT(/*model*/ MODEL_NONE,                       /*pos*/ -1330,   890,   200, /*angle*/ 0, 90, 0,  /*behParam*/ 0x00000000, /*beh*/ bhvBookendSpawn),
-    OBJECT(/*model*/ MODEL_NONE,                       /*pos*/  -818,   890,  -200, /*angle*/ 0, 270, 0, /*behParam*/ 0x00000000, /*beh*/ bhvBookendSpawn),
-    OBJECT(/*model*/ MODEL_NONE,                       /*pos*/ -1330,   890,  -622, /*angle*/ 0, 90, 0,  /*behParam*/ 0x00000000, /*beh*/ bhvBookendSpawn),
-    OBJECT(/*model*/ MODEL_NONE,                       /*pos*/  -818,   890,  -686, /*angle*/ 0, 270, 0, /*behParam*/ 0x00000000, /*beh*/ bhvBookendSpawn),
-    OBJECT(/*model*/ MODEL_NONE,                       /*pos*/ -1950,   880,     8, /*angle*/ 0, 180, 0, /*behParam*/ 0x00000000, /*beh*/ bhvHauntedBookshelfManager),
-    OBJECT(/*model*/ MODEL_BOOKEND,                    /*pos*/  2680,  1045,   876, /*angle*/ 0, 166, 0, /*behParam*/ 0x00000000, /*beh*/ bhvFlyingBookend),
-    OBJECT(/*model*/ MODEL_BOOKEND,                    /*pos*/  3075,  1045,   995, /*angle*/ 0, 166, 0, /*behParam*/ 0x00000000, /*beh*/ bhvFlyingBookend),
-    OBJECT(/*model*/ MODEL_BOOKEND,                    /*pos*/ -1411,   218,   922, /*angle*/ 0, 180, 0, /*behParam*/ 0x00000000, /*beh*/ bhvFlyingBookend),
+    OBJECT_WITH_ACTS(/*model*/ MODEL_BBH_STAIRCASE_STEP, /*pos*/   973,     0,   517, /*angle*/ 0, 0, 0,   /*behParam*/ 0x00000000, /*beh*/ bhvHiddenStaircaseStep, /*acts*/ ACT_2 | ACT_3 | ACT_4 | ACT_5 | ACT_6),
+    OBJECT_WITH_ACTS(/*model*/ MODEL_BBH_STAIRCASE_STEP, /*pos*/   973,  -206,   717, /*angle*/ 0, 0, 0,   /*behParam*/ 0x00000000, /*beh*/ bhvHiddenStaircaseStep, /*acts*/ ACT_2 | ACT_3 | ACT_4 | ACT_5 | ACT_6),
+    OBJECT_WITH_ACTS(/*model*/ MODEL_BBH_STAIRCASE_STEP, /*pos*/   973,  -412,   917, /*angle*/ 0, 0, 0,   /*behParam*/ 0x00000000, /*beh*/ bhvHiddenStaircaseStep, /*acts*/ ACT_2 | ACT_3 | ACT_4 | ACT_5 | ACT_6),
+    OBJECT_WITH_ACTS(/*model*/ MODEL_NONE,               /*pos*/   990, -2146,  -908, /*angle*/ 0, -45, 0, /*behParam*/ 0x00030000, /*beh*/ bhvFlamethrower,        /*acts*/ ACT_2 | ACT_3 | ACT_4 | ACT_5 | ACT_6),
+    
+    OBJECT(/*model*/ MODEL_NONE, /*pos*/ -1330,   890,   200, /*angle*/ 0, 90, 0,  /*behParam*/ 0x00000000, /*beh*/ bhvBookendSpawn),
+    OBJECT(/*model*/ MODEL_NONE, /*pos*/  -818,   890,  -200, /*angle*/ 0, 270, 0, /*behParam*/ 0x00000000, /*beh*/ bhvBookendSpawn),
+    OBJECT(/*model*/ MODEL_NONE, /*pos*/ -1330,   890,  -622, /*angle*/ 0, 90, 0,  /*behParam*/ 0x00000000, /*beh*/ bhvBookendSpawn),
+    OBJECT(/*model*/ MODEL_NONE, /*pos*/  -818,   890,  -686, /*angle*/ 0, 270, 0, /*behParam*/ 0x00000000, /*beh*/ bhvBookendSpawn),
+    OBJECT(/*model*/ MODEL_NONE, /*pos*/ -1950,   880,     8, /*angle*/ 0, 180, 0, /*behParam*/ 0x00000000, /*beh*/ bhvHauntedBookshelfManager),
+
     RETURN(),
 };
 
+// Stars
 static const LevelScript script_func_local_4[] = {
-    OBJECT_WITH_ACTS(/*model*/ MODEL_STAR, /*pos*/ -2030, 1350,  1940, /*angle*/ 0, 0, 0,  /*behParam*/ 0x02000000, /*beh*/ bhvStar,                    /*acts*/ ALL_ACTS),
-    OBJECT_WITH_ACTS(/*model*/ MODEL_NONE, /*pos*/  -204, 1100,  1576, /*angle*/ 0, 0, 0,  /*behParam*/ 0x03000000, /*beh*/ bhvHiddenRedCoinStar,    /*acts*/ ALL_ACTS),
-    OBJECT_WITH_ACTS(/*model*/ MODEL_NONE, /*pos*/   923, 1741,  -332, /*angle*/ 0, 18, 0, /*behParam*/ 0x05010000, /*beh*/ bhvMrI,                    /*acts*/ ALL_ACTS),
+    OBJECT_WITH_ACTS(/*model*/ MODEL_STAR, /*pos*/ -2030, 1350,  1940, /*angle*/ 0, 0, 0,  /*behParam*/ 0x02000000, /*beh*/ bhvStar,                    /*acts*/ ACT_3),
+    OBJECT_WITH_ACTS(/*model*/ MODEL_NONE, /*pos*/  -204, 1100,  1576, /*angle*/ 0, 0, 0,  /*behParam*/ 0x03000000, /*beh*/ bhvHiddenRedCoinStar,    /*acts*/ ACT_4),
+    OBJECT_WITH_ACTS(/*model*/ MODEL_NONE, /*pos*/   923, 1741,  -332, /*angle*/ 0, 18, 0, /*behParam*/ 0x05010000, /*beh*/ bhvMrI,                    /*acts*/ ACT_6),
+    OBJECT_WITH_ACTS(/*model*/ MODEL_BOO,  /*pos*/  1030,  1922,  2546, /*angle*/ 0, -90, 0, /*behParam*/ 0x04000000, /*beh*/ bhvBalconyBigBoo,        /*acts*/ ACT_5),
+    OBJECT_WITH_ACTS(/*model*/ MODEL_NONE, /*pos*/ -1100, -2372,  1100, /*angle*/ 0, 135, 0, /*behParam*/ 0x01000000, /*beh*/ bhvMerryGoRoundBooManager,         /*acts*/ ACT_2),
+    OBJECT_WITH_ACTS(/*model*/ MODEL_BOO,                        /*pos*/  1000,    50,  1000, /*angle*/ 0, 0, 0,   /*behParam*/ 0x00000000, /*beh*/ bhvGhostHuntBigBoo,       /*acts*/ ACT_1),
     RETURN(),
 };
 
+// Randomize
+// TODO: Randomize model w/o changing behavior?
+static LevelScript script_func_local_5[112 + 238 + 1];
 
-// 0x070268C4 - 0x07026A1A
-MacroObject bbh_seg7_macro_objs[205];
-
-
-static void setup_macro_local() {
+static void setup_script_func_local_5() {
     u32 index = 0;
-    MACRO_OBJECT_ASSIGNMENT(bbh_seg7_macro_objs, index, /*preset*/ macro_haunted_chair,             /*yaw*/  90, /*pos*/ -1960,   -20,   340)
-    MACRO_OBJECT_WITH_BEH_PARAM_ASSIGNMENT(bbh_seg7_macro_objs, index, /*preset*/ macro_wooden_signpost,           /*yaw*/   0, /*pos*/  -800,  -204,  2915, /*behParam*/ DIALOG_063)
-    MACRO_OBJECT_WITH_BEH_PARAM_ASSIGNMENT(bbh_seg7_macro_objs, index, /*preset*/ macro_wooden_signpost,           /*yaw*/   0, /*pos*/   400,  -204,  3057, /*behParam*/ DIALOG_085)
-    MACRO_OBJECT_ASSIGNMENT(bbh_seg7_macro_objs, index, /*preset*/ macro_haunted_chair,             /*yaw*/ 270, /*pos*/ -1080,    20,   160)
-    MACRO_OBJECT_ASSIGNMENT(bbh_seg7_macro_objs, index, /*preset*/ macro_box_vanish_cap,            /*yaw*/   0, /*pos*/  1268,  1050,  1860)
-    MACRO_OBJECT_ASSIGNMENT(bbh_seg7_macro_objs, index, /*preset*/ macro_red_coin,                  /*yaw*/   0, /*pos*/ -1164,     0,  2325)
-    MACRO_OBJECT_ASSIGNMENT(bbh_seg7_macro_objs, index, /*preset*/ macro_red_coin,                  /*yaw*/   0, /*pos*/  2540,   820,  2174)
-    MACRO_OBJECT_ASSIGNMENT(bbh_seg7_macro_objs, index, /*preset*/ macro_red_coin,                  /*yaw*/   0, /*pos*/  2600,   815,  -380)
-    MACRO_OBJECT_ASSIGNMENT(bbh_seg7_macro_objs, index, /*preset*/ macro_red_coin,                  /*yaw*/   0, /*pos*/  2950,   815, -1250)
-    MACRO_OBJECT_ASSIGNMENT(bbh_seg7_macro_objs, index, /*preset*/ macro_red_coin,                  /*yaw*/   0, /*pos*/ -1500,   550,   960)
-    MACRO_OBJECT_ASSIGNMENT(bbh_seg7_macro_objs, index, /*preset*/ macro_red_coin,                  /*yaw*/   0, /*pos*/  -420,   550,    60)
-    MACRO_OBJECT_ASSIGNMENT(bbh_seg7_macro_objs, index, /*preset*/ macro_red_coin,                  /*yaw*/   0, /*pos*/  2856,    50,  2144)
-    MACRO_OBJECT_ASSIGNMENT(bbh_seg7_macro_objs, index, /*preset*/ macro_red_coin,                  /*yaw*/   0, /*pos*/    50,   900, -1400)
-    MACRO_OBJECT_ASSIGNMENT(bbh_seg7_macro_objs, index, /*preset*/ macro_box_1up,                   /*yaw*/   0, /*pos*/   660,  3200,  1160)
-    MACRO_OBJECT_ASSIGNMENT(bbh_seg7_macro_objs, index, /*preset*/ macro_blue_coin_switch,          /*yaw*/   0, /*pos*/   640,  1741,   760)
-    MACRO_OBJECT_ASSIGNMENT(bbh_seg7_macro_objs, index, /*preset*/ macro_hidden_blue_coin,          /*yaw*/   0, /*pos*/  1400,  1840,  1100)
-    MACRO_OBJECT_ASSIGNMENT(bbh_seg7_macro_objs, index, /*preset*/ macro_hidden_blue_coin,          /*yaw*/   0, /*pos*/  1700,  1840,  1100)
-    MACRO_OBJECT_ASSIGNMENT(bbh_seg7_macro_objs, index, /*preset*/ macro_hidden_blue_coin,          /*yaw*/   0, /*pos*/     0,  1840,  1100)
-    MACRO_OBJECT_ASSIGNMENT(bbh_seg7_macro_objs, index, /*preset*/ macro_hidden_blue_coin,          /*yaw*/   0, /*pos*/  -400,  1840,  1100)
-    MACRO_OBJECT_WITH_BEH_PARAM_ASSIGNMENT(bbh_seg7_macro_objs, index, /*preset*/ macro_wooden_signpost,           /*yaw*/   0, /*pos*/  2026,  -204,  2966, /*behParam*/ DIALOG_102)
-    MACRO_OBJECT_ASSIGNMENT(bbh_seg7_macro_objs, index, /*preset*/ macro_mr_i,                      /*yaw*/   0, /*pos*/   480,    10,  -653)
-    MACRO_OBJECT_ASSIGNMENT(bbh_seg7_macro_objs, index, /*preset*/ macro_scuttlebug,                /*yaw*/   0, /*pos*/  -346,  -204, -2813)
-    MACRO_OBJECT_ASSIGNMENT(bbh_seg7_macro_objs, index, /*preset*/ macro_scuttlebug,                /*yaw*/   0, /*pos*/  1146,  -203, -2280)
-    MACRO_OBJECT_ASSIGNMENT(bbh_seg7_macro_objs, index, /*preset*/ macro_mr_i,                      /*yaw*/   0, /*pos*/ -2369,  -204,  5184)
-    MACRO_OBJECT_WITH_BEH_PARAM_ASSIGNMENT(bbh_seg7_macro_objs, index, /*preset*/ macro_wooden_signpost,           /*yaw*/ 135, /*pos*/ -1546,  -204,  4813, /*behParam*/ DIALOG_086)
-    MACRO_OBJECT_ASSIGNMENT(bbh_seg7_macro_objs, index, /*preset*/ macro_scuttlebug,                /*yaw*/   0, /*pos*/  3466,  -204,  5106)
-    MACRO_OBJECT_ASSIGNMENT(bbh_seg7_macro_objs, index, /*preset*/ macro_mr_i,                      /*yaw*/   0, /*pos*/  1640,   840,  -733)
-    MACRO_OBJECT_ASSIGNMENT(bbh_seg7_macro_objs, index, /*preset*/ macro_box_vanish_cap,            /*yaw*/   0, /*pos*/ -1960,   300,  -120)
-    MACRO_OBJECT_ASSIGNMENT(bbh_seg7_macro_objs, index, /*preset*/ macro_box_vanish_cap,            /*yaw*/   0, /*pos*/   460,  2140,  -560)
-    MACRO_OBJECT_ASSIGNMENT(bbh_seg7_macro_objs, index, /*preset*/ macro_box_ten_coins,             /*yaw*/   0, /*pos*/   700,    80, -2800)
-    MACRO_OBJECT_ASSIGNMENT(bbh_seg7_macro_objs, index, /*preset*/ macro_breakable_box_three_coins, /*yaw*/  45, /*pos*/ -3800,  -204,  4600)
-    MACRO_OBJECT_ASSIGNMENT(bbh_seg7_macro_objs, index, /*preset*/ macro_breakable_box_three_coins, /*yaw*/  45, /*pos*/ -3659,  -204,  4459)
-    MACRO_OBJECT_ASSIGNMENT(bbh_seg7_macro_objs, index, /*preset*/ macro_jumping_box,               /*yaw*/   0, /*pos*/  -220,  -220,  6140)
-    MACRO_OBJECT_ASSIGNMENT(bbh_seg7_macro_objs, index, /*preset*/ macro_1up,                       /*yaw*/   0, /*pos*/ -3040,  1120,  5460)
-    bbh_seg7_macro_objs[(sizeof(bbh_seg7_macro_objs)/sizeof(bbh_seg7_macro_objs [0])) - 1] = MACRO_OBJECT_END();
+    // Do Not randomize type
+    OBJECT_WITH_ACTS_ASSIGNMENT(script_func_local_5, index, /*model*/ MODEL_BOO, /*pos*/    20,   100,  -908, /*angle*/ 0, 0, 0,   /*behParam*/ 0x00000000, /*beh*/ bhvGhostHuntBoo, /*acts*/ ACT_1);
+    OBJECT_WITH_ACTS_ASSIGNMENT(script_func_local_5, index, /*model*/ MODEL_BOO, /*pos*/  3150,   100,   398, /*angle*/ 0, 0, 0,   /*behParam*/ 0x00000000, /*beh*/ bhvGhostHuntBoo, /*acts*/ ACT_1);
+    OBJECT_WITH_ACTS_ASSIGNMENT(script_func_local_5, index, /*model*/ MODEL_BOO, /*pos*/ -2000,   150,  -800, /*angle*/ 0, 0, 0,   /*behParam*/ 0x00000000, /*beh*/ bhvGhostHuntBoo, /*acts*/ ACT_1);
+    OBJECT_WITH_ACTS_ASSIGNMENT(script_func_local_5, index, /*model*/ MODEL_BOO, /*pos*/  2851,   100,  2289, /*angle*/ 0, 0, 0,   /*behParam*/ 0x00000000, /*beh*/ bhvGhostHuntBoo, /*acts*/ ACT_1);
+    OBJECT_WITH_ACTS_ASSIGNMENT(script_func_local_5, index, /*model*/ MODEL_BOO, /*pos*/ -1551,   100, -1018, /*angle*/ 0, 0, 0,   /*behParam*/ 0x00000000, /*beh*/ bhvGhostHuntBoo, /*acts*/ ACT_1);
+    OBJECT_ASSIGNMENT(script_func_local_5,           index, /*MODEL*/ MODEL_RED_COIN, /*pos*/ -1164,     0,  2325, /*angle*/ 0,   0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvRedCoin);
+    OBJECT_ASSIGNMENT(script_func_local_5,           index, /*MODEL*/ MODEL_RED_COIN, /*pos*/  2540,   820,  2174, /*angle*/ 0,   0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvRedCoin);
+    OBJECT_ASSIGNMENT(script_func_local_5,           index, /*MODEL*/ MODEL_RED_COIN, /*pos*/  2600,   815,  -380, /*angle*/ 0,   0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvRedCoin);
+    OBJECT_ASSIGNMENT(script_func_local_5,           index, /*MODEL*/ MODEL_RED_COIN, /*pos*/  2950,   815, -1250, /*angle*/ 0,   0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvRedCoin);
+    OBJECT_ASSIGNMENT(script_func_local_5,           index, /*MODEL*/ MODEL_RED_COIN, /*pos*/ -1500,   550,   960, /*angle*/ 0,   0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvRedCoin);
+    OBJECT_ASSIGNMENT(script_func_local_5,           index, /*MODEL*/ MODEL_RED_COIN, /*pos*/  -420,   550,    60, /*angle*/ 0,   0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvRedCoin);
+    OBJECT_ASSIGNMENT(script_func_local_5,           index, /*MODEL*/ MODEL_RED_COIN, /*pos*/  2856,    50,  2144, /*angle*/ 0,   0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvRedCoin);
+    OBJECT_ASSIGNMENT(script_func_local_5,           index, /*MODEL*/ MODEL_RED_COIN, /*pos*/    50,   900, -1400, /*angle*/ 0,   0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvRedCoin);
+    // Signs
+    OBJECT_ASSIGNMENT(script_func_local_5, index, /*model*/ MODEL_WOODEN_SIGNPOST, /*pos*/  2026,  -204,  2966, /*angle*/     0,     0,     0, /*behParam*/ (DIALOG_102 << 16) + (DIALOG_102 & 0xFF00), /*beh*/ bhvMessagePanel);
+    OBJECT_ASSIGNMENT(script_func_local_5, index, /*model*/ MODEL_WOODEN_SIGNPOST, /*pos*/  -800,  -204,  2915, /*angle*/     0,     0,     0, /*behParam*/ (DIALOG_063 << 16) + (DIALOG_063 & 0xFF00), /*beh*/ bhvMessagePanel);
+    OBJECT_ASSIGNMENT(script_func_local_5, index, /*model*/ MODEL_WOODEN_SIGNPOST, /*pos*/   400,  -204,  3057, /*angle*/     0,     0,     0, /*behParam*/ (DIALOG_085 << 16) + (DIALOG_085 & 0xFF00), /*beh*/ bhvMessagePanel);
+    OBJECT_ASSIGNMENT(script_func_local_5, index, /*model*/ MODEL_WOODEN_SIGNPOST, /*pos*/ -1546,  -204,  4813, /*angle*/     0,   135,     0, /*behParam*/ (DIALOG_086 << 16) + (DIALOG_086 & 0xFF00), /*beh*/ bhvMessagePanel);
+    
+    // Boxes
+    OBJECT_ASSIGNMENT(script_func_local_5,                index, /*model*/ MODEL_EXCLAMATION_BOX, /*pos*/   660,  3200,  1160, /*angle*/     0,     0,     0, /*behParam*/          7, /*beh*/ bhvExclamationBox);
+    OBJECT_ASSIGNMENT(script_func_local_5,                index, /*model*/ MODEL_BLUE_COIN_SWITCH,           /*pos*/   640,  1741,   760, /*angle*/ 0,   0, 0, /*behParam*/ 0x00000000, bhvBlueCoinSwitch);
+    OBJECT_ASSIGNMENT(script_func_local_5,                index, /*model*/ MODEL_BLUE_COIN,                  /*pos*/  1400,  1840,  1100, /*angle*/ 0,   0, 0, /*behParam*/ 0x00000000, bhvHiddenBlueCoin);
+    OBJECT_ASSIGNMENT(script_func_local_5,                index, /*model*/ MODEL_BLUE_COIN,                  /*pos*/  1700,  1840,  1100, /*angle*/ 0,   0, 0, /*behParam*/ 0x00000000, bhvHiddenBlueCoin);
+    OBJECT_ASSIGNMENT(script_func_local_5,                index, /*model*/ MODEL_BLUE_COIN,                  /*pos*/     0,  1840,  1100, /*angle*/ 0,   0, 0, /*behParam*/ 0x00000000, bhvHiddenBlueCoin);
+    OBJECT_ASSIGNMENT(script_func_local_5,                index, /*model*/ MODEL_BLUE_COIN,                  /*pos*/  -400,  1840,  1100, /*angle*/ 0,   0, 0, /*behParam*/ 0x00000000, bhvHiddenBlueCoin);
+    OBJECT_ASSIGNMENT(script_func_local_5,                index, /*model*/ MODEL_EXCLAMATION_BOX, /*pos*/  1268,  1050,  1860, /*angle*/     0,     0,     0, /*behParam*/ ((2 &0x00FF) << 16) + ((2 &0x00FF) & 0xFF00), /*beh*/ bhvExclamationBox);
+    OBJECT_ASSIGNMENT(script_func_local_5,                index, /*model*/ MODEL_EXCLAMATION_BOX, /*pos*/ -1960,   300,  -120, /*angle*/     0,     0,     0, /*behParam*/ ((2 &0x00FF) << 16) + ((2 &0x00FF) & 0xFF00), /*beh*/ bhvExclamationBox);
+    OBJECT_ASSIGNMENT(script_func_local_5,                index, /*model*/ MODEL_EXCLAMATION_BOX, /*pos*/   460,  2140,  -560, /*angle*/     0,     0,     0, /*behParam*/ ((2 &0x00FF) << 16) + ((2 &0x00FF) & 0xFF00), /*beh*/ bhvExclamationBox);
+    OBJECT_ASSIGNMENT(script_func_local_5,                index, /*model*/ MODEL_EXCLAMATION_BOX, /*pos*/   700,    80, -2800, /*angle*/     0,     0,     0, /*behParam*/ ((6 &0x00FF) << 16) + ((6 &0x00FF) & 0xFF00), /*beh*/ bhvExclamationBox);
+    OBJECT_ASSIGNMENT(script_func_local_5,                index, /*model*/ MODEL_BREAKABLE_BOX, /*pos*/ -3800,  -204,  4600, /*angle*/     0,    45,     0, /*behParam*/ ((1 &0x00FF) << 16) + ((1 &0x00FF) & 0xFF00), /*beh*/ bhvBreakableBox);
+    OBJECT_ASSIGNMENT(script_func_local_5,                index, /*model*/ MODEL_BREAKABLE_BOX, /*pos*/ -3659,  -204,  4459, /*angle*/     0,    45,     0, /*behParam*/ ((1 &0x00FF) << 16) + ((1 &0x00FF) & 0xFF00), /*beh*/ bhvBreakableBox);
+    OBJECT_ASSIGNMENT(script_func_local_5,                index, /*model*/ MODEL_BREAKABLE_BOX, /*pos*/  -220,  -220,  6140, /*angle*/     0,     0,     0, /*behParam*/ (0 << 16) + (0 & 0xFF00), /*beh*/ bhvJumpingBox);
+    OBJECT_ASSIGNMENT(script_func_local_5,                index, /*model*/ MODEL_1UP, /*pos*/ -3040,  1120,  5460, /*angle*/     0,     0,     0, /*behParam*/          0, /*beh*/ bhv1Up);
+//
+//    // TODO: randomize?
+//    // end do not randomize type
+//    
+    generate_enemy_acts(script_func_local_5, &index, /*pos*/    20,   100,  -908, /*angle*/ 0, 0, 0, /*acts*/ ACT_2 | ACT_3 | ACT_4 | ACT_5 | ACT_6);
+    generate_enemy_acts(script_func_local_5, &index, /*pos*/  3150,   100,   398, /*angle*/ 0, 0, 0, /*acts*/ ACT_2 | ACT_3 | ACT_4 | ACT_5 | ACT_6);
+    generate_enemy_acts(script_func_local_5, &index, /*pos*/ -2000,   150,  -800, /*angle*/ 0, 0, 0, /*acts*/ ACT_2 | ACT_3 | ACT_4 | ACT_5 | ACT_6);
+    generate_enemy_acts(script_func_local_5, &index, /*pos*/  2851,   100,  2289, /*angle*/ 0, 0, 0, /*acts*/ ACT_2 | ACT_3 | ACT_4 | ACT_5 | ACT_6);
+    generate_enemy_acts(script_func_local_5, &index, /*pos*/ -1551,   100, -1018, /*angle*/ 0, 0, 0, /*acts*/ ACT_2 | ACT_3 | ACT_4 | ACT_5 | ACT_6);
+    generate_enemy(script_func_local_5, &index,      /*pos*/ -1300,     0,  2310, /*angle*/ 0, 243, 0);
+    generate_enemy(script_func_local_5, &index,      /*pos*/ -1530,     0,  2200, /*angle*/ 0, 66, 0);
+    generate_enemy_acts(script_func_local_5, &index, /*pos*/   581,  1850,  -206, /*angle*/ 0, -90, 0, /*acts*/ ALL_ACTS);
+    generate_enemy(script_func_local_5, &index,      /*pos*/  2680,  1045,   876, /*angle*/ 0, 166, 0);
+    generate_enemy(script_func_local_5, &index,      /*pos*/  3075,  1045,   995, /*angle*/ 0, 166, 0);
+    generate_enemy(script_func_local_5, &index,      /*pos*/ -1411,   218,   922, /*angle*/ 0, 180, 0);
+    generate_enemy(script_func_local_5, &index,      /*pos*/ -1960,   -20,   340, /*angle*/ 0,  90, 0);
+    generate_enemy(script_func_local_5, &index,      /*pos*/ -1080,    20,   160, /*angle*/ 0, 270, 0);
+    generate_enemy(script_func_local_5, &index,      /*pos*/   480,    10,  -653, /*angle*/ 0,   0, 0);
+    generate_enemy(script_func_local_5, &index,      /*pos*/  -346,  -204, -2813, /*angle*/ 0,   0, 0);
+    generate_enemy(script_func_local_5, &index,      /*pos*/  1146,  -203, -2280, /*angle*/ 0,   0, 0);
+    generate_enemy(script_func_local_5, &index,      /*pos*/ -2369,  -204,  5184, /*angle*/ 0,   0, 0);
+    generate_enemy(script_func_local_5, &index,      /*pos*/  3466,  -204,  5106, /*angle*/ 0,   0, 0);
+    generate_enemy(script_func_local_5, &index,      /*pos*/  1640,   840,  -733, /*angle*/ 0,   0, 0);
+    
+    script_func_local_5[index] = RETURN();
+    helpme = script_func_local_5[index - 2];
+};
+
+static void setup_level_scripts_local() {
+    setup_script_func_local_5();
+    suffle_levelscript_array(script_func_local_5, sizeof(script_func_local_5)/sizeof(script_func_local_5[0]));
 }
 
 
-
-
 const LevelScript level_bbh_entry[] = {
+    CALL(LEVEL_BBH, generate_init_level),
+    CALL(0, setup_level_scripts_local),
     INIT_LEVEL(),
     LOAD_MIO0(        /*seg*/ 0x07, _bbh_segment_7SegmentRomStart, _bbh_segment_7SegmentRomEnd),
     LOAD_MIO0(        /*seg*/ 0x0A, _bbh_skybox_mio0SegmentRomStart, _bbh_skybox_mio0SegmentRomEnd),
@@ -158,12 +180,13 @@ const LevelScript level_bbh_entry[] = {
         JUMP_LINK(script_func_local_2),
         JUMP_LINK(script_func_local_3),
         JUMP_LINK(script_func_local_4),
+        JUMP_LINK(script_func_local_5),
         OBJECT(/*model*/ MODEL_NONE, /*pos*/ 666, 796, 5350, /*angle*/ 0, 180, 0, /*behParam*/ 0x000A0000, /*beh*/ bhvWarps74),
         WARP_NODE(/*id*/ 0x0A, /*destLevel*/ LEVEL_BBH, /*destArea*/ 0x01, /*destNode*/ 0x0A, /*flags*/ WARP_NO_CHECKPOINT),
         WARP_NODE(/*id*/ 0xF0, /*destLevel*/ LEVEL_CASTLE_COURTYARD, /*destArea*/ 0x01, /*destNode*/ 0x0A, /*flags*/ WARP_NO_CHECKPOINT),
         WARP_NODE(/*id*/ 0xF1, /*destLevel*/ LEVEL_CASTLE_COURTYARD, /*destArea*/ 0x01, /*destNode*/ 0x0B, /*flags*/ WARP_NO_CHECKPOINT),
         TERRAIN(/*terrainData*/ bbh_seg7_collision_level),
-        MACRO_OBJECTS(/*objList*/ bbh_seg7_macro_objs),
+        //MACRO_OBJECTS(/*objList*/ aas), // bbh_seg7_macro_objs),
         ROOMS(/*surfaceRooms*/ bbh_seg7_rooms),
         SHOW_DIALOG(/*index*/ 0x00, DIALOG_098),
         SET_BACKGROUND_MUSIC(/*settingsPreset*/ 0x0006, /*seq*/ SEQ_LEVEL_SPOOKY),

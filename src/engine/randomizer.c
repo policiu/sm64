@@ -1,11 +1,12 @@
 #include <types.h>
 #include <ultra64.h>
-#include "model_ids.h"
+#include "model_ids.h" 
 #include "randomizer.h"
 #include "behavior_data.h"
 #include "level_commands.h"
 #include "behavior_script.h"
 #include "object_constants.h"
+#include "../game/save_file.h"
 #include "sm64.h"
 #include "./src/game/area.h"
 #include "./game/game_init.h"
@@ -259,9 +260,7 @@ void generate_enemy_acts( LevelScript *array, u32 * start_index, const s16 x, co
     int getEnemy = rand_int() % 30;
     selection = rng_modelsEnemy[getEnemy];
     bhv = rng_bhvEnemy[getEnemy];
-    helpme2 = selection;
     bhvParam = rng_EnemeyBehFunc[getEnemy](bhv);//gen_goomba_behavior();
-    helpme = 0;
     OBJECT_WITH_ACTS_ASSIGNMENT(array, (*start_index),/*model*/ selection, /*pos*/ x,y,z, /*angle*/ roll,pitch,yaw, /*behParam*/ bhvParam, /*beh*/ bhv, acts);
 
 }
@@ -275,8 +274,8 @@ void generate_star_select(s16 currCourse[6][2], u8 courseNum) {
       currCourse[i%6][0] = sAllCourse[i][0];
       currCourse[i%6][1] = sAllCourse[i][1]; // 6 Acts
    }
-   currCourse[0][0] = sAllCourse[0][0];
-   currCourse[0][1] = sAllCourse[0][1];
+   currCourse[0][0] = COURSE_BBH;
+   currCourse[0][1] = 1;
 
 }
 
@@ -290,7 +289,7 @@ void generate_init_level( u32 level_id ){
 // Suffles the position coords
 void suffle_macro_array(MacroObject array[], const u16 array_size)
 {
-    u16 i, j, ii, temp;
+    u16 i, j, ii;
     for (i = 0; i < array_size - 1; i+=6) {
       MacroObject t;
       //j  = i /6;
@@ -307,6 +306,23 @@ void suffle_macro_array(MacroObject array[], const u16 array_size)
         array[i + ii] = array[j + ii];
         array[j + ii] = t;
       }
+   }
+   return;
+}
+
+
+void suffle_levelscript_array(LevelScript * array, const u16 array_size)
+{
+    u16 i, j, ii;
+    for (i = 0; i < array_size - 1; i+=LEVELSCRIPT_LINE_SIZE) {
+        LevelScript t;
+        j = rand_int() % ((array_size - 1)/LEVELSCRIPT_LINE_SIZE);
+        j*= LEVELSCRIPT_LINE_SIZE;
+        for (ii = 2; ii  <= 4; ii++){
+          t = array[i + ii];
+          array[i + ii] = array[j + ii];
+          array[j + ii] = t;
+        }
    }
    return;
 }

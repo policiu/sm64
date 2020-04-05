@@ -105,7 +105,7 @@ struct LoadedPreset {
 #define MACRO_OBJ_Z 3
 #define MACRO_OBJ_PARAMS 4
 #define MACRO_OBJ_ACT 5
-
+#include "game_init.h"
 void spawn_macro_objects(s16 areaIndex, s16 *macroObjList) {
     UNUSED u32 pad5C;
     s32 presetID;
@@ -175,6 +175,9 @@ void spawn_macro_objects(s16 areaIndex, s16 *macroObjList) {
             newObj->respawnInfoType = RESPAWN_INFO_TYPE_16;
             newObj->respawnInfo = macroObjList - 1;
             newObj->parentObj = newObj;
+            if (preset.model == MODEL_RED_COIN) {
+                helpme = newObj->oBehParams;
+            }
         }
     }
 }

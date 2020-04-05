@@ -42,6 +42,16 @@ static const LevelScript script_func_local_3[] = {
     OBJECT(/*model*/ MODEL_NONE, /*pos*/  7180,  3000,    0, /*angle*/ 0, 0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvBowserCourseRedCoinStar),
     RETURN(),
 };
+static LevelScript script_func_local_5[0];
+
+static void setup_script_func_local_5() {
+    u32 index = 0;
+}
+
+static void setup_level_scripts_local() {
+    setup_script_func_local_5();
+    suffle_levelscript_array(script_func_local_5, sizeof(script_func_local_5)/sizeof(script_func_local_5[0]));
+}
 
 const LevelScript level_bitdw_entry[] = {
     INIT_LEVEL(),
@@ -98,7 +108,7 @@ const LevelScript level_bitdw_entry[] = {
         JUMP_LINK(script_func_local_2),
         JUMP_LINK(script_func_local_3),
         TERRAIN(/*terrainData*/ bitdw_seg7_collision_level),
-        MACRO_OBJECTS(/*objList*/ bitdw_seg7_macro_objs),
+        //MACRO_OBJECTS(/*objList*/ bitdw_seg7_macro_objs),
         SHOW_DIALOG(/*index*/ 0x00, DIALOG_090),
         SET_BACKGROUND_MUSIC(/*settingsPreset*/ 0x0000, /*seq*/ SEQ_LEVEL_KOOPA_ROAD),
         TERRAIN_TYPE(/*terrainType*/ TERRAIN_STONE),
