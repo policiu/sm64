@@ -145,6 +145,7 @@ s8 gCourseNumToLevelTable[] = {
     LEVEL_TTC,
     LEVEL_RR,
     LEVEL_BITDW,
+    LEVEL_BITFS,
     LEVEL_BITS,
     LEVEL_PSS,
     LEVEL_COTMC,

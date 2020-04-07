@@ -80,10 +80,10 @@ static const LevelScript script_func_local_3[] = {
 };
 #define LEN_EXT 7
 static LevelScript script_func_local_4[15*7+1];
-static s32 setup_level_scripts_local(void) {
-
+static void setup_level_scripts_local(void) {
     u32 index;
     index = 0;
+    
     generate_enemy(script_func_local_4, &index,  -1204,  326,  3296,  0, 0, 0);
                                                 // Pos                Angle
     generate_enemy(script_func_local_4, &index,  -4508,  406,  4400,  0, 0, 0);
@@ -102,13 +102,11 @@ static s32 setup_level_scripts_local(void) {
     OBJECT_ASSIGNMENT(script_func_local_4, index, MODEL_YOSHI,          0, 3174, -5625,  0, 0, 0,  0x00000000,  bhvYoshi);
 
     script_func_local_4[index] = RETURN();
-    return 1;
+    return;
 }
 
 const LevelScript level_castle_grounds_entry[] = {
     CALL(16, generate_init_level),
-    CALL(0, setup_level_scripts_local),
-    SLEEP(10),
     INIT_LEVEL(),
     LOAD_MIO0(        /*seg*/ 0x07, _castle_grounds_segment_7SegmentRomStart, _castle_grounds_segment_7SegmentRomEnd),
     LOAD_MIO0(        /*seg*/ 0x0A, _water_skybox_mio0SegmentRomStart, _water_skybox_mio0SegmentRomEnd),
@@ -120,6 +118,7 @@ const LevelScript level_castle_grounds_entry[] = {
     LOAD_MIO0(        /*seg*/ 0x08, _common0_mio0SegmentRomStart, _common0_mio0SegmentRomEnd),
     LOAD_RAW(         /*seg*/ 0x0F, _common0_geoSegmentRomStart,  _common0_geoSegmentRomEnd),
     ALLOC_LEVEL_POOL(),
+    CALL(0, setup_level_scripts_local),
     MARIO(/*model*/ MODEL_MARIO, /*behParam*/ 0x00000001, /*beh*/ bhvMario),
     JUMP_LINK(script_func_global_1),
     //JUMP_LINK(script_func_global_11),

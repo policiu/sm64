@@ -467,10 +467,6 @@ static void level_cmd_place_object_ext(void) {
         spawnInfo->behaviorScript = CMD_GET(void *, 24);
         spawnInfo->unk18 = gLoadedGraphNodes[model];
         spawnInfo->next = gAreas[sCurrAreaIndex].objectSpawnInfos;
-        if (model == MODEL_RED_COIN){
-        helpme = model;
-        helpme5 = spawnInfo;
-        }
         gAreas[sCurrAreaIndex].objectSpawnInfos = spawnInfo;
     }
     sCurrentCmd = CMD_NEXT;

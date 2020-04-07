@@ -351,7 +351,13 @@ void print_act_selector_strings(void) {
     gDPSetEnvColor(gDisplayListHead++, 0, 0, 0, 255);
     // Print the name of the selected act.
     if (sVisibleStars != 0) {
-        selectedActName = segmented_to_virtual(actNameTbl[(currCourse[sSelectedActIndex][0] - 1) * 6 + currCourse[sSelectedActIndex][1]]);
+	// Castle Secrets do not have act names
+        if ( COURSE_IS_MAIN_COURSE(currCourse[sSelectedActIndex][0])) {
+            selectedActName = segmented_to_virtual(actNameTbl[(currCourse[sSelectedActIndex][0] - 1) * 6 + currCourse[sSelectedActIndex][1]]);
+        }
+        else {
+            selectedActName =segmented_to_virtual(actNameTbl[(COURSE_BITDW - 1)*6]);
+        }
 #ifdef VERSION_EU
         print_menu_generic_string(get_str_x_pos_from_center(ACT_NAME_X, selectedActName, 8.0f), 81, selectedActName);
 #elif defined(VERSION_SH)

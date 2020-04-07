@@ -7,6 +7,10 @@
 *.ilk
 *.exp
 
+# Debug
+*.txt
+compile_commands.json
+
 # Precompiled Headers
 *.gch
 *.pch

@@ -64,6 +64,7 @@ LAKITU_DIRS      := lakitu_cameraman toad mips boo_castle
 PEACH_DIRS       := bird peach yoshi
 BOWSER_DIRS      := bowser_flame impact_ring yellow_sphere bowser bomb impact_smoke
 MARIO_DIRS       := mario bubble walk_smoke burn_smoke stomp_smoke water_wave sparkle water_splash white_particle_small sparkle_animation
+ALL_DIRS         := $(KOOPA_DIRS) $(CAPSWITCH_DIRS) $(CHILLYCHIEF_DIRS) $(BULLY_DIRS) $(SPINDRIFT_DIRS) $(KING_BOBOMB_DIRS) $(BOO_DIRS) $(MR_I_DIRS) $(HOOT_DIRS) $(COINS_DIRS) $(BUBBA_DIRS) $(SKEETER_DIRS) $(KLEPTO_DIRS) $(SEA_DIRS) $(AMP_DIRS) $(MOLE_DIRS) $(LAKITU_DIRS) $(PEACH_DIRS) $(BOWSER_DIRS) $(MARIO_DIRS) 
 
 # Actor Files
 AMP_CHUCKYA_FILES            := $(foreach dir,$(addprefix $(ACTOR_DIR)/,$(AMP_DIRS)),$(patsubst %.png,%.inc.c,$(wildcard $(dir)/*.png)))
@@ -86,7 +87,7 @@ PEACH_TOADSTOOL_FILES        := $(foreach dir,$(addprefix $(ACTOR_DIR)/,$(PEACH_
 SEA_CREATURES_FILES          := $(foreach dir,$(addprefix $(ACTOR_DIR)/,$(SEA_DIRS)),$(patsubst %.png,%.inc.c,$(wildcard $(dir)/*.png)))
 SKEETER_FISH_FILES           := $(foreach dir,$(addprefix $(ACTOR_DIR)/,$(SKEETER_DIRS)),$(patsubst %.png,%.inc.c,$(wildcard $(dir)/*.png)))
 SPINDRIFT_PENGUIN_FILES      := $(foreach dir,$(addprefix $(ACTOR_DIR)/,$(SPINDRIFT_DIRS)),$(patsubst %.png,%.inc.c,$(wildcard $(dir)/*.png)))
-
+ALL_FILES                    := $(AMP_CHUCKYA_FILES)  $(BOBOMBS_BUBBLE_FILES)  $(BOO_BOOKEND_FILES)  $(CAPSWITCH_SPRINGBOARD_FILES)  $(COINS_PIPE_FILES)  $(BOWSER_FLAMES_FILES)  $(BUBBA_WIGGLER_FILES)  $(BULLY_BLARGG_FILES)  $(CHILLYCHIEF_FILES)  $(HOOT_THWOMP_FILES)  $(KOOPA_LOG_FILES)  $(KLEPTO_EYEROK_FILES)  $(LAKITU_TOAD_FILES)  $(MARIO_WATER_FILES)  $(MOLE_UKIKI_FILES)  $(MR_I_SWOOP_FILES)  $(PEACH_TOADSTOOL_FILES)  $(SEA_CREATURES_FILES)  $(SKEETER_FISH_FILES)  $(SPINDRIFT_PENGUIN_FILES) 
 # Actor dependencies
 $(BUILD_DIR)/actors/group0.o: $(addprefix $(BUILD_DIR)/,$(MARIO_WATER_FILES)) $(foreach dir,$(addprefix $(ACTOR_DIR)/,$(MARIO_DIRS)),$(wildcard $(dir)/*.c))
 $(BUILD_DIR)/actors/group1.o: $(addprefix $(BUILD_DIR)/,$(HOOT_THWOMP_FILES)) $(foreach dir,$(addprefix $(ACTOR_DIR)/,$(HOOT_DIRS)),$(wildcard $(dir)/*.c))
@@ -106,7 +107,7 @@ $(BUILD_DIR)/actors/group14.o: $(addprefix $(BUILD_DIR)/,$(KOOPA_LOG_FILES)) $(f
 $(BUILD_DIR)/actors/group15.o: $(addprefix $(BUILD_DIR)/,$(LAKITU_TOAD_FILES)) $(foreach dir,$(addprefix $(ACTOR_DIR)/,$(LAKITU_DIRS)),$(wildcard $(dir)/*.c))
 $(BUILD_DIR)/actors/group16.o: $(addprefix $(BUILD_DIR)/,$(CHILLYCHIEF_FILES)) $(foreach dir,$(addprefix $(ACTOR_DIR)/,$(CHILLYCHIEF_DIRS)),$(wildcard $(dir)/*.c))
 $(BUILD_DIR)/actors/group17.o: $(addprefix $(BUILD_DIR)/,$(MR_I_SWOOP_FILES)) $(foreach dir,$(addprefix $(ACTOR_DIR)/,$(MR_I_DIRS)),$(wildcard $(dir)/*.c))
-$(BUILD_DIR)/actors/common0.o: $(addprefix $(BUILD_DIR)/,$(AMP_CHUCKYA_FILES)) $(foreach dir,$(addprefix $(ACTOR_DIR)/,$(AMP_DIRS)),$(wildcard $(dir)/*.c))
+$(BUILD_DIR)/actors/common0.o: $(addprefix $(BUILD_DIR)/,$(ALL_FILES)) $(foreach dir,$(addprefix $(ACTOR_DIR)/,$(ALL_DIRS)),$(wildcard $(dir)/*.c))
 $(BUILD_DIR)/actors/common1.o: $(addprefix $(BUILD_DIR)/,$(COINS_PIPE_FILES)) $(foreach dir,$(addprefix $(ACTOR_DIR)/,$(COINS_DIRS)),$(wildcard $(dir)/*.c))
 
 # Actor Elf Files

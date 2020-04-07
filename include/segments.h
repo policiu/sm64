@@ -44,14 +44,15 @@
  */
 
 #define SEG_BUFFERS      0x8005C000 // 0x0085000 in size
-#define SEG_MAIN         0x800E1000 // 0x2328000 in size
-#define SEG_ENGINE 0x80313800       // 0x0017000 in size
-#define SEG_FRAMEBUFFERS 0x8032A800 // 0x0070800 in size
-#define SEG_POOL_START 0x8039B000   // 0x0165000 in size
-#define SEG_POOL_END     0x80800000
+#define SEG_MAIN         0x800E1000 // 0x1328000 in size
+#define SEG_ENGINE       0x80213800 // 0x0017000 in size
+#define SEG_FRAMEBUFFERS 0x8022A800 // 0x0070800 in size
+#define SEG_POOL_START   0x8029B000 // 0x0165000 in size
+#define SEG_POOL_END     RANDOMIZER_START
 #define SEG_POOL_END_4MB 0x80400000 // For the error message screen enhancement.
-#define SEG_GODDARD SEG_POOL_START + 0x113000
-#define RANDOMIZER_START SEG_GODDARD + 0x10000
+#define SEG_GODDARD      SEG_POOL_START + 0x113000
+#define RANDOMIZER_START 0x80700000
+#define RANDOMIZER_END   RANDOMIZER_START + 0x00100000
 #endif
 
 #endif // _SEGMENTS_H

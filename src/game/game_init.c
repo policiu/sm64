@@ -631,41 +631,6 @@ void thread5_game_loop(UNUSED void *arg) {
         config_gfx_pool();
         read_controller_inputs();
         addr = level_script_execute(addr);
-        /*
-        print_text_fmt_int(20,20, "Beh: %d",(helpme & 0xffff0000)>>32);
-        print_text_fmt_int(20,40, "x: %d", (helpme2 & 0xffff0000)>>32);
-        print_text_fmt_int(20,60, "j: %d", (helpme3 & 0xffff0000)>>32);
-        print_text_fmt_int(20,80, "i: %d", (helpme4 & 0xffff0000)>>32);
-        print_text_fmt_int(20,100, "Curr: %x", gSaveBuffer.files[1][0].gRandomSeed & 0x00FFFFFF);//(int)_common0_geoSegmentRomStart & 0x00FFFFFF);
-        print_text_fmt_int(20,120, "Old: %x", gSaveBuffer.files[1][1].gRandomSeed & 0x00FFFFFF); //(int)_common0_geoSegmentRomEnd & 0x00FFFFFF);
-        print_text_fmt_int(20,140, "Act: %x", gCurrActNum & 0x00FFFFFF); //(int)_common0_geoSegmentRomEnd & 0x00FFFFFF);
-        
-
-        for (i =14*6; i <14*6 + 6; i++){
-            print_text_fmt_int(220, 20 + 20*(i%6), "%x", sAllCourse[i][0]);
-            print_text_fmt_int(260, 20 + 20*(i%6), "%x", sAllCourse[i][1]);
-        }
-        */
-       /*
-
-           for (i =0; i < 12; i++){
-            print_text_fmt_int(20, 20 + 20*(i%12), "%d", helpme6[i]);
-            print_text_fmt_int(230, 20 + 20*(i%12), "%d",helpme6[i + 12  ]);
-           }
-*/
-       /*
-        if ( helpme5 != NULL){
-            print_text_fmt_int(20,180, "model: %x", helpme & 0x00ffffff);
-        print_text_fmt_int(20, 20, "x: %d", helpme5->startPos[0]   & 0x00FFFFFF);
-        print_text_fmt_int(20, 40, "y: %d", helpme5->startPos[1]  & 0x00FFFFFF);
-        print_text_fmt_int(20, 60, "z: %d", helpme5->startPos[2]  & 0x00FFFFFF);
-        print_text_fmt_int(20, 80, "a: %x", helpme5->startAngle[0]  & 0x00FFFFFF);
-        print_text_fmt_int(20, 100, "b: %x", helpme5->startAngle[1]  & 0x00FFFFFF);
-        print_text_fmt_int(20, 120, "c: %x", helpme5->startAngle[2]  & 0x00FFFFFF);
-        print_text_fmt_int(20, 140, "beh: %x", helpme5->behaviorArg  & 0x00FFFFFF);
-        print_text_fmt_int(20, 160, "behS: %x", (u32)helpme5->behaviorScript  & 0x00FFFFFF);
-        }
-        */
         //print_text_fmt_int(220, 20, "%x", sAllCourse[i][0] & 0x00FFFFFF);
 
         display_and_vsync();

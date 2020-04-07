@@ -7,6 +7,10 @@
 #include "segment_symbols.h"
 #include "level_commands.h"
 
+//#include "include/macro_preset_names.h"
+#include "include/macro_presets.h"
+#include "engine/randomizer.h"
+
 #include "game/level_update.h"
 
 #include "levels/scripts.h"
@@ -29,6 +33,8 @@ static const LevelScript script_func_local_1[] = {
     OBJECT(/*model*/ MODEL_BITDW_FERRIS_WHEEL_AXLE, /*pos*/  -204, -1924,  3381, /*angle*/ 0, 0, 0,  /*behParam*/ 0x00010000, /*beh*/ bhvFerrisWheelAxle),
     OBJECT(/*model*/ MODEL_BITDW_STAIRCASE,         /*pos*/  5279,  1740,    -6, /*angle*/ 0, 0, 0,  /*behParam*/ 0x00010000, /*beh*/ bhvAnimatesOnFloorSwitchPress),
     OBJECT(/*model*/ MODEL_PURPLE_SWITCH,           /*pos*/  3922,  1740,    -7, /*angle*/ 0, 0, 0,  /*behParam*/ 0x00000000, /*beh*/ bhvFloorSwitchAnimatesObject),
+        // Switch
+    OBJECT(/*model*/ MODEL_PURPLE_SWITCH, /*pos*/ -3100, -2946,  3530, /*angle*/     0,     0,     0, /*behParam*/ (0 << 16) + (0 & 0xFF00), /*beh*/ bhvFloorSwitchHiddenObjects),
     RETURN(),
 };
 
@@ -38,14 +44,79 @@ static const LevelScript script_func_local_2[] = {
     RETURN(),
 };
 
+
 static const LevelScript script_func_local_3[] = {
     OBJECT(/*model*/ MODEL_NONE, /*pos*/  7180,  3000,    0, /*angle*/ 0, 0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvBowserCourseRedCoinStar),
     RETURN(),
 };
-static LevelScript script_func_local_5[0];
+static LevelScript script_func_local_5[58*7+1];
 
 static void setup_script_func_local_5() {
     u32 index = 0;
+    // Sign
+    MACRO_TO_OBJECT_WITH_BEH_PARAM_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_wooden_signpost,             /*yaw*/   0, /*pos*/  5940,  2765,  -280, /*behParam*/ DIALOG_066);
+    //box
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_hidden_box,                  /*yaw*/   0, /*pos*/ -7810, -3360,  4500);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_hidden_box,                  /*yaw*/   0, /*pos*/ -7810, -3360,  4700);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_hidden_box,                  /*yaw*/   0, /*pos*/ -7810, -3360,  4900);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_hidden_box,                  /*yaw*/   0, /*pos*/ -3100, -3145,  4518);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_box_1up,                     /*yaw*/   0, /*pos*/ -4860,  1380,  -300);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_box_1up_running_away,        /*yaw*/   0, /*pos*/ -2420, -1140,  3700);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_box_metal_cap,               /*yaw*/   0, /*pos*/ -6420, -2900,  3880);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_box_three_coins,             /*yaw*/   0, /*pos*/ -5120,  1460, -2140);
+    // Red Coin
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_red_coin,                    /*yaw*/   0, /*pos*/ -3100, -2900,  4520);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_red_coin,                    /*yaw*/   0, /*pos*/ -4740,  1050, -2130);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_red_coin,                    /*yaw*/   0, /*pos*/ -3120,  1160, -2570);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_red_coin,                    /*yaw*/   0, /*pos*/ -4613,  1220,  -427);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_red_coin,                    /*yaw*/   0, /*pos*/ -1000,  1933,   466);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_red_coin,                    /*yaw*/   0, /*pos*/ -6475,   125,   890);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_red_coin,                    /*yaw*/   0, /*pos*/ -7810, -3100,  4900);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_red_coin,                    /*yaw*/   0, /*pos*/  1500,  1066,  -166);
+    // Coins
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_coin_ring_horizontal_flying, /*yaw*/   0, /*pos*/ -2060,  1200,  -940);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_coin_ring_horizontal_flying, /*yaw*/   0, /*pos*/ -1660, -3000,  3900);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_coin_line_horizontal,        /*yaw*/   0, /*pos*/ -2400,  -800,  1900);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_coin_line_horizontal,        /*yaw*/  90, /*pos*/  1660, -1980,  3660);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_coin_ring_horizontal,        /*yaw*/   0, /*pos*/ -4620,  1220,  -300);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_yellow_coin,                 /*yaw*/   0, /*pos*/  -170,  1070,   300);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_yellow_coin,                 /*yaw*/   0, /*pos*/  1450,  1400,   300);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_yellow_coin,                 /*yaw*/   0, /*pos*/  1450,  1400,   700);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_yellow_coin,                 /*yaw*/   0, /*pos*/  4640,  2360,     0);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_yellow_coin,                 /*yaw*/   0, /*pos*/  4900,  2600,     0);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_yellow_coin,                 /*yaw*/   0, /*pos*/  5180,  2820,     0);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_yellow_coin,                 /*yaw*/   0, /*pos*/  2760,  1940,   500);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_yellow_coin,                 /*yaw*/   0, /*pos*/  2760,  1940,   180);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_yellow_coin,                 /*yaw*/   0, /*pos*/  -170,  1070,   700);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_yellow_coin_2,               /*yaw*/   0, /*pos*/ -2460,   812,   800);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_yellow_coin_2,               /*yaw*/   0, /*pos*/ -3080,   813,   840);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_yellow_coin_2,               /*yaw*/   0, /*pos*/ -3660,   873,   620);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_yellow_coin_2,               /*yaw*/   0, /*pos*/ -4060,  1011,   240);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_yellow_coin,                 /*yaw*/   0, /*pos*/  -150, -1200,  3660);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_yellow_coin,                 /*yaw*/   0, /*pos*/  4380,  2120,     0);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_yellow_coin,                 /*yaw*/   0, /*pos*/  5420,  3000,     0);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_yellow_coin,                 /*yaw*/   0, /*pos*/ -2357,  1200, -2454);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_yellow_coin,                 /*yaw*/   0, /*pos*/ -2357,  1300, -2454);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_yellow_coin,                 /*yaw*/   0, /*pos*/ -2357,  1400, -2454);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_yellow_coin,                 /*yaw*/   0, /*pos*/  -170,  1070,   500);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_yellow_coin,                 /*yaw*/   0, /*pos*/  1450,  1400,   500);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_1up_2,                       /*yaw*/   0, /*pos*/    33,  1900,   333);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_1up,                         /*yaw*/   0, /*pos*/   610,  1045,  -167);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_1up_2,                       /*yaw*/   0, /*pos*/  -485,  1054,  -167);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_1up_3,                       /*yaw*/   0, /*pos*/  1100,  2080,   363);
+    // Enemies
+    generate_enemy(script_func_local_5, &index, /*pos*/  3180,  1020,   240, /*angle*/ 0, 0, 0);
+    generate_enemy(script_func_local_5, &index, /*pos*/  2860,  1020,   580, /*angle*/ 0, 0, 0);
+    generate_enemy(script_func_local_5, &index, /*pos*/ -2560, -1433,  3280, /*angle*/ 0, 0, 0);
+    generate_enemy(script_func_local_5, &index, /*pos*/ -2060, -1433,  3540, /*angle*/ 0, 0, 0);
+    generate_enemy(script_func_local_5, &index, /*pos*/ -2720, -1433,  3860, /*angle*/ 0, 0, 0);
+    generate_enemy(script_func_local_5, &index, /*pos*/ -1680,  1024,   580, /*angle*/ 0, 0, 0);
+    generate_enemy(script_func_local_5, &index, /*pos*/ -4620,  1220,  -300, /*angle*/ 0, 0, 0);
+    generate_enemy(script_func_local_5, &index, /*pos*/ -5300,    20,  1000, /*angle*/ 0, 0, 0);
+    generate_enemy(script_func_local_5, &index, /*pos*/ -7140,   500,   380, /*angle*/ 0, 0, 0);
+    generate_enemy(script_func_local_5, &index, /*pos*/ -7120,  1050, -2080, /*angle*/ 0, 0, 0);
+    generate_enemy(script_func_local_5, &index, /*pos*/ -6480,   240,  1000, /*angle*/ 0, 0, 0);
+    script_func_local_5[index] = RETURN();
 }
 
 static void setup_level_scripts_local() {
@@ -54,6 +125,8 @@ static void setup_level_scripts_local() {
 }
 
 const LevelScript level_bitdw_entry[] = {
+    CALL(LEVEL_BITDW, generate_init_level),
+    CALL(0, setup_level_scripts_local),
     INIT_LEVEL(),
     LOAD_MIO0(        /*seg*/ 0x07, _bitdw_segment_7SegmentRomStart, _bitdw_segment_7SegmentRomEnd),
     LOAD_MIO0(        /*seg*/ 0x0A, _bidw_skybox_mio0SegmentRomStart, _bidw_skybox_mio0SegmentRomEnd),
@@ -107,6 +180,7 @@ const LevelScript level_bitdw_entry[] = {
         JUMP_LINK(script_func_local_1),
         JUMP_LINK(script_func_local_2),
         JUMP_LINK(script_func_local_3),
+        JUMP_LINK(script_func_local_5),
         TERRAIN(/*terrainData*/ bitdw_seg7_collision_level),
         //MACRO_OBJECTS(/*objList*/ bitdw_seg7_macro_objs),
         SHOW_DIALOG(/*index*/ 0x00, DIALOG_090),

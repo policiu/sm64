@@ -12,6 +12,8 @@
 
 extern u8 _engineSegmentRomStart[];
 extern u8 _engineSegmentRomEnd[];
+extern u8 _randomSegmentRomStart[];
+extern u8 _randomSegmentRomEnd[];
 extern u8 gDecompressionHeap[];
 
 // round up to the next multiple
@@ -353,6 +355,20 @@ void load_engine_code_segment(void) {
     bzero(startAddr, totalSize);
     osWritebackDCacheAll();
     dma_read(startAddr, _engineSegmentRomStart, _engineSegmentRomEnd);
+    osInvalICache(startAddr, totalSize);
+    osInvalDCache(startAddr, totalSize);
+        load_random_code_segment();
+        
+}
+
+void load_random_code_segment(void) {
+    void * startAddr = (void *) (RANDOMIZER_START);
+    u32 totalSize = RANDOMIZER_END - RANDOMIZER_START;
+    UNUSED u32 alignedSize = ALIGN16(_randomSegmentRomEnd - _randomSegmentRomStart);
+
+    bzero(startAddr, totalSize);
+    osWritebackDCacheAll();
+    dma_read(startAddr, _randomSegmentRomStart, _randomSegmentRomEnd);
     osInvalICache(startAddr, totalSize);
     osInvalDCache(startAddr, totalSize);
 }

@@ -200,6 +200,37 @@
 #define OBJECT_ASSIGNMENT(array, index, model, posX, posY, posZ, angleX, angleY, angleZ, behParam, beh) \
     OBJECT_WITH_ACTS_ASSIGNMENT(array, index, model, posX, posY, posZ, angleX, angleY, angleZ, behParam, beh, 0x1F)
 
+// Macro To Objects
+
+#define MACRO_TO_OBJECT_WITH_BEH_PARAM_AND_ACTS(preset, yaw, posX, posY, posZ, behParam, acts) \
+    OBJECT_WITH_ACTS(MacroObjectPresets[preset].model, posX, posY, posZ, 0, yaw, 0, \
+        (((MacroObjectPresets[preset].param & 0x00FF) + (behParam & 0xFF00)) << 16) + (((MacroObjectPresets[preset].param & 0x00FF) + (behParam & 0xFF00)) && 0xFF00), \
+        MacroObjectPresets[preset].behavior, acts)
+
+#define MACRO_TO_OBJECT_WITH_ACTS(preset, yaw, posX, posY, posZ, acts) \
+    MACRO_TO_OBJECT_WITH_BEH_PARAM_AND_ACTS(preset, yaw, posX, posY, posZ, 0, acts)
+
+#define MACRO_TO_OBJECT_WITH_BEH_PARAM(preset, yaw, posX, posY, posZ, behParam) \
+    MACRO_TO_OBJECT_WITH_BEH_PARAM_AND_ACTS(preset, yaw, posX, posY, posZ, behParam, ALL_ACTS)
+
+#define MACRO_TO_OBJECT(preset, yaw, posX, posY, posZ) \
+    MACRO_TO_OBJECT_WITH_BEH_PARAM(preset, yaw, posX, posY, posZ, 0)
+
+//TODO: if param != 0, do mask
+#define MACRO_TO_OBJECT_WITH_BEH_PARAM_AND_ACTS_ASSIGNMENT(array, index, preset, yaw, posX, posY, posZ, behParam, acts) \
+    OBJECT_WITH_ACTS_ASSIGNMENT(array, index, MacroObjectPresets[preset].model, posX, posY, posZ, 0, yaw, 0, \
+        (((MacroObjectPresets[preset].param & 0x00FF) + (behParam & (MacroObjectPresets[preset].param ? 0xFF00 : 0xFFFF))) << 16) + (((MacroObjectPresets[preset].param & 0x00FF) + (behParam & (MacroObjectPresets[preset].param ? 0xFF00 : 0xFFFF))) && 0xFF00), \
+        MacroObjectPresets[preset].behavior, acts)
+
+#define MACRO_TO_OBJECT_WITH_ACTS_ASSIGNMENT(array, index, preset, yaw, posX, posY, posZ, acts) \
+    MACRO_TO_OBJECT_WITH_BEH_PARAM_AND_ACTS_ASSIGNMENT(array, index, preset, yaw, posX, posY, posZ, 0, acts)
+
+#define MACRO_TO_OBJECT_WITH_BEH_PARAM_ASSIGNMENT(array, index, preset, yaw, posX, posY, posZ, behParam) \
+    MACRO_TO_OBJECT_WITH_BEH_PARAM_AND_ACTS_ASSIGNMENT(array, index, preset, yaw, posX, posY, posZ, behParam, ALL_ACTS)
+
+#define MACRO_TO_OBJECT_ASSIGNMENT(array, index, preset, yaw, posX, posY, posZ) \
+    MACRO_TO_OBJECT_WITH_BEH_PARAM_ASSIGNMENT(array, index, preset, yaw, posX, posY, posZ, 0)
+
 
 
 #define MARIO(unk3, behArg, beh) \

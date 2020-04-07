@@ -175,9 +175,6 @@ void spawn_macro_objects(s16 areaIndex, s16 *macroObjList) {
             newObj->respawnInfoType = RESPAWN_INFO_TYPE_16;
             newObj->respawnInfo = macroObjList - 1;
             newObj->parentObj = newObj;
-            if (preset.model == MODEL_RED_COIN) {
-                helpme = newObj->oBehParams;
-            }
         }
     }
 }
