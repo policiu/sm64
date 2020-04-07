@@ -611,8 +611,9 @@ void initiate_warp(s16 destLevel, s16 destArea, s16 destWarpNode, s32 arg3) {
     } else {
         sWarpDest.type = WARP_TYPE_SAME_AREA;
     }
-
-    sWarpDest.levelNum = destLevel;
+    if (sWarpDest.type != WARP_TYPE_CHANGE_AREA || sWarpDest.type != WARP_TYPE_SAME_AREA ) {
+        sWarpDest.levelNum = destLevel;
+    }
     sWarpDest.areaIdx = destArea;
     sWarpDest.nodeId = destWarpNode;
     sWarpDest.arg = arg3;
@@ -886,7 +887,11 @@ void initiate_delayed_warp(void) {
                                   warpNode->node.destNode, sDelayedWarpArg);
                     //if (currWarpOp == WARP_OP_STAR_EXIT || currWarpOp == WARP_OP_DEATH
                     //   || currWarpOp == WARP_OP_WARP_FLOOR)
-                    gCurrLevelNumOld = gCurrLevelNum;;
+                    if (sWarpDest.type != WARP_TYPE_CHANGE_AREA || sWarpDest.type != WARP_TYPE_SAME_AREA )  {
+                        // Do nothing.
+                    } else {
+                        gCurrLevelNumOld = gCurrLevelNum;
+                    }
                     check_if_should_set_warp_checkpoint(&warpNode->node);
                     if (sWarpDest.type != WARP_TYPE_CHANGE_LEVEL) {
                         level_set_transition(2, NULL);

@@ -580,11 +580,13 @@ void setup_game_memory(void) {
 #include "./include/segment_symbols.h"
 #include "./src/engine/randomizer.h"
 #include "./src/buffers/buffers.h"
+#include "libc/stdio.h"
 int helpme = 0;
 int helpme2 = 0;
 int helpme3 = 0;
 int helpme4 = 0;
 s16 helpme6[4*3*2] = {-1};
+        char myBuff[30];
 struct SpawnInfo * helpme5 = NULL;
 // main game loop thread. runs forever as long as the game
 // continues.
@@ -631,8 +633,14 @@ void thread5_game_loop(UNUSED void *arg) {
         config_gfx_pool();
         read_controller_inputs();
         addr = level_script_execute(addr);
-        //print_text_fmt_int(220, 20, "%x", sAllCourse[i][0] & 0x00FFFFFF);
-
+/*
+        sprintf(myBuff, "Level Old: %x", helpme);
+        print_text(20, 20, myBuff);
+        sprintf(myBuff, "LevelOld: %x", gCurrLevelNumOld);
+        print_text(20, 40, myBuff);
+        sprintf(myBuff, "Level: %x", gCurrLevelNum);
+        print_text(20, 60, myBuff);
+*/
         display_and_vsync();
 
         // when debug info is enabled, print the "BUF %d" information.
