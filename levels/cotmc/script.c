@@ -7,6 +7,9 @@
 #include "segment_symbols.h"
 #include "level_commands.h"
 
+#include "include/macro_presets.h"
+#include "engine/randomizer.h"
+
 #include "game/level_update.h"
 
 #include "levels/scripts.h"
@@ -28,7 +31,43 @@ static const LevelScript script_func_local_2[] = {
     RETURN(),
 };
 
+static LevelScript script_func_local_5[21*7+1];
+
+static void setup_script_func_local_5() {
+    u32 index = 0;
+    MACRO_TO_OBJECT_WITH_BEH_PARAM_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_wooden_signpost,      /*yaw*/ 270, /*pos*/   -71,    20,   720, /*behParam*/ DIALOG_123);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_1up,                  /*yaw*/   0, /*pos*/   900,   260, -3620);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_box_1up_running_away, /*yaw*/   0, /*pos*/   -20,   180,  2060);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_box_metal_cap,        /*yaw*/   0, /*pos*/  -360,   300,  -200);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_box_metal_cap,        /*yaw*/   0, /*pos*/   300,   620, -5280);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_coin_line_horizontal, /*yaw*/   0, /*pos*/   400,   256, -4300);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_coin_ring_horizontal, /*yaw*/   0, /*pos*/     0,  -450, -7000);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_coin_line_horizontal, /*yaw*/   0, /*pos*/     0,  -170, -1660);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_coin_line_horizontal, /*yaw*/   0, /*pos*/   -20,  -211, -3940);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_red_coin,             /*yaw*/   0, /*pos*/   200,  -291, -5600);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_red_coin,             /*yaw*/   0, /*pos*/   980,   260, -3430);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_red_coin,             /*yaw*/   0, /*pos*/  -540,  -352, -5940);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_red_coin,             /*yaw*/   0, /*pos*/  -300,   450, -6240);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_red_coin,             /*yaw*/   0, /*pos*/  -200,  -400, -6680);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_red_coin,             /*yaw*/   0, /*pos*/   250,   450, -6400);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_red_coin,             /*yaw*/   0, /*pos*/   540,  -361, -6340);
+    MACRO_TO_OBJECT_ASSIGNMENT(script_func_local_5, index, /*preset*/ macro_red_coin,             /*yaw*/   0, /*pos*/   980,   260, -3810);
+    generate_enemy(script_func_local_5, &index, /*pos*/ -2920,   220,   -20, /*angle*/ 0, 0, 0);
+    generate_enemy(script_func_local_5, &index, /*pos*/ -1380,   240,   740, /*angle*/ 0, 0, 0);
+    generate_enemy(script_func_local_5, &index, /*pos*/   360,   200, -1120, /*angle*/ 0, 0, 0);
+    generate_enemy(script_func_local_5, &index, /*pos*/  -340,   260, -2620, /*angle*/ 0, 0, 0);
+    script_func_local_5[index] = RETURN();
+}
+
+static void setup_level_scripts_local() {
+    setup_script_func_local_5();
+    suffle_levelscript_array(script_func_local_5, sizeof(script_func_local_5)/sizeof(script_func_local_5[0]));
+}
+
+
 const LevelScript level_cotmc_entry[] = {
+    CALL(LEVEL_COTMC, generate_init_level),
+    CALL(0, setup_level_scripts_local),
     INIT_LEVEL(),
     LOAD_MIO0(        /*seg*/ 0x07, _cotmc_segment_7SegmentRomStart, _cotmc_segment_7SegmentRomEnd),
     LOAD_MIO0_TEXTURE(/*seg*/ 0x09, _cave_mio0SegmentRomStart, _cave_mio0SegmentRomEnd),
@@ -52,8 +91,9 @@ const LevelScript level_cotmc_entry[] = {
         WARP_NODE(/*id*/ 0xF3, /*destLevel*/ LEVEL_CASTLE_GROUNDS, /*destArea*/ 0x01, /*destNode*/ 0x14, /*flags*/ WARP_NO_CHECKPOINT),
         JUMP_LINK(script_func_local_2),
         JUMP_LINK(script_func_local_1),
+        JUMP_LINK(script_func_local_5),
         TERRAIN(/*terrainData*/ cotmc_seg7_collision_level),
-        MACRO_OBJECTS(/*objList*/ cotmc_seg7_macro_objs),
+        //MACRO_OBJECTS(/*objList*/ cotmc_seg7_macro_objs),
         SHOW_DIALOG(/*index*/ 0x00, DIALOG_130),
         SET_BACKGROUND_MUSIC(/*settingsPreset*/ 0x0004, /*seq*/ SEQ_LEVEL_UNDERGROUND),
         TERRAIN_TYPE(/*terrainType*/ TERRAIN_STONE),
