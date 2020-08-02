@@ -1091,7 +1091,7 @@ SECTIONS
       BUILD_DIR/levels/wmotr/script.o(.bss*);
    }
    END_NOLOAD(random)
-    ASSERT((. <= RANDOMIZER_END), "Error: buffers segment extended into OOB.") 
+    ASSERT((. <= RANDOMIZER_END), "Error: randomizer segment extended past the end of memory.") 
 #define STUB_LEVEL(_0, _1, _2, _3, _4, _5, _6, _7, _8)
 #define DEFINE_LEVEL(_0, _1, _2, folder, _4, _5, _6, _7, _8, _9, _10) STANDARD_LEVEL(folder)
 

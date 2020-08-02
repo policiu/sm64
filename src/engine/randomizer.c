@@ -274,8 +274,8 @@ void generate_star_select(s16 currCourse[6][2], u8 courseNum) {
       currCourse[i%6][0] = sAllCourse[i][0];
       currCourse[i%6][1] = sAllCourse[i][1]; // 6 Acts
    }
-   currCourse[0][0] = COURSE_BBH;
-   currCourse[0][1] = 1;
+   currCourse[0][0] = COURSE_LLL;
+   currCourse[0][1] = 0;
 
 }
 
