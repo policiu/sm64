@@ -30,4 +30,4 @@
 	array[index++] = CMD_HH(c, d); \
 	array[index++] = CMD_HH(e, f);
 
-#endif
+#endif // COMMAND_MACROS_BASE_H

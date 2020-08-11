@@ -1,26 +1,25 @@
-#include <ultra64.h>
+#include <PR/ultratypes.h>
 
-#include "sm64.h"
 #include "audio/external.h"
-#include "game/game_init.h"
-#include "game/memory.h"
-#include "game/area.h"
-#include "game/save_file.h"
-#include "game/object_helpers.h"
-#include "game/ingame_menu.h"
-#include "game/level_update.h"
-#include "game/segment2.h"
-#include "game/segment7.h"
-#include "game/object_list_processor.h"
+#include "behavior_data.h"
 #include "engine/behavior_script.h"
 #include "engine/graph_node.h"
-#include "engine/randomizer.h"
-#include "behavior_data.h"
-#include "text_strings.h"
-#include "star_select.h"
 #include "eu_translation.h"
-#include <prevent_bss_reordering.h>
-
+#include "game/area.h"
+#include "game/game_init.h"
+#include "game/ingame_menu.h"
+#include "game/level_update.h"
+#include "game/memory.h"
+#include "game/object_helpers.h"
+#include "game/object_list_processor.h"
+#include "game/save_file.h"
+#include "game/segment2.h"
+#include "game/segment7.h"
+#include "sm64.h"
+#include "star_select.h"
+#include "text_strings.h"
+#include "prevent_bss_reordering.h"
+#include "random/randomizer.h"
 /**
  * @file star_select.c
  * This file implements how the star select screen (act selector) function.
@@ -131,7 +130,6 @@ void bhv_act_selector_init(void) {
             }
         }
         sVisibleStars++;
-        //i++;
     }
 
     // If the stars have been collected in order so far, show the next star.
@@ -308,6 +306,7 @@ void print_act_selector_strings(void) {
             levelNameTbl = segmented_to_virtual(course_name_table_eu_de);
             break;
     }
+    //currLevelName = segmented_to_virtual(levelNameTbl[gCurrCourseNum - 1]);
 #endif
     if (updateCur){
         updateCur = 0;
@@ -363,7 +362,7 @@ void print_act_selector_strings(void) {
 #elif defined(VERSION_SH)
         actNameX = get_str_x_pos_from_center_scale(ACT_NAME_X, selectedActName, 8.0f);
         print_menu_generic_string(actNameX, 81, selectedActName);
-#else        
+#else
         actNameX = get_str_x_pos_from_center(ACT_NAME_X, selectedActName, 8.0f);
         print_menu_generic_string(actNameX, 81, selectedActName);
 #endif
@@ -429,7 +428,7 @@ s32 lvl_init_act_selector_values_and_stars(UNUSED s32 arg, UNUSED s32 unused) {
 
 /**
  * Loads act selector button actions with selected act value checks.
- * Also updates objects and returns act number selected after is choosen.
+ * Also updates objects and returns act number selected after is chosen.
  */
 s32 lvl_update_obj_and_load_act_button_actions(UNUSED s32 arg, UNUSED s32 unused) {
     if (sActSelectorMenuTimer >= 11) {

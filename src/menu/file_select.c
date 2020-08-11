@@ -1,26 +1,26 @@
-#include <ultra64.h>
+#include <PR/ultratypes.h>
+#include <PR/gbi.h>
 
-#include "sm64.h"
 #include "audio/external.h"
-#include "game/game_init.h"
-#include "game/ingame_menu.h"
-#include "game/object_helpers.h"
-#include "game/area.h"
-#include "game/save_file.h"
-#include "game/spawn_object.h"
-#include "game/object_list_processor.h"
-#include "game/segment2.h"
-#include "game/segment7.h"
-#include "game/print.h"
+#include "behavior_data.h"
+#include "dialog_ids.h"
 #include "engine/behavior_script.h"
 #include "engine/graph_node.h"
 #include "engine/math_util.h"
-#include "behavior_data.h"
-#include "text_strings.h"
 #include "file_select.h"
-#include "../engine/randomizer.h"
-#include "dialog_ids.h"
-
+#include "game/area.h"
+#include "game/game_init.h"
+#include "game/ingame_menu.h"
+#include "game/object_helpers.h"
+#include "game/object_list_processor.h"
+#include "game/print.h"
+#include "game/save_file.h"
+#include "game/segment2.h"
+#include "game/segment7.h"
+#include "game/spawn_object.h"
+#include "sm64.h"
+#include "text_strings.h"
+#include "random/randomizer.h"
 #include "eu_translation.h"
 #ifdef VERSION_EU
 #undef LANGUAGE_FUNCTION
@@ -54,7 +54,7 @@ static s16 sSoundTextY;
 #else
 #define NUM_BUTTONS 32 + 3
 #endif
-// 35
+
 // Amount of main menu buttons defined in the code called by spawn_object_rel_with_rot.
 // See file_select.h for the names in MenuButtonTypes.
 static struct Object *sMainMenuButtons[NUM_BUTTONS];
@@ -315,6 +315,7 @@ static unsigned char textNew[][5] = {{ TEXT_NEW }, { TEXT_NEW_FR }, { TEXT_NEW_D
 static unsigned char starIcon[] = { GLYPH_STAR, GLYPH_SPACE };
 static unsigned char xIcon[] = { GLYPH_MULTIPLY, GLYPH_SPACE };
 #endif
+
 /**
  * Yellow Background Menu Initial Action
  * Rotates the background at 180 grades and it's scale.
@@ -1576,15 +1577,23 @@ void check_main_menu_clicked_buttons(void) {
                     	sMainMenuButtons[MENU_BUTTON_RANDOM_FILE_B]->oMenuButtonScale = 1.0f;
                     	sMainMenuButtons[MENU_BUTTON_RANDOM_FILE_B]->oMenuButtonState = MENU_BUTTON_STATE_GROWING;
                     	sSelectedButtonID = MENU_BUTTON_RANDOM_FILE_B;
-                }
-                else{                    
-                    sMainMenuButtons[buttonID]->oMenuButtonState = MENU_BUTTON_STATE_GROWING;
-                    sSelectedButtonID = buttonID;
-		}                    
-	        break;   
+                    }
+                    else{                    
+                        sMainMenuButtons[buttonID]->oMenuButtonState = MENU_BUTTON_STATE_GROWING;
+                        sSelectedButtonID = buttonID;
+		    }                    
+	            break;   
+            	}
             }
+	}
+#ifdef VERSION_EU
+        // Open Options Menu if sOpenLangSettings is TRUE (It's TRUE when there's no saves)
+        if (sOpenLangSettings == TRUE) {
+            sMainMenuButtons[MENU_BUTTON_SOUND_MODE]->oMenuButtonState = MENU_BUTTON_STATE_GROWING;
+            sSelectedButtonID = MENU_BUTTON_SOUND_MODE;
+            sOpenLangSettings = FALSE;
         }
-    }
+#endif
 
         // Play sound of the save file clicked
         switch (sSelectedButtonID) {
@@ -2910,7 +2919,6 @@ void print_score_file_star_score(s8 fileIndex, s16 courseIndex, s16 x, s16 y) {
         print_score_file_star_score(fileIndex, courseIndex - 1, 171, 23 + 12 * courseIndex);                        \
         print_score_file_course_coin_score(fileIndex, courseIndex - 1, 213, 23 + 12 * courseIndex);
 #endif
-
     // Course values are indexed, from Bob-omb Battlefield to Rainbow Ride
     PRINT_COURSE_SCORES(COURSE_BOB, PADCHAR) // BOB
     PRINT_COURSE_SCORES(COURSE_WF, PADCHAR) // WF
@@ -3021,7 +3029,7 @@ static void print_file_select_strings(void) {
 /**
  * Geo function that prints file select strings and the cursor.
  */
-Gfx *geo_file_select_strings_and_menu_cursor(s32 callContext, UNUSED struct GraphNode *node, UNUSED f32 mtx[4][4]) {
+Gfx *geo_file_select_strings_and_menu_cursor(s32 callContext, UNUSED struct GraphNode *node, UNUSED Mat4 mtx) {
     if (callContext == GEO_CONTEXT_RENDER) {
         print_file_select_strings();
         print_menu_cursor();

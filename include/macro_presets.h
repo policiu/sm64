@@ -1,5 +1,5 @@
-#ifndef _MACRO_PRESETS_H
-#define _MACRO_PRESETS_H
+#ifndef MACRO_PRESETS_H
+#define MACRO_PRESETS_H
 
 #include "macro_preset_names.h"
 #include "behavior_data.h"
@@ -14,4 +14,4 @@ struct MacroPreset
 
 extern struct MacroPreset MacroObjectPresets[];
 
-#endif // _MACRO_PRESETS_H
+#endif // MACRO_PRESETS_H

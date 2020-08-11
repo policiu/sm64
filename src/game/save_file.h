@@ -1,5 +1,7 @@
-#ifndef _SAVE_FILE_H_
-#define _SAVE_FILE_H_
+#ifndef SAVE_FILE_H
+#define SAVE_FILE_H
+
+#include <PR/ultratypes.h>
 
 #include "types.h"
 #include "area.h"
@@ -157,8 +159,8 @@ u32 save_file_get_random_seed(void);
 void save_file_move_cap_to_default_location(void);
 
 void disable_warp_checkpoint(void);
-void check_if_should_set_warp_checkpoint(struct WarpNode *a);
-s32 check_warp_checkpoint(struct WarpNode *a);
+void check_if_should_set_warp_checkpoint(struct WarpNode *warpNode);
+s32 check_warp_checkpoint(struct WarpNode *warpNode);
 
 #ifdef VERSION_EU
 enum EuLanguages {
@@ -171,4 +173,4 @@ void eu_set_language(u16 language);
 u16 eu_get_language(void);
 #endif
 
-#endif
+#endif // SAVE_FILE_H

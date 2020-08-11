@@ -8,11 +8,11 @@
 #include "level_commands.h"
 
 #include "include/macro_presets.h"
-#include "engine/randomizer.h"
+#include "random/randomizer.h"
 
 #include "level_misc_macros.h"
 #include "game/level_update.h"
-#include "engine/randomizer.h"
+#include "random/randomizer.h"
 
 #include "levels/scripts.h"
 
@@ -209,39 +209,27 @@ const LevelScript level_bob_entry[] = {
     LOAD_MODEL_FROM_GEO(MODEL_BOB_BARS_GRILLS, bob_geo_000470),
 
     AREA(/*index*/ 1, bob_geo_000488),
-    JUMP_LINK(script_func_local_1),
-    JUMP_LINK(script_func_local_2),
-    JUMP_LINK(script_func_local_3),
-    JUMP_LINK(script_func_local_5),
-    OBJECT(/*model*/ MODEL_NONE, /*pos*/ -6558, 1000, 6464, /*angle*/ 0, 135, 0,
-           /*behParam*/ 0x000A0000, /*beh*/ bhvWarps74),
-    OBJECT(/*model*/ MODEL_NONE, /*pos*/ 583, 2683, -5387, /*angle*/ 0, -154, 0,
-           /*behParam*/ 0x000B0000, /*beh*/ bhvFadingWarp),
-    OBJECT(/*model*/ MODEL_NONE, /*pos*/ 1680, 3835, -5523, /*angle*/ 0, -153, 0,
-           /*behParam*/ 0x000C0000, /*beh*/ bhvFadingWarp),
-    OBJECT(/*model*/ MODEL_NONE, /*pos*/ -6612, 1024, -3351, /*angle*/ 0, 107, 0,
-           /*behParam*/ 0x000D0000, /*beh*/ bhvFadingWarp),
-    OBJECT(/*model*/ MODEL_NONE, /*pos*/ 1980, 768, 6618, /*angle*/ 0, -151, 0, /*behParam*/ 0x000E0000,
-           /*beh*/ bhvFadingWarp),
-    WARP_NODE(/*id*/ 0x0A, /*destLevel*/ 0x09, /*destArea*/ 0x01, /*destNode*/ 0x0A,
-              /*flags*/ WARP_NO_CHECKPOINT),
-    WARP_NODE(/*id*/ 0x0B, /*destLevel*/ 0x09, /*destArea*/ 0x01, /*destNode*/ 0x0C,
-              /*flags*/ WARP_NO_CHECKPOINT),
-    WARP_NODE(/*id*/ 0x0C, /*destLevel*/ 0x09, /*destArea*/ 0x01, /*destNode*/ 0x0B,
-              /*flags*/ WARP_NO_CHECKPOINT),
-    WARP_NODE(/*id*/ 0x0D, /*destLevel*/ 0x09, /*destArea*/ 0x01, /*destNode*/ 0x0E,
-              /*flags*/ WARP_NO_CHECKPOINT),
-    WARP_NODE(/*id*/ 0x0E, /*destLevel*/ 0x09, /*destArea*/ 0x01, /*destNode*/ 0x0D,
-              /*flags*/ WARP_NO_CHECKPOINT),
-    WARP_NODE(/*id*/ 0xF0, /*destLevel*/ 0x06, /*destArea*/ 0x01, /*destNode*/ 0x32,
-              /*flags*/ WARP_NO_CHECKPOINT),
-    WARP_NODE(/*id*/ 0xF1, /*destLevel*/ 0x06, /*destArea*/ 0x01, /*destNode*/ 0x64,
-              /*flags*/ WARP_NO_CHECKPOINT),
-    TERRAIN(/*terrainData*/ bob_seg7_collision_level),
-    //MACRO_OBJECTS(/*objList*/ bob_seg7_macro_objs),
-    SHOW_DIALOG(/*index*/ 0x00, /*dialogid*/ 0x00),
-    SET_BACKGROUND_MUSIC(/*settingsPreset*/ 0x0000, /*seq*/ SEQ_LEVEL_GRASS),
-    TERRAIN_TYPE(/*terrainType*/ TERRAIN_GRASS),
+        JUMP_LINK(script_func_local_1),
+        JUMP_LINK(script_func_local_2),
+        JUMP_LINK(script_func_local_3),
+    	JUMP_LINK(script_func_local_5),
+        OBJECT(/*model*/ MODEL_NONE, /*pos*/ -6558,  1000,  6464, /*angle*/ 0, 135, 0,  /*behParam*/ 0x000A0000, /*beh*/ bhvSpinAirborneWarp),
+        OBJECT(/*model*/ MODEL_NONE, /*pos*/   583,  2683, -5387, /*angle*/ 0, -154, 0, /*behParam*/ 0x000B0000, /*beh*/ bhvFadingWarp),
+        OBJECT(/*model*/ MODEL_NONE, /*pos*/  1680,  3835, -5523, /*angle*/ 0, -153, 0, /*behParam*/ 0x000C0000, /*beh*/ bhvFadingWarp),
+        OBJECT(/*model*/ MODEL_NONE, /*pos*/ -6612,  1024, -3351, /*angle*/ 0, 107, 0,  /*behParam*/ 0x000D0000, /*beh*/ bhvFadingWarp),
+        OBJECT(/*model*/ MODEL_NONE, /*pos*/  1980,   768,  6618, /*angle*/ 0, -151, 0, /*behParam*/ 0x000E0000, /*beh*/ bhvFadingWarp),
+        WARP_NODE(/*id*/ 0x0A, /*destLevel*/ LEVEL_BOB, /*destArea*/ 0x01, /*destNode*/ 0x0A, /*flags*/ WARP_NO_CHECKPOINT),
+        WARP_NODE(/*id*/ 0x0B, /*destLevel*/ LEVEL_BOB, /*destArea*/ 0x01, /*destNode*/ 0x0C, /*flags*/ WARP_NO_CHECKPOINT),
+        WARP_NODE(/*id*/ 0x0C, /*destLevel*/ LEVEL_BOB, /*destArea*/ 0x01, /*destNode*/ 0x0B, /*flags*/ WARP_NO_CHECKPOINT),
+        WARP_NODE(/*id*/ 0x0D, /*destLevel*/ LEVEL_BOB, /*destArea*/ 0x01, /*destNode*/ 0x0E, /*flags*/ WARP_NO_CHECKPOINT),
+        WARP_NODE(/*id*/ 0x0E, /*destLevel*/ LEVEL_BOB, /*destArea*/ 0x01, /*destNode*/ 0x0D, /*flags*/ WARP_NO_CHECKPOINT),
+        WARP_NODE(/*id*/ 0xF0, /*destLevel*/ LEVEL_CASTLE, /*destArea*/ 0x01, /*destNode*/ 0x32, /*flags*/ WARP_NO_CHECKPOINT),
+        WARP_NODE(/*id*/ 0xF1, /*destLevel*/ LEVEL_CASTLE, /*destArea*/ 0x01, /*destNode*/ 0x64, /*flags*/ WARP_NO_CHECKPOINT),
+        TERRAIN(/*terrainData*/ bob_seg7_collision_level),
+        //MACRO_OBJECTS(/*objList*/ bob_seg7_macro_objs),
+        SHOW_DIALOG(/*index*/ 0x00, DIALOG_000),
+        SET_BACKGROUND_MUSIC(/*settingsPreset*/ 0x0000, /*seq*/ SEQ_LEVEL_GRASS),
+        TERRAIN_TYPE(/*terrainType*/ TERRAIN_GRASS),
     END_AREA(),
 
     FREE_LEVEL_POOL(),

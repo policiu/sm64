@@ -1,15 +1,8 @@
 #ifndef LEVEL_MISC_MACROS_H
 #define LEVEL_MISC_MACROS_H
 
-#define MACRO_OBJECT_WITH_BEH_PARAM_AND_ACTS(preset, yaw, posX, posY, posZ, behParam, acts) \
-    (((yaw * 0x10 / 45) << 9) | (preset + 0x1F)), posX, posY, posZ, behParam, acts
-
-#define MACRO_OBJECT_WITH_ACTS(preset, yaw, posX, posY, posZ, acts) \
-    MACRO_OBJECT_WITH_BEH_PARAM_AND_ACTS(preset, yaw, posX, posY, posZ, 0, acts)
-
-
 #define MACRO_OBJECT_WITH_BEH_PARAM(preset, yaw, posX, posY, posZ, behParam) \
-    (((yaw * 0x10 / 45) << 9) | (preset + 0x1F)), posX, posY, posZ, behParam, ALL_ACTS
+    ((s16)((yaw * 0x10 / 45) << 9) | (preset + 0x1F)), posX, posY, posZ, behParam, ALL_ACTS
 
 #define MACRO_OBJECT(preset, yaw, posX, posY, posZ) \
     MACRO_OBJECT_WITH_BEH_PARAM(preset, yaw, posX, posY, posZ, 0)
@@ -19,20 +12,19 @@
 
 
 
-#define MACRO_OBJECT_WITH_BEH_PARAM_AND_ACTS_ASSIGNMENT(array, index, preset, yaw, posX, posY, posZ, behParam, acts) \
+#define MACRO_OBJECT_WITH_BEH_PARAM_AND_ACTS_ASSIGNMENT(array, index, preset, yaw, posX, posY, posZ, behParam) \
     array[index++] = (short)((((yaw * 0x10 / 45) << 9) | (preset + 0x1F))); \
     array[index++] = posX; \
     array[index++] = posY; \
     array[index++] = posZ;  \
-    array[index++] = behParam; \
-    array[index++] =  acts;
+    array[index++] = behParam;
 
-#define MACRO_OBJECT_WITH_ACTS_ASSIGNMENT(array, index, preset, yaw, posX, posY, posZ, acts) \
-    MACRO_OBJECT_WITH_BEH_PARAM_AND_ACTS_ASSIGNMENT(array, index, preset, yaw, posX, posY, posZ, 0, acts)
+#define MACRO_OBJECT_WITH_ACTS_ASSIGNMENT(array, index, preset, yaw, posX, posY, posZ) \
+    MACRO_OBJECT_WITH_BEH_PARAM_AND_ACTS_ASSIGNMENT(array, index, preset, yaw, posX, posY, posZ, 0)
 
 
 #define MACRO_OBJECT_WITH_BEH_PARAM_ASSIGNMENT(array, index, preset, yaw, posX, posY, posZ, behParam) \
-    MACRO_OBJECT_WITH_BEH_PARAM_AND_ACTS_ASSIGNMENT(array, index, preset, yaw, posX, posY, posZ, behParam, ALL_ACTS)
+    MACRO_OBJECT_WITH_BEH_PARAM_AND_ACTS_ASSIGNMENT(array, index, preset, yaw, posX, posY, posZ, behParam)
 
 #define MACRO_OBJECT_ASSIGNMENT(array, index, preset, yaw, posX, posY, posZ) \
     MACRO_OBJECT_WITH_BEH_PARAM_ASSIGNMENT(array, index, preset, yaw, posX, posY, posZ, 0)
